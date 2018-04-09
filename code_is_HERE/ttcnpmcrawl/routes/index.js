@@ -62,6 +62,7 @@ router.get("/tiki-crawl", function(req, res){
 });
 
 // Product price is inreased or decreased?
+// Get the last month price to now, apply the formula to find if it increase or decrease over a month
 router.get("/tiki-increase", function(req, res){
   // load all the price go into one Array
   var arrayPrice = []
@@ -100,11 +101,26 @@ router.get("/tiki-increase", function(req, res){
           count = count+1;
         });
 
-        Product.findByIdAndUpdate(product._id,{"price.$[].date": {$gte: new Date(startDate), $lt: new Date(endDate)}}, function(err, updateProduct){
+        Product.findByIdAndUpdate(product._id,{"date": {$gte: new Date(startDate) , $lt: new Date(endDate)}}, function(err, updateProduct){
           if(err) {
             console.log(err);
           } else {
-            console.log("success");
+            // percentage increase 10% -> 1.1
+            // percentage decrease 10% -> 0.9
+            // apply the formula: increaseOrDecrease = basePrice * 1 * nextDayPrice * percentage * ...
+
+            // % of change = ( )(new - old)/ old ) * 100
+            var result, temp, countTemp = 0;
+
+            if(countTemp == 0) {
+              temp = ((updateProduct.price - startPrice)/startPrice)*100;
+              countTemp = countTemp + 1;
+            } else {
+              ((updateProduct.price - temp)/temp)*100
+            }
+
+
+            console.log("success hihi" + updateProduct.name);
           }
         });
 
@@ -114,11 +130,7 @@ router.get("/tiki-increase", function(req, res){
     }
   });
 
-  // get the last 30 day price - the point
 
-  // percentage increase 10% -> 1.1
-  // percentage decrease 10% -> 0.9
-  // apply the formula: increaseOrDecrease = basePrice * 1 * nextDayPrice * percentage * ...
 
   res.send("Find the increased one!");
 
