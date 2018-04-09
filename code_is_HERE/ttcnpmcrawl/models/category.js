@@ -1,8 +1,13 @@
 var mongoose = require("mongoose");
 
 var CategorySchema = new mongoose.Schema({
-    catId: String,
-    name: String
+    name: String,
+    products: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Product"
+      }
+    ]
 });
 
 module.exports = mongoose.model("Category", CategorySchema);

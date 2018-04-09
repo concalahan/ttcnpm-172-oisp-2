@@ -4,7 +4,6 @@ var express = require('express'),
     passport = require('passport'),
     fs = require('fs'),
     mongoose = require('mongoose'),
-    KhongDau = require('khong-dau'),
     cheerio = require('cheerio');
 
 var Product = require("../models/product");
