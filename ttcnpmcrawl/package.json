@@ -1,0 +1,28 @@
+{
+  "name": "crawler",
+  "version": "1.0.0",
+  "description": "cnpm project",
+  "main": "app.js",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "cheerio": "^1.0.0-rc.2",
+    "ejs": "^2.5.7",
+    "express": "^4.16.3",
+    "fs": "0.0.1-security",
+    "http": "0.0.0",
+    "khong-dau": "^2.0.0",
+    "mongoose": "^5.0.12",
+    "nodemon": "^1.17.3",
+    "passport": "^0.4.0",
+    "passport-local-mongoose": "^5.0.0",
+    "request": "^2.85.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon app.js",
+    "start": "node app.js"
+  },
+  "author": "oisp2",
+  "license": "ISC"
+}
