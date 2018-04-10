@@ -16,6 +16,7 @@ router.get("/", function(req, res){
       console.log(err);
       res.redirect("/");
     } else {
+      console.log(categories);
       res.render('index', {categories: categories});
     }
   });
