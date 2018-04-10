@@ -22,6 +22,26 @@ router.get("/", function(req, res){
   });
 });
 
+// LOGIN PAGE
+router.get("/login", function(req, res){
+    return res.render("login");
+});
+
+// HANDLE LOGIN LOGIC
+router.post("/login", passport.authenticate("local",
+    {
+        successRedirect: "/admin",
+        failureRedirect: "/login"
+    }), function(req, res){
+});
+
+//logout route
+router.get("/logout", function(req, res){
+    req.logout();
+    req.flash("success", "Logged you out!");
+    return res.redirect("/");
+});
+
 router.get("/tiki-crawl", function(req, res){
   Product.find({}, function(err, foundProducts){
     if(err) {
@@ -90,7 +110,7 @@ router.get("/tiki-increase-or-decrease", function(req, res){
           // compare date with the last month, guarantee it run 31 time
           if(
             endDate.getUTCDate() == each.date.getUTCDate() &&
-            endDate.getUTCMonth() == each.date.get10690000UTCMonth() &&
+            endDate.getUTCMonth() == each.date.getUTCMonth() &&
             count == 31
           ) {
             // have it in the database
@@ -269,6 +289,5 @@ router.get("/:url_path", function(req, res){
         }
     });
 });
-
 
 module.exports = router;
