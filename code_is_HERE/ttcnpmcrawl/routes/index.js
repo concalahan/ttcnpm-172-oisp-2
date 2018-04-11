@@ -11,8 +11,35 @@ var Category = require("../models/category");
 
 
 router.get("/", function(req, res){
-    //res.render("index");
-    res.send("Home page...");
+  Category.find({}).populate("products").exec(function(err, categories){
+    if(err) {
+      console.log(err);
+      res.redirect("/");
+    } else {
+      console.log(categories);
+      res.render('index', {categories: categories});
+    }
+  });
+});
+
+// LOGIN PAGE
+router.get("/login", function(req, res){
+    return res.render("login");
+});
+
+// HANDLE LOGIN LOGIC
+router.post("/login", passport.authenticate("local",
+    {
+        successRedirect: "/admin",
+        failureRedirect: "/login"
+    }), function(req, res){
+});
+
+//logout route
+router.get("/logout", function(req, res){
+    req.logout();
+    req.flash("success", "Logged you out!");
+    return res.redirect("/");
 });
 
 router.get("/tiki-crawl", function(req, res){
@@ -62,7 +89,8 @@ router.get("/tiki-crawl", function(req, res){
 });
 
 // Product price is inreased or decreased?
-router.get("/tiki-increase", function(req, res){
+// Get the last month price to now, apply the formula to find if it increase or decrease over a month
+router.get("/tiki-increase-or-decrease", function(req, res){
   // load all the price go into one Array
   var arrayPrice = []
 
@@ -100,28 +128,66 @@ router.get("/tiki-increase", function(req, res){
           count = count+1;
         });
 
-        Product.findByIdAndUpdate(product._id,{"price.$[].date": {$gte: new Date(startDate), $lt: new Date(endDate)}}, function(err, updateProduct){
+        var result = 1, temp = 0, countTemp = 0;
+
+        Product.findByIdAndUpdate(product._id,{"date": {$gte: new Date(startDate) , $lt: new Date(endDate)}}, function(err, updateProduct){
           if(err) {
             console.log(err);
           } else {
-            console.log("success");
+            // percentage increase 10% -> 1.1
+            // percentage decrease 10% -> 0.9
+            // apply the formula: increaseOrDecrease = basePrice * 1 * nextDayPrice * percentage * ...
+            // Ex: 100 90 120 150 80 200
+            // result = 100/100 * 90/100 * 120/100 * 150/100 * 80/100 * 200/100
+
+
+            // Another way? https://toanmath.com/2017/11/cach-tim-cong-thuc-tong-quat-cua-day-so-cho-boi-cong-thuc-truy-hoi-pham-thi-thu-huyen.html
+            temp = updateProduct.price/ startPrice;
+
+            updateProduct.price.forEach(function(data){
+              temp = data.value/ startPrice;
+              result = result * temp;
+            });
+
+            console.log("product " + product.name + " " + result);
+
+            if(result > 1) {
+              updateProduct.isIncrease = 1;
+              updateProduct.save();
+            } else if (result < 1) {
+              updateProduct.isDecrease = 1;
+              updateProduct.save();
+            }
           }
         });
-
-        //console.log("base date: " + baseDate);
-        //console.log("product " + product.name + "base date: " + baseDate);
       });
     }
   });
 
-  // get the last 30 day price - the point
+  res.send("Sort the increased one from the decreased one!");
 
-  // percentage increase 10% -> 1.1
-  // percentage decrease 10% -> 0.9
-  // apply the formula: increaseOrDecrease = basePrice * 1 * nextDayPrice * percentage * ...
+});
 
-  res.send("Find the increased one!");
+router.get("/tang-gia", function(req, res){
+  Product.find({isIncrease: true}, function(err, foundProduct) {
+    if(err) {
+      console.log(err);
+    } else {
+      console.log("hi " + foundProduct);
+      res.render("category", {products: foundProduct});
+    }
+  });
+});
 
+router.get("/giam-gia", function(req, res){
+  Product.find({isDecrease: true}, function(err, foundProduct) {
+    if(err) {
+      console.log(err);
+    } else {
+      console.log("hi " + foundProduct);
+      res.render("category", {products: foundProduct});
+    }
+  });
 });
 
 router.get("/tiki", function(req, res){
@@ -203,17 +269,6 @@ router.get("/tiki", function(req, res){
     res.send("temp");
 });
 
-router.get("/index", function(req, res){
-  Category.find({}).populate("products").exec(function(err, categories){
-    if(err) {
-      console.log(err);
-      res.redirect("/");
-    } else {
-      res.render('index', {categories: categories});
-    }
-  });
-});
-
 router.get("/delete", function(req, res){
     Product.remove({}, function(err, done){
         if(err){
@@ -234,6 +289,5 @@ router.get("/:url_path", function(req, res){
         }
     });
 });
-
 
 module.exports = router;
