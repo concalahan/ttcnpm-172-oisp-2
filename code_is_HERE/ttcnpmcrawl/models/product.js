@@ -18,6 +18,7 @@ var ProductSchema = new mongoose.Schema({
             ref: "Comment"
         }
     ],
+    rating: Number,
     isIncrease: Boolean,
     isDecrease: Boolean
 });

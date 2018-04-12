@@ -209,12 +209,23 @@ router.get("/tiki", function(req, res){
                 url_path = url_path.split("?")[0];
                 var thumbnail_url = productData.product.thumbnail_url;
                 var value = productData.product.price;
+                var rating = (productData.product.rating_value != 0) ? productData.product.rating_value : "No rating";
                 //var categoryType = "unknown";
                 request("https://tiki.vn/".concat(url_path), function(err, response, body) {
                     if(err){
                         console.log("Cannot request to product url: " + url_path);
                     } else {
                         if(response.statusCode === 200){
+                            // request("https://tiki.vn/api/v2/reviews?product_id=".concat(product_id).concat("&apikey=2cd335e2c2c74a6f9f4b540b91128e55"), function(err, res, body){
+                            //   if(err){
+                            //     console.log(err);
+                            //   } else {
+                            //     Object.preventExtensions(res);
+                            //     res.body.slice(0, res.body.length);
+                            //     var body = JSON.parse(res.body);
+                                
+                            //   }
+                            // });
                             var $ = cheerio.load(body);
                             // get category
                             $('ul.breadcrumb').children().each(function(){
@@ -229,31 +240,36 @@ router.get("/tiki", function(req, res){
                                           name: category_type
                                         }
                                       }, { upsert: true, new: true }, function(err, category) {
-                                        Product.findOneAndUpdate(
-                                            { product_id: product_id },
-                                            {
-                                                $set: {
-                                                    product_id: product_id,
-                                                    name: name,
-                                                    url_path: url_path,
-                                                    thumbnail_url: thumbnail_url,
-                                                    category_type: category_type
-                                                }
-                                            },
-                                            { upsert: true, new: true }
-                                        , function(err, product) {
-                                            if(err) {
-                                                console.log(err);
-                                            } else {
-                                                // push the current price
-                                                product.price.push({value: value});
-                                                product.save();
-
-                                                category.products.push(product);
-                                                category.save();
-                                                console.log("yay " + category);
-                                            }
-                                        });
+                                        if(err){
+                                          console.log(err);
+                                        } else {
+                                          Product.findOneAndUpdate(
+                                              { product_id: product_id },
+                                              {
+                                                  $set: {
+                                                      product_id: product_id,
+                                                      name: name,
+                                                      url_path: url_path,
+                                                      thumbnail_url: thumbnail_url,
+                                                      rating: rating,
+                                                      category_type: category_type
+                                                  }
+                                              },
+                                              { upsert: true, new: true }
+                                          , function(err, product) {
+                                              if(err) {
+                                                  console.log(err);
+                                              } else {
+                                                  // push the current price
+                                                  product.price.push({value: value});
+                                                  product.save();
+  
+                                                  category.products.push(product);
+                                                  category.save();
+                                                  console.log("yay " + category);
+                                              }
+                                          });
+                                        }
                                       }
                                     )
                                 }
