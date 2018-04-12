@@ -18,6 +18,10 @@ var ProductSchema = new mongoose.Schema({
             ref: "Comment"
         }
     ],
+<<<<<<< HEAD
+=======
+    rating: String,
+>>>>>>> e97a84c8e3799e8ce670dedabf0292a947f12f49
     isIncrease: Boolean,
     isDecrease: Boolean
 });
