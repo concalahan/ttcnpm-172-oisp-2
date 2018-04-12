@@ -18,7 +18,7 @@ var ProductSchema = new mongoose.Schema({
             ref: "Comment"
         }
     ],
-    rating: Number,
+    rating: String,
     isIncrease: Boolean,
     isDecrease: Boolean
 });
