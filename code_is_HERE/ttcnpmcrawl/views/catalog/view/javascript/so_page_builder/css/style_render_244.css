@@ -1,0 +1,7 @@
+.so-page-builder .container-fluid{padding:0; overflow:hidden;}.so-page-builder .container{padding:0; overflow:hidden;}.so-page-builder section{overflow:hidden;}
+.section-style1{background-color:rgba(242,242,242,1);}
+
+#testi-home{background-image:url('../../../../../image/catalog/banner/bgtesti.png');background-repeat:no-repeat; background-position:center center; background-attachment:scroll ;background-size:cover;}
+
+/* Style Testimonial */ 
+.mod-testimonial_359v h3{text-align:center}.mod-testimonial_359v .item-info,.mod-testimonial_359v .item-info h5,.mod-testimonial_359v .item-info span{color:#cccccc}.mod-testimonial_359v .item-img-info img{border-radius:50%; margin:0 auto; max-width:100%;}.mod-testimonial_359v .item{border:0px solid #ccc; background:rgba(255,255,255,0.8) }
