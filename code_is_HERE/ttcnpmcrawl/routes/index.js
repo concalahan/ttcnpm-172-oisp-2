@@ -209,18 +209,14 @@ router.get("/tiki", function(req, res){
                 url_path = url_path.split("?")[0];
                 var thumbnail_url = productData.product.thumbnail_url;
                 var value = productData.product.price;
-<<<<<<< HEAD
-=======
+
                 var rating = (productData.product.rating_value != 0) ? productData.product.rating_value : "No rating";
->>>>>>> e97a84c8e3799e8ce670dedabf0292a947f12f49
                 //var categoryType = "unknown";
                 request("https://tiki.vn/".concat(url_path), function(err, response, body) {
                     if(err){
                         console.log("Cannot request to product url: " + url_path);
                     } else {
                         if(response.statusCode === 200){
-<<<<<<< HEAD
-=======
                             // request("https://tiki.vn/api/v2/reviews?product_id=".concat(product_id).concat("&apikey=2cd335e2c2c74a6f9f4b540b91128e55"), function(err, res, body){
                             //   if(err){
                             //     console.log(err);
@@ -231,7 +227,6 @@ router.get("/tiki", function(req, res){
                                 
                             //   }
                             // });
->>>>>>> e97a84c8e3799e8ce670dedabf0292a947f12f49
                             var $ = cheerio.load(body);
                             // get category
                             $('ul.breadcrumb').children().each(function(){
@@ -246,7 +241,6 @@ router.get("/tiki", function(req, res){
                                           name: category_type
                                         }
                                       }, { upsert: true, new: true }, function(err, category) {
-<<<<<<< HEAD
                                         Product.findOneAndUpdate(
                                             { product_id: product_id },
                                             {
@@ -272,7 +266,6 @@ router.get("/tiki", function(req, res){
                                                 console.log("yay " + category);
                                             }
                                         });
-=======
                                         if(err){
                                           console.log(err);
                                         } else {
@@ -303,7 +296,6 @@ router.get("/tiki", function(req, res){
                                               }
                                           });
                                         }
->>>>>>> e97a84c8e3799e8ce670dedabf0292a947f12f49
                                       }
                                     )
                                 }
