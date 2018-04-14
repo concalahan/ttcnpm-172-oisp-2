@@ -9,6 +9,17 @@ var express = require('express'),
 var Product = require("../models/product");
 var Category = require("../models/category");
 
+router.get("/index", function(req, res){
+  Category.find({}).populate("products").exec(function(err, categories){
+    if(err) {
+      console.log(err);
+      res.redirect("/");
+    } else {
+      console.log(categories);
+      res.render('index3', {categories: categories});
+    }
+  });
+});
 
 router.get("/", function(req, res){
   Category.find({}).populate("products").exec(function(err, categories){
