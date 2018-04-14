@@ -30,7 +30,7 @@
     		text: "Biểu đồ giá"
     	},
       axisX:{
-        valueFormatString: "HH MMM-DD" ,
+        valueFormatString: "MMM DD" ,
         labelAngle: -50
       },
     	axisY:{
@@ -48,7 +48,7 @@
 
     // https://canvasjs.com/docs/charts/basics-of-creating-html5-chart/updating-chart-options/
     product.price.forEach(function(data){
-      chart.options.data[count] = {}; // type: "line"
+      chart.options.data[count] = {connectNullData: true}; // type: "line"
       chart.options.data.push({});
       chart.options.data[count].dataPoints = [];
       chart.options.data[count].dataPoints.push({x: new Date(data.date), y: data.value});

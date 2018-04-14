@@ -4,11 +4,11 @@ var express = require('express'),
     passport = require('passport'),
     fs = require('fs'),
     mongoose = require('mongoose'),
+    middleware = require("../middleware/index.js");
     cheerio = require('cheerio');
 
 var Product = require("../models/product");
 var Category = require("../models/category");
-
 
 router.get("/", function(req, res){
   Category.find({}).populate("products").exec(function(err, categories){
@@ -16,8 +16,7 @@ router.get("/", function(req, res){
       console.log(err);
       res.redirect("/");
     } else {
-      console.log(categories);
-      res.render('index', {categories: categories});
+      res.render('index2', {categories: categories});
     }
   });
 });
@@ -30,7 +29,7 @@ router.get("/login", function(req, res){
 // HANDLE LOGIN LOGIC
 router.post("/login", passport.authenticate("local",
     {
-        successRedirect: "/admin",
+        successRedirect: "/",
         failureRedirect: "/login"
     }), function(req, res){
 });
@@ -42,11 +41,29 @@ router.get("/logout", function(req, res){
     return res.redirect("/");
 });
 
+router.get("/test-tiki-crawl", function(req, res){
+  request("https://tiki.vn/may-giat-cua-ngang-electrolux-ewf12843-8-0-kg-p460088.html", function(err, response, body){
+    if(err) {
+      console.log("err " + err);
+    } else {
+      var $ = cheerio.load(body);
+
+      console.log($('#span-price').text());
+
+      var value = String($('#span-price').text().match( /\d+/g )).replace(/,/g, "");
+
+      console.log("value " + value);
+
+      res.send("test crawl again");
+    }
+  });
+});
+
 router.get("/tiki-crawl", function(req, res){
+  var count = 0;
   Product.find({}, function(err, foundProducts){
     if(err) {
       console.log(err);
-      res.redirect("/");
     } else {
       foundProducts.forEach(function(product){
         request("https://tiki.vn/" + product.url_path, function(err, response, body){
@@ -57,7 +74,12 @@ router.get("/tiki-crawl", function(req, res){
 
             // get price, tyim all except value, and ,
             var value = String($('#span-price').text().match( /\d+/g )).replace(/,/g, "");
-            var newPrice = {value: value};
+            var date = new Date();
+
+            var newPrice = {
+              value: value,
+              date: date
+            };
 
             // pull out all the image in the content
             var m, moreImages = [], str = $('.product-content-detail').children().html(), rex = /<img[^>]+src="(https:\/\/[^">]+)"/g;
@@ -70,13 +92,14 @@ router.get("/tiki-crawl", function(req, res){
             Product.findOneAndUpdate(
               {product_id: product.product_id},
               {
-                  $push: { "price": newPrice },
-                  $push : { "more_thumbnail_url": moreImages }
+                  $push: { "price": newPrice }
+                  //$push : { "more_thumbnail_url": moreImages }
               }, function(err, done) {
                   if(err) {
                     console.log(err);
                   } else {
-                    console.log(done);
+                    console.log(count + " " + done.price);
+                    count = count + 1;
                   }
               });
           }
@@ -165,7 +188,6 @@ router.get("/tiki-increase-or-decrease", function(req, res){
   });
 
   res.send("Sort the increased one from the decreased one!");
-
 });
 
 router.get("/tang-gia", function(req, res){
@@ -209,18 +231,13 @@ router.get("/tiki", function(req, res){
                 url_path = url_path.split("?")[0];
                 var thumbnail_url = productData.product.thumbnail_url;
                 var value = productData.product.price;
-<<<<<<< HEAD
-=======
                 var rating = (productData.product.rating_value != 0) ? productData.product.rating_value : "No rating";
->>>>>>> e97a84c8e3799e8ce670dedabf0292a947f12f49
                 //var categoryType = "unknown";
                 request("https://tiki.vn/".concat(url_path), function(err, response, body) {
                     if(err){
                         console.log("Cannot request to product url: " + url_path);
                     } else {
                         if(response.statusCode === 200){
-<<<<<<< HEAD
-=======
                             // request("https://tiki.vn/api/v2/reviews?product_id=".concat(product_id).concat("&apikey=2cd335e2c2c74a6f9f4b540b91128e55"), function(err, res, body){
                             //   if(err){
                             //     console.log(err);
@@ -228,10 +245,9 @@ router.get("/tiki", function(req, res){
                             //     Object.preventExtensions(res);
                             //     res.body.slice(0, res.body.length);
                             //     var body = JSON.parse(res.body);
-                                
+
                             //   }
                             // });
->>>>>>> e97a84c8e3799e8ce670dedabf0292a947f12f49
                             var $ = cheerio.load(body);
                             // get category
                             $('ul.breadcrumb').children().each(function(){
@@ -246,7 +262,6 @@ router.get("/tiki", function(req, res){
                                           name: category_type
                                         }
                                       }, { upsert: true, new: true }, function(err, category) {
-<<<<<<< HEAD
                                         Product.findOneAndUpdate(
                                             { product_id: product_id },
                                             {
@@ -272,7 +287,6 @@ router.get("/tiki", function(req, res){
                                                 console.log("yay " + category);
                                             }
                                         });
-=======
                                         if(err){
                                           console.log(err);
                                         } else {
@@ -296,14 +310,13 @@ router.get("/tiki", function(req, res){
                                                   // push the current price
                                                   product.price.push({value: value});
                                                   product.save();
-  
+
                                                   category.products.push(product);
                                                   category.save();
                                                   console.log("yay " + category);
                                               }
                                           });
                                         }
->>>>>>> e97a84c8e3799e8ce670dedabf0292a947f12f49
                                       }
                                     )
                                 }
@@ -320,24 +333,24 @@ router.get("/tiki", function(req, res){
 });
 
 router.get("/delete", function(req, res){
-    Product.remove({}, function(err, done){
-        if(err){
-            console.log(err);
-        } else {
-            console.log("Delete all products!");
-            res.redirect("/");
-        }
-    });
+  Product.remove({}, function(err, done){
+    if(err){
+      console.log(err);
+    } else {
+      console.log("Delete all products!");
+      res.redirect("/");
+    }
+  });
 });
 
 router.get("/:url_path", function(req, res){
   Product.findOne({url_path: req.params.url_path}, function(err, foundProduct){
-        if(err){
-            res.redirect("/");
-        } else {
-            res.render("product", {product: foundProduct});
-        }
-    });
+    if(err){
+      res.redirect("/");
+    } else {
+      res.render("product", {product: foundProduct});
+    }
+  });
 });
 
 module.exports = router;
