@@ -10,8 +10,6 @@ var express = require('express'),
 var Product = require("../models/product");
 var Category = require("../models/category");
 
-<<<<<<< HEAD
-=======
 router.get("/index", function(req, res){
   Category.find({}).populate("products").exec(function(err, categories){
     if(err) {
@@ -24,7 +22,6 @@ router.get("/index", function(req, res){
   });
 });
 
->>>>>>> 21ed2a1a68bb74cc84334b3f5f6a03992f47d64b
 router.get("/", function(req, res){
   Category.find({}).populate("products").exec(function(err, categories){
     if(err) {
@@ -246,10 +243,6 @@ router.get("/tiki", function(req, res){
                 url_path = url_path.split("?")[0];
                 var thumbnail_url = productData.product.thumbnail_url;
                 var value = productData.product.price;
-<<<<<<< HEAD
-=======
-
->>>>>>> 7379473520b609c9bcbef9302baaa361cb403a6c
                 var rating = (productData.product.rating_value != 0) ? productData.product.rating_value : "No rating";
                 //var categoryType = "unknown";
                 request("https://tiki.vn/".concat(url_path), function(err, response, body) {

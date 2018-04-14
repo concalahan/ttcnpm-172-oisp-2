@@ -12,11 +12,12 @@ function seedDB(){
   });
 
   var newUser = new User({username: "user"});
-  User.register(newAdmin, "Haiconcacon123", function(err, user){
+  User.register(newUser, "user", function(err, user){
     if(err){
       console.log(err);
     } else {
       user.isAdmin = 0;
+      user.mail = "mainguyenvu210@gmail.com";
       user.save();
     }
   });
