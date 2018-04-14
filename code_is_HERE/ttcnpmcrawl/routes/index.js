@@ -231,6 +231,10 @@ router.get("/tiki", function(req, res){
                 url_path = url_path.split("?")[0];
                 var thumbnail_url = productData.product.thumbnail_url;
                 var value = productData.product.price;
+<<<<<<< HEAD
+=======
+
+>>>>>>> 7379473520b609c9bcbef9302baaa361cb403a6c
                 var rating = (productData.product.rating_value != 0) ? productData.product.rating_value : "No rating";
                 //var categoryType = "unknown";
                 request("https://tiki.vn/".concat(url_path), function(err, response, body) {
