@@ -123,6 +123,54 @@ router.get("/tiki-crawl", function(req, res){
   res.send("crawling it again...");
 });
 
+router.get("/linear-regression", function(req, res){
+  var priceArray = [];
+
+  Product.find({}, function(err, foundProducts){
+    if(err) {
+      res.redirect("/");
+    } else {
+
+      foundProducts.forEach(function(product){
+        // loop through all date in product
+
+        // linear regression formula:
+        // http://www.statisticshowto.com/probability-and-statistics/regression-analysis/find-a-linear-regression-equation/
+        var x=0,y=1,xy=0,x2=0,y2=0;
+        var sumX=0, sumY=0, sumXY=0, sumX2=0, sumY2=0;
+        var a, b;
+        product.price.forEach(function(eachDay){
+          x = eachDay.value/ 1000;
+          xy = x*y;
+          x2 = x*x;
+          y2 = y*y;
+
+          sumX = sumX + x;
+          sumY = sumY + y;
+          sumXY = sumXY + xy;
+          sumX2 = sumX2 + x2;
+          sumY2 = sumY2 + y2;
+
+          if(y == product.price.length){
+            if((y*sumX2-sumX*sumX) == 0) {
+              a = 0;
+              b = 1;
+            } else {
+              a = (sumY*sumX2 - sumX*sumXY)/(y*sumX2-sumX*sumX);
+              b = (y*sumXY - sumX*sumY)/(y*sumX2-sumX*sumX);
+            }
+
+            console.log("the function is: " + a + "+ x*" + b);
+            console.log("------------------------------");
+          }
+          y = y + 1;
+        });
+      });
+    }
+  });
+  res.send("Apply linear regression!");
+});
+
 // Product price is inreased or decreased?
 // Get the last month price to now, apply the formula to find if it increase or decrease over a month
 router.get("/tiki-increase-or-decrease", function(req, res){
@@ -131,7 +179,6 @@ router.get("/tiki-increase-or-decrease", function(req, res){
 
   Product.find({}, function(err, foundProducts){
     if(err) {
-      console.log(err);
       res.redirect("/");
     } else {
       var endDate = new Date();
@@ -174,7 +221,6 @@ router.get("/tiki-increase-or-decrease", function(req, res){
             // apply the formula: increaseOrDecrease = basePrice * 1 * nextDayPrice * percentage * ...
             // Ex: 100 90 120 150 80 200
             // result = 100/100 * 90/100 * 120/100 * 150/100 * 80/100 * 200/100
-
 
             // Another way? https://toanmath.com/2017/11/cach-tim-cong-thuc-tong-quat-cua-day-so-cho-boi-cong-thuc-truy-hoi-pham-thi-thu-huyen.html
             temp = updateProduct.price/ startPrice;

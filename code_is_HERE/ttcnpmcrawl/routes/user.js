@@ -19,8 +19,6 @@ router.post("/track/:user_id/:product_id", middleware.isLoggedIn, function(req, 
       }
     });
 
-    console.log("uiui " + req.params.user_id);
-
     User.findById(req.params.user_id, function(err, foundUser){
       if(err){
         console.log(err);
@@ -29,7 +27,8 @@ router.post("/track/:user_id/:product_id", middleware.isLoggedIn, function(req, 
           if(error){
             console.log(error);
           } else {
-            console.log("hihi " + foundUser.mail);
+            foundUser.products.push(foundProduct);
+            foundUser.save();
 
             var mailOptions = {
               from: 'vuwebproject@gmail.com',
