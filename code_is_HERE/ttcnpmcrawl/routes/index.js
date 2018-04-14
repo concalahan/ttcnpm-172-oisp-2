@@ -10,6 +10,21 @@ var express = require('express'),
 var Product = require("../models/product");
 var Category = require("../models/category");
 
+<<<<<<< HEAD
+=======
+router.get("/index", function(req, res){
+  Category.find({}).populate("products").exec(function(err, categories){
+    if(err) {
+      console.log(err);
+      res.redirect("/");
+    } else {
+      console.log(categories);
+      res.render('index3', {categories: categories});
+    }
+  });
+});
+
+>>>>>>> 21ed2a1a68bb74cc84334b3f5f6a03992f47d64b
 router.get("/", function(req, res){
   Category.find({}).populate("products").exec(function(err, categories){
     if(err) {
