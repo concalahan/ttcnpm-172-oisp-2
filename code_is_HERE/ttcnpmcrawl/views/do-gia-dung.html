@@ -1,6 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+<style>
+body {
+    
+    min-width: 330px;
 
+    height: 100%;
+}
+</style>
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -26,24 +33,44 @@
 
 </head>
 <body>
-    
+   <span class="mb_right_hotline">
+    <span class="mb_bar">
+        <ul>
+            <li> <span class="bar_dm">Danh mục</span> </li>
+            <li>
+                  <span class="">Điện thoại</span> </li>
+            </li>
+            <li> <a href="index.html"> <span>Trang chủ</span></a> </li>
+            <li>
+                <a href=""> <span id="bar_zopim">Gửi tin nhắn</span></a>
+            </li>
+            <li>
+                <a href="gio-hang.html" rel="nofollow">
+                    <div id="cart_soluong" class="total-quantity-cart">0</div>
+                    <span id="bar_cart">Giỏ hàng</span>
+                </a>
+            </li>
+        </ul>
+        <img class="icon_bottom" style="width:100%;z-index:0;" src="Content/images/mb_bar_bgsk.png">
+    </span>
+</span>
 
 
     <!--#begin Header-->
-	<Header style = "padding-top: 0px">
+	<Header >
 	<div class="container-fluid" style = "background-color: black">
 	
         <div class="container">
-          <div class="col-md-2" style = "padding-left:0px">
+      
 		<a href='index.html' id='logo' class='columns' style = "text-align: left; "> <h1 style= "font-size:300%; margin-left:0px; color: white" >SoSanh.com</h1> </a>
-		</div>
+		
 <!--Search Form-->
 
-	<div class="col-md-6" style = "margin-top: 5px; margin-left: 30px">
+	<div class="columns head_mid" style = "background:black">
     
 	<form class="navbar-form navbar-left" role="form">
 	<div class="form-group">
-	<input class="form-control" placeholder="Tìm Sản Phẩm" style="width:400px">
+	<input class="form-control" placeholder="Tìm Sản Phẩm" style="width:300px">
 	</div>
 	<button class="btn btn-primary" type="submit" style = "padding: 6px 6px" >Tìm Kiếm</button>
 	</form>
@@ -71,7 +98,7 @@
                     <input type="password" id="txtpass" class="input password" placeholder="Mật khẩu" />
                 </div>
                 <div class="login-notify"></div>
-                <div class="input_form"> <a href="#" class="button" id="btnLogin">Đăng nhập <i class="arr_circle"></i></a></div>
+                <div class="input_form"> <a href="#" class="button" id="btnLogin" style = "height:45px">Đăng nhập <i class="arr_circle"></i></a></div>
                 <div class="input_form note_wrapper"><a class="lost_password fl" href="quen-mat-khau.html">Quên mật khẩu?</a> <a rel="nofollow" href="dang-ky.html" class="fr">Đăng ký</a> </div>
             </div>
         </div>
@@ -83,8 +110,8 @@
 		<div class="container">
         <div class="head_bottom cf" style = "background: #337ab7; margin-top:12px">
 
-<div class="container">
-    <!--Main Menu-->
+
+      <!--Main Menu-->
     <div class="all_categories all_cate_subpage">
 	        <div class="menu_Tab" style = "background: #337ab7"><i class="icon_menu"></i>Danh mục sản phẩm</div>
 
@@ -133,12 +160,11 @@
     </div>
     <!--End Main Menu-->
     <!--Right Top Main-->
-   
+    
     <!--End Right Top Main-->
 </div>
-
         </div>
-    </header>
+  </Header>
     <!--#end Header-->
     
 <div class="container">

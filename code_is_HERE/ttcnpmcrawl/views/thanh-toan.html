@@ -1,6 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+<style>
+body {
+    
+    min-width: 330px;
 
+    height: 100%;
+}
+</style>
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -29,21 +36,44 @@
     
 
 
+   <span class="mb_right_hotline">
+    <span class="mb_bar">
+        <ul>
+            <li> <span class="bar_dm">Danh mục</span> </li>
+            <li>
+                  <span class="">Điện thoại</span> </li>
+            </li>
+            <li> <a href="index.html"> <span>Trang chủ</span></a> </li>
+            <li>
+                <a href=""> <span id="bar_zopim">Gửi tin nhắn</span></a>
+            </li>
+            <li>
+                <a href="gio-hang.html" rel="nofollow">
+                    <div id="cart_soluong" class="total-quantity-cart">0</div>
+                    <span id="bar_cart">Giỏ hàng</span>
+                </a>
+            </li>
+        </ul>
+        <img class="icon_bottom" style="width:100%;z-index:0;" src="Content/images/mb_bar_bgsk.png">
+    </span>
+</span>
+
+
     <!--#begin Header-->
-	<Header style = "padding-top: 0px">
+	<Header >
 	<div class="container-fluid" style = "background-color: black">
 	
         <div class="container">
-          <div class="col-md-2" style = "padding-left:0px">
+      
 		<a href='index.html' id='logo' class='columns' style = "text-align: left; "> <h1 style= "font-size:300%; margin-left:0px; color: white" >SoSanh.com</h1> </a>
-		</div>
+		
 <!--Search Form-->
 
-	<div class="col-md-6" style = "margin-top: 5px; margin-left: 30px">
+	<div class="columns head_mid" style = "background:black">
     
 	<form class="navbar-form navbar-left" role="form">
 	<div class="form-group">
-	<input class="form-control" placeholder="Tìm Sản Phẩm" style="width:400px">
+	<input class="form-control" placeholder="Tìm Sản Phẩm" style="width:300px">
 	</div>
 	<button class="btn btn-primary" type="submit" style = "padding: 6px 6px" >Tìm Kiếm</button>
 	</form>
@@ -71,7 +101,7 @@
                     <input type="password" id="txtpass" class="input password" placeholder="Mật khẩu" />
                 </div>
                 <div class="login-notify"></div>
-                <div class="input_form"> <a href="#" class="button" id="btnLogin">Đăng nhập <i class="arr_circle"></i></a></div>
+                <div class="input_form"> <a href="#" class="button" id="btnLogin" style = "height:45px">Đăng nhập <i class="arr_circle"></i></a></div>
                 <div class="input_form note_wrapper"><a class="lost_password fl" href="quen-mat-khau.html">Quên mật khẩu?</a> <a rel="nofollow" href="dang-ky.html" class="fr">Đăng ký</a> </div>
             </div>
         </div>
@@ -83,8 +113,8 @@
 		<div class="container">
         <div class="head_bottom cf" style = "background: #337ab7; margin-top:12px">
 
-<div class="container">
-    <!--Main Menu-->
+
+      <!--Main Menu-->
     <div class="all_categories all_cate_subpage">
 	        <div class="menu_Tab" style = "background: #337ab7"><i class="icon_menu"></i>Danh mục sản phẩm</div>
 
@@ -133,12 +163,11 @@
     </div>
     <!--End Main Menu-->
     <!--Right Top Main-->
-   
+    
     <!--End Right Top Main-->
 </div>
-
         </div>
-    </header>
+  </Header>
     <!--#end Header-->
     
 
@@ -257,10 +286,12 @@
 </textarea>
                                 </div>
                             </div>
-                            <div class="row">
-                                <span class="form_item_title">Tỉnh/Thành phố</span>
-                                <div class="row_input">
-                                    <select class="input_text" data-val="true" data-val-number="The field CITY_ID must be a number." data-val-required="The CITY_ID field is required." id="CITY_ID" name="CITY_ID"><option value="">Tỉnh/th&#224;nh phố</option>
+
+     <div class="row">
+							<span class="form_item_title">Tỉnh/Thành phố</span>
+                    <div class="row_input">
+                        <div class="dropdown_list">
+							                                    <select class="input_text" data-val="true" data-val-number="The field CITY_ID must be a number." data-val-required="The CITY_ID field is required." id="CITY_ID" name="CITY_ID"><option value="">Tỉnh/th&#224;nh phố</option>
 <option value="19">H&#224; Nội</option>
 <option value="20">Hồ Ch&#237; Minh</option>
 <option value="75">Đ&#224; Nẵng</option>
@@ -324,15 +355,22 @@
 <option value="764">Vĩnh Ph&#250;c</option>
 <option value="773">Y&#234;n B&#225;i</option>
 </select>
-                                </div>
-                            </div>
+                        </div>
+                    </div>
+                </div>
+				
+				
+
                             <div class="row">
-                                <span class="form_item_title">Quận/Huyện</span>
-                                <div class="row_input">
-                                    <select class="input_text" data-val="true" data-val-number="The field DISTRICT_ID must be a number." data-val-required="The DISTRICT_ID field is required." id="DISTRICT_ID" name="DISTRICT_ID"><option value="">Quận/huyện</option>
+											                                <span class="form_item_title">Quận/Huyện</span>
+
+                    <div class="row_input">
+                        <div class="dropdown_list">
+                            <select class="input_text" data-val="true" data-val-number="The field DISTRICT_ID must be a number." data-val-required="The DISTRICT_ID field is required." id="DISTRICT_ID" name="DISTRICT_ID"><option value="">Quận/huyện</option>
 </select>
-                                </div>
-                            </div>
+                        </div>
+                    </div>
+                </div>
                         </div>
                         <!--end Form-->
                     </div>
@@ -355,7 +393,7 @@
                             <div class="more_info_article">
                                 <div class="box_info_payment">
                                     <div class="info_payment_top">Quý khách có thể đến địa chỉ sau để thanh toán và nhận hàng:</div>
-                                    <div class="info_payment_center"> Địa điểm: 15/2 Đường C1, Cộng Hòa, P13, Q. Tân Bình, TP.HCM </div>
+                                    <div class="info_payment_center"> Địa điểm: 268 Lý Thường Kiệt, Phường 14, Quận 10, TP.HCM </div>
                                 </div>
                             </div>
                         </div>
