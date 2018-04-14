@@ -7,11 +7,13 @@ var express = require('express'),
     session = require('express-session'),
     morgan = require('morgan'),
     robots = require('express-robots'),
+    seedDB = require("./seed"),
     app = express();
 
 var User = require("./models/user");
 
 var index = require('./routes/index');
+var userRoutes = require('./routes/user');
 var cmsRoutes = require("./routes/cms");
 
 mongoose.connect('mongodb://localhost/crawlTiki');
@@ -39,7 +41,18 @@ passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
+app.use(function(req, res, next){
+    res.locals.currentUser = req.user;
+    // res.locals.error = req.flash("error");
+    // res.locals.success = req.flash("success");
+    next();
+});
+
+app.use('/', cmsRoutes);
+app.use('/', userRoutes);
 app.use('/', index);
+
+seedDB();
 
 // 404 route
 app.use(function(req, res, next){

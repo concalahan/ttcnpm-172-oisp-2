@@ -30,7 +30,7 @@
     		text: "Biểu đồ giá"
     	},
       axisX:{
-        valueFormatString: "HH MMM-DD" ,
+        valueFormatString: "MMM DD" ,
         labelAngle: -50
       },
     	axisY:{
@@ -48,7 +48,7 @@
 
     // https://canvasjs.com/docs/charts/basics-of-creating-html5-chart/updating-chart-options/
     product.price.forEach(function(data){
-      chart.options.data[count] = {}; // type: "line"
+      chart.options.data[count] = {connectNullData: true}; // type: "line"
       chart.options.data.push({});
       chart.options.data[count].dataPoints = [];
       chart.options.data[count].dataPoints.push({x: new Date(data.date), y: data.value});
@@ -114,9 +114,19 @@
                 <%product.price.forEach(function(each){%>
                   <h4><%=each.value%></h4> -
                 <% }); %>
-              <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente dicta fugit fugiat hic aliquam itaque facere, soluta. Totam id dolores, sint aperiam sequi pariatur praesentium animi perspiciatis molestias iure, ducimus!</p>
-              <span class="text-warning">&#9733; &#9733; &#9733; &#9733; &#9734;</span>
-              4.0 stars
+
+                <% if(currentUser){ %>
+                  <center><h3>Track the product now!!!</h3></center>
+                  <form action="/track/<%=currentUser._id%>/<%=product.product_id%>" method="POST">
+    		            <input
+                      type="submit"
+                      class="btn btn-block btn-primary"
+                      onclick="return confirm('Are you want to track this Product? We will notify you via email.');"
+                      value="submit">
+    		          </form>
+    		        <% } %>
+              <!-- <span class="text-warning">&#9733; &#9733; &#9733; &#9733; &#9734;</span>
+              4.0 stars -->
             </div>
 
           </div>
