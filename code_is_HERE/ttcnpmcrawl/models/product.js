@@ -19,8 +19,7 @@ var ProductSchema = new mongoose.Schema({
         }
     ],
     rating: String,
-    isIncrease: Boolean,
-    isDecrease: Boolean
+    isIncrease: Boolean
 });
 
 module.exports = mongoose.model("Product", ProductSchema);

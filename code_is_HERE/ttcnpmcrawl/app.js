@@ -13,11 +13,12 @@ var express = require('express'),
 var User = require("./models/user");
 
 var index = require('./routes/index');
+var productRoutes = require('./routes/product');
 var userRoutes = require('./routes/user');
 var cmsRoutes = require("./routes/cms");
 
-//mongoose.connect('mongodb://localhost/crawlTiki');
-mongoose.connect('mongodb://admin:Haiconcacon123@ds233769.mlab.com:33769/ttcnpm');
+  mongoose.connect('mongodb://localhost/crawlTiki');
+//mongoose.connect('mongodb://admin:Haiconcacon123@ds233769.mlab.com:33769/ttcnpm');
 
 // App setup
 app.set("view engine", "ejs");
@@ -51,6 +52,7 @@ app.use(function(req, res, next){
 app.use('/', cmsRoutes);
 app.use('/', userRoutes);
 app.use('/', index);
+app.use('/', productRoutes);
 
 seedDB();
 
@@ -80,7 +82,3 @@ const server = http.createServer(app);
 server.listen(port);
 
 console.log("Server has started at port ", port);
-
-// app.listen(process.env.PORT, process.env.IP, function(){
-//     console.log("Server has started...");
-// });

@@ -10,17 +10,17 @@ var express = require('express'),
 var Product = require("../models/product");
 var Category = require("../models/category");
 
-router.get("/index", function(req, res){
-  Category.find({}).populate("products").exec(function(err, categories){
-    if(err) {
-      console.log(err);
-      res.redirect("/");
-    } else {
-      console.log(categories);
-      res.render('index3', {categories: categories});
-    }
-  });
-});
+// router.get("/index", function(req, res){
+//   Category.find({}).populate("products").exec(function(err, categories){
+//     if(err) {
+//       console.log(err);
+//       res.redirect("/");
+//     } else {
+//       console.log(categories);
+//       res.render('index3', {categories: categories});
+//     }
+//   });
+// });
 
 router.get("/", function(req, res){
   Category.find({}).populate("products").exec(function(err, categories){
@@ -92,6 +92,10 @@ router.get("/tiki-crawl", function(req, res){
               value: value,
               date: date
             };
+            // console.log("product: " + product.name);
+            // console.log("check value: " + newPrice.value);
+            // console.log("check date: " + newPrice.date);
+            // console.log("---------------------");
 
             // pull out all the image in the content
             var m, moreImages = [], str = $('.product-content-detail').children().html(), rex = /<img[^>]+src="(https:\/\/[^">]+)"/g;
@@ -236,7 +240,7 @@ router.get("/tiki-increase-or-decrease", function(req, res){
               updateProduct.isIncrease = 1;
               updateProduct.save();
             } else if (result < 1) {
-              updateProduct.isDecrease = 1;
+              updateProduct.isIncrease = 0;
               updateProduct.save();
             }
           }
@@ -253,18 +257,16 @@ router.get("/tang-gia", function(req, res){
     if(err) {
       console.log(err);
     } else {
-      console.log("hi " + foundProduct);
       res.render("category", {products: foundProduct});
     }
   });
 });
 
 router.get("/giam-gia", function(req, res){
-  Product.find({isDecrease: true}, function(err, foundProduct) {
+  Product.find({isIncrease: false}, function(err, foundProduct) {
     if(err) {
       console.log(err);
     } else {
-      console.log("hi " + foundProduct);
       res.render("category", {products: foundProduct});
     }
   });
@@ -289,7 +291,10 @@ router.get("/tiki", function(req, res){
                 url_path = url_path.split("?")[0];
                 var thumbnail_url = productData.product.thumbnail_url;
                 var value = productData.product.price;
-                var rating = (productData.product.rating_value != 0) ? productData.product.rating_value : "No rating";
+                var rating = (productData.product.rating_value != 0)            // console.log("product: " + product.name);
+            // console.log("check value: " + newPrice.value);
+            // console.log("check date: " + newPrice.date);
+            // console.log("---------------------"); ? productData.product.rating_value : "No rating";
                 //var categoryType = "unknown";
                 request("https://tiki.vn/".concat(url_path), function(err, response, body) {
                     if(err){
@@ -404,7 +409,7 @@ router.get("/delete", function(req, res){
 router.get("/:url_path", function(req, res){
   Product.findOne({url_path: req.params.url_path}, function(err, foundProduct){
     if(err){
-      res.redirect("/");
+      console.log(err);
     } else {
       res.render("product", {product: foundProduct});
     }
