@@ -54,7 +54,7 @@ app.use('/', userRoutes);
 app.use('/', index);
 app.use('/', productRoutes);
 
-seedDB();
+//seedDB();
 
 // 404 route
 app.use(function(req, res, next){

@@ -4,7 +4,7 @@ var express = require('express'),
     passport = require('passport'),
     fs = require('fs'),
     mongoose = require('mongoose'),
-    middleware = require("../middleware/index.js");
+    middleware = require("../middleware/index.js"),
     cheerio = require('cheerio');
 
 var Product = require("../models/product");
@@ -72,31 +72,77 @@ router.get("/test-tiki-crawl", function(req, res){
 });
 
 router.get("/tiki-crawl", function(req, res){
-  var count = 0;
+  // var count = 0;
+  // Product.find({}, function(err, foundProducts){
+  //   if(err) {
+  //     console.log(err);
+  //   } else {
+  //     foundProducts.forEach(function(product){
+  //       request("https://tiki.vn/" + product.url_path, function(err, response, body){
+  //         if(err) {
+  //           console.log("err " + err);
+  //         } else {
+  //           var $ = cheerio.load(body);
+
+  //           // get price, tyim all except value, and ,
+  //           var value = String($('#span-price').text().match( /\d+/g )).replace(/,/g, "");
+  //           var date = new Date();
+
+  //           var newPrice = {
+  //             value: value,
+  //             date: date
+  //           };
+  //           // console.log("product: " + product.name);
+  //           // console.log("check value: " + newPrice.value);
+  //           // console.log("check date: " + newPrice.date);
+  //           // console.log("---------------------");
+
+  //           // pull out all the image in the content
+  //           var m, moreImages = [], str = $('.product-content-detail').children().html(), rex = /<img[^>]+src="(https:\/\/[^">]+)"/g;
+
+  //           // update more image to the product
+  //           while ( m = rex.exec( str ) ) {
+  //               moreImages.push( m[1] );
+  //           }
+
+  //           Product.findOneAndUpdate(
+  //             {product_id: product.product_id},
+  //             {
+  //                 $push: { "price": newPrice }
+  //                 //$push : { "more_thumbnail_url": moreImages }
+  //             }, function(err, done) {
+  //                 if(err) {
+  //                   console.log(err);
+  //                 } else {
+  //                   console.log(count + " " + done.price);
+  //                   count = count + 1;
+  //                 }
+  //             });
+  //         }
+  //       });
+
+  //     });
+  //   }
+  // });
   Product.find({}, function(err, foundProducts){
-    if(err) {
+    if(err){
       console.log(err);
+      res.redirect("/");
     } else {
+      console.log("GET 1 LAYER");
       foundProducts.forEach(function(product){
-        request("https://tiki.vn/" + product.url_path, function(err, response, body){
-          if(err) {
+        request("https://tiki.vn/" + product.url_path, function(err, res, body){
+          if(err){
             console.log("err " + err);
           } else {
+            console.log("GET 2 LAYER");
             var $ = cheerio.load(body);
-
-            // get price, tyim all except value, and ,
+            
+            // get price
             var value = String($('#span-price').text().match( /\d+/g )).replace(/,/g, "");
             var date = new Date();
-
-            var newPrice = {
-              value: value,
-              date: date
-            };
-            // console.log("product: " + product.name);
-            // console.log("check value: " + newPrice.value);
-            // console.log("check date: " + newPrice.date);
-            // console.log("---------------------");
-
+            var newPrice = {value: value, date: date};
+            
             // pull out all the image in the content
             var m, moreImages = [], str = $('.product-content-detail').children().html(), rex = /<img[^>]+src="(https:\/\/[^">]+)"/g;
 
@@ -104,27 +150,93 @@ router.get("/tiki-crawl", function(req, res){
             while ( m = rex.exec( str ) ) {
                 moreImages.push( m[1] );
             }
-
-            Product.findOneAndUpdate(
-              {product_id: product.product_id},
-              {
-                  $push: { "price": newPrice }
-                  //$push : { "more_thumbnail_url": moreImages }
-              }, function(err, done) {
-                  if(err) {
-                    console.log(err);
-                  } else {
-                    console.log(count + " " + done.price);
-                    count = count + 1;
-                  }
-              });
+            
+            // get comment
+            // request("https://tiki.vn/api/v2/reviews?product_id=" + product.product_id + "&apikey=2cd335e2c2c74a6f9f4b540b91128e55", function(err, res, body){
+            //   if(err){
+            //     console.log("Cannot get reviews of product: " + product.name + ". Err: " + err);
+            //   } else {
+            //     Object.preventExtensions(res);
+            //     res.body.slice(0, res.body.length);
+            //     var temp = JSON.parse(res.body);
+            //     temp.data.forEach(function(reviewData){
+            //       var cmt_id = reviewData.id;
+            //       var author_name = reviewData.created_by.name;
+            //       var content = reviewData.content;
+            //       var comment = {
+            //         cmt_id: cmt_id,
+            //         author_name: author_name,
+            //         content: content
+            //       };
+            //       // store comment and price to database
+            //       Product.findOneAndUpdate(
+            //         {product_id: product.product_id},  //query
+            //         {
+            //           $push: {"comments": comment}
+            //         },
+            //         {upsert: true, new: true},
+            //       function(err, done){
+            //         if(err){
+            //           console.log("Err push comment " + err);
+            //         } else {
+            //           console.log("push 1 comment for product: " + product.name);
+            //         }
+            //       });
+            //     });
+            //   }
+            // });
           }
         });
-
       });
     }
   });
   res.send("crawling it again...");
+});
+
+router.get("/update-comment", function(req, res){
+  Product.find({}, function(err, foundProducts) {
+    if(err){
+      console.log("Error at Product.find /update-comment: " + err);
+      res.redirect("/");
+    } else {
+      foundProducts.forEach(function(product){
+        request("https://tiki.vn/api/v2/reviews?product_id=" + product.product_id + "&apikey=2cd335e2c2c74a6f9f4b540b91128e55", function(err, res, body){
+            if(err){
+              console.log("Cannot get reviews of product: " + product.name + ". Err: " + err);
+            } else {
+              Object.preventExtensions(res);
+              res.body.slice(0, res.body.length);
+              var temp = JSON.parse(res.body);
+              temp.data.forEach(function(reviewData){
+                var cmt_id = reviewData.id;
+                var author_name = reviewData.created_by.name;
+                var content = reviewData.content;
+                var comment = {
+                  cmt_id: cmt_id,
+                  author_name: author_name,
+                  content: content
+                };
+                // store comment and price to database
+                Product.findOneAndUpdate(
+                  {product_id: product.product_id},  //query
+                  {
+                    $push: {"comments": comment}
+                  },
+                  {upsert: true, new: true},
+                function(err, done){
+                  if(err){
+                    console.log("Err push comment " + err);
+                  } else {
+                    console.log("push 1 comment for product: " + product.name);
+                  }
+                });
+              });
+            }
+        });
+      });
+    }
+  });
+  res.send("update comment...");
 });
 
 router.get("/linear-regression", function(req, res){
@@ -291,7 +403,9 @@ router.get("/tiki", function(req, res){
                 url_path = url_path.split("?")[0];
                 var thumbnail_url = productData.product.thumbnail_url;
                 var value = productData.product.price;
-                var rating = (productData.product.rating_value != 0)            // console.log("product: " + product.name);
+                var rating = productData.product.rating_average;   
+            
+            // console.log("product: " + product.name);
             // console.log("check value: " + newPrice.value);
             // console.log("check date: " + newPrice.date);
             // console.log("---------------------"); ? productData.product.rating_value : "No rating";

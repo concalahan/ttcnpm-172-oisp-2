@@ -14,11 +14,12 @@ var ProductSchema = new mongoose.Schema({
     category_type: String,
     comments: [
         {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "Comment"
+            cmt_id: String,
+            author_name: String,
+            content: String
         }
     ],
-    rating: String,
+    rating: Number,
     isIncrease: Boolean
 });
 
