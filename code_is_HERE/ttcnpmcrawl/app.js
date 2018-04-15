@@ -16,8 +16,8 @@ var index = require('./routes/index');
 var userRoutes = require('./routes/user');
 var cmsRoutes = require("./routes/cms");
 
-mongoose.connect('mongodb://localhost/crawlTiki');
-//mongoose.connect('mongodb://admin:Haiconcacon123@ds233769.mlab.com:33769/ttcnpm');
+//mongoose.connect('mongodb://localhost/crawlTiki');
+mongoose.connect('mongodb://admin:Haiconcacon123@ds233769.mlab.com:33769/ttcnpm');
 
 // App setup
 app.set("view engine", "ejs");
