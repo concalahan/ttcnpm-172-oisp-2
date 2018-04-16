@@ -1999,7 +1999,6 @@ span.mb_bar li span{padding-top:68px;display:block;color:#8b8b8b;width:100%;text
 .button_print{float:right}
 }
 @media only screen and (min-width: 769px) {
-header{padding-top:15px}
 .footer-special-phone {
     position: fixed;
     bottom: -100%;

@@ -10,39 +10,13 @@ var express = require('express'),
 var Product = require("../models/product");
 var Category = require("../models/category");
 
-<<<<<<< HEAD
-router.get("/index", function(req, res){
-  Category.find({}).populate("products").exec(function(err, categories){
-    if(err) {
-      console.log(err);
-      res.redirect("/");
-    } else {
-      console.log(categories);
-      res.render('index', {categories: categories});
-    }
-  });
-});
-=======
-// router.get("/index", function(req, res){
-//   Category.find({}).populate("products").exec(function(err, categories){
-//     if(err) {
-//       console.log(err);
-//       res.redirect("/");
-//     } else {
-//       console.log(categories);
-//       res.render('index3', {categories: categories});
-//     }
-//   });
-// });
->>>>>>> 819efa9c08a83670664fcda9b5280701a922ccfc
-
 router.get("/", function(req, res){
   Category.find({}).populate("products").exec(function(err, categories){
     if(err) {
       console.log(err);
       res.redirect("/");
     } else {
-      res.render('index3', {categories: categories});
+      res.render('index', {categories: categories});
     }
   });
 });
@@ -151,12 +125,12 @@ router.get("/tiki-crawl", function(req, res){
           } else {
             console.log("GET 2 LAYER");
             var $ = cheerio.load(body);
-            
+
             // get price
             var value = String($('#span-price').text().match( /\d+/g )).replace(/,/g, "");
             var date = new Date();
             var newPrice = {value: value, date: date};
-            
+
             // pull out all the image in the content
             var m, moreImages = [], str = $('.product-content-detail').children().html(), rex = /<img[^>]+src="(https:\/\/[^">]+)"/g;
 
@@ -164,7 +138,7 @@ router.get("/tiki-crawl", function(req, res){
             while ( m = rex.exec( str ) ) {
                 moreImages.push( m[1] );
             }
-            
+
             // get comment
             // request("https://tiki.vn/api/v2/reviews?product_id=" + product.product_id + "&apikey=2cd335e2c2c74a6f9f4b540b91128e55", function(err, res, body){
             //   if(err){
@@ -417,8 +391,8 @@ router.get("/tiki", function(req, res){
                 url_path = url_path.split("?")[0];
                 var thumbnail_url = productData.product.thumbnail_url;
                 var value = productData.product.price;
-                var rating = productData.product.rating_average;   
-            
+                var rating = productData.product.rating_average;
+
             // console.log("product: " + product.name);
             // console.log("check value: " + newPrice.value);
             // console.log("check date: " + newPrice.date);
@@ -436,7 +410,7 @@ router.get("/tiki", function(req, res){
                             //     Object.preventExtensions(res);
                             //     res.body.slice(0, res.body.length);
                             //     var body = JSON.parse(res.body);
-
+                            //
                             //   }
                             // });
                             var $ = cheerio.load(body);
