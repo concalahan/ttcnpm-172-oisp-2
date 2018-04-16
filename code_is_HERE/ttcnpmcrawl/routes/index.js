@@ -17,7 +17,7 @@ router.get("/index", function(req, res){
       res.redirect("/");
     } else {
       console.log(categories);
-      res.render('index3', {categories: categories});
+      res.render('index', {categories: categories});
     }
   });
 });
@@ -28,7 +28,7 @@ router.get("/", function(req, res){
       console.log(err);
       res.redirect("/");
     } else {
-      res.render('index2', {categories: categories});
+      res.render('index3', {categories: categories});
     }
   });
 });
