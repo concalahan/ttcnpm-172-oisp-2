@@ -34,6 +34,10 @@ router.post("/login", passport.authenticate("local",
     }), function(req, res){
 });
 
+router.get("/register", function(req, res){
+    return res.render("register");
+});
+
 //logout route
 router.get("/logout", function(req, res){
     req.logout();
@@ -89,9 +93,13 @@ router.get("/tiki-crawl", function(req, res){
               if(err){
                 console.log("Cannot get reviews of product: " + product.name + ". Err: " + err);
               } else {
-                Object.preventExtensions(res);
-                res.body.slice(0, res.body.length);
+                // Object.preventExtensions(res);
+                // res.body.slice(0, res.body.length);
                 var temp = JSON.parse(res.body);
+
+                console.log("san pham " + product.name);
+                console.log("QQQQQQQQQQQQQQQQQQQQQQQQQ " + temp.data);
+
                 temp.data.forEach(function(reviewData){
                   var cmt_id = reviewData.id;
                   var author_name = reviewData.created_by.name;
@@ -102,11 +110,8 @@ router.get("/tiki-crawl", function(req, res){
                     content: content
                   };
                   /*TEST THOI*/
-                  //console.log(newPrice);
+                  console.log(newPrice);
                   console.log(comment);
-                  //console.log(moreImages);
-
-
 
                   // store comment and price to database
                   Product.findOneAndUpdate(
@@ -377,16 +382,6 @@ router.get("/delete", function(req, res){
     } else {
       console.log("Delete all products!");
       res.redirect("/");
-    }
-  });
-});
-
-router.get("/:url_path", function(req, res){
-  Product.findOne({url_path: req.params.url_path}, function(err, foundProduct){
-    if(err){
-      res.redirect("/");
-    } else {
-      res.render("product", {product: foundProduct});
     }
   });
 });
