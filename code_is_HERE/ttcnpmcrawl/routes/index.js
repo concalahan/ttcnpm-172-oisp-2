@@ -70,7 +70,7 @@ router.get("/tiki-crawl", function(req, res){
       console.log(err);
     } else {
       foundProducts.forEach(function(product){
-        request("https://tiki.vn/api/v2/reviews?" + product.url_path + "&sort=score|desc,id|desc,stars|all&include=comments&page=1&_=1523956327894", function(err, response, body){
+        request("https://tiki.vn/" + product.url_path, function(err, response, body){
           if(err) {
             console.log("err " + err);
           } else {
@@ -89,7 +89,7 @@ router.get("/tiki-crawl", function(req, res){
             }
 
             // get comment, then update all
-            request("https://tiki.vn/api/v2/reviews?product_id=" + product.product_id + "&limit=5&apikey=2cd335e2c2c74a6f9f4b540b91128e55&sort=score|desc,id|desc,stars|all&include=comments&page=1&_=1523956090300", function(err, res, body){
+            request("https://tiki.vn/api/v2/reviews?product_id=" + product.master_id + "&limit=50&apikey=2cd335e2c2c74a6f9f4b540b91128e55", function(err, res, body){
               if(err){
                 console.log("Cannot get reviews of product: " + product.name + ". Err: " + err);
               } else {
@@ -97,40 +97,45 @@ router.get("/tiki-crawl", function(req, res){
                 res.body.slice(0, res.body.length);
                 var temp = JSON.parse(res.body);
 
-                console.log("san pham " + product.url_path);
-                console.log("QQQQQQQQQQQQQQQQQQQQQQQQQ " + JSON.stringify(temp.data));
+                console.log("-----------------------------------------------");
+                console.log("san pham " + product.name);
+                //console.log("lalala " + JSON.stringify(temp.data));
 
-                // temp.data.forEach(function(reviewData){
-                //   var cmt_id = reviewData.id;
-                //   var author_name = reviewData.created_by.name;
-                //   var content = reviewData.content;
-                //   var comment = {
-                //     cmt_id: cmt_id,
-                //     author_name: author_name,
-                //     content: content
-                //   };
-                //   /*TEST THOI*/
-                //   console.log("comment la: " + comment);
-                //
-                //   // store comment and price to database
-                //   Product.findOneAndUpdate(
-                //     {product_id: product.product_id},  //query
-                //     {
-                //       $push: {"comments": comment},
-                //       //$push: {"price": newPrice},
-                //       //$push: {"more_thumbnail_url": {$each: moreImages}}
-                //     },
-                //     {upsert: true, new: true},
-                //   function(err, product){
-                //     if(err){
-                //       console.log("Err push comment, price and image: " + err);
-                //     } else {
-                //       console.log("Save ne ae.....");
-                //       product.save();
-                //       //console.log("Update comment, price, image for product: " + product.name);
-                //     }
-                //   });
-                // });
+                temp.data.forEach(function(reviewData){
+                  var cmt_id = reviewData.id;
+                  var author_name = reviewData.created_by.name;
+                  var content = reviewData.content;
+                  var comment = {
+                    cmt_id: cmt_id,
+                    author_name: author_name,
+                    content: content
+                  };
+                  /*TEST THOI*/
+                  console.log("comment: " + comment);
+                  console.log("price: " + newPrice);
+                  console.log("image: " + moreImages);
+
+                  // store comment and price to database
+                  Product.findOneAndUpdate(
+                    {product_id: product.product_id},  //query
+                    {
+                      $push: {"price": newPrice},
+                      $addToSet: {
+                        "comments": comment,
+                        "more_thumbnail_url": {$each: moreImages}
+                      }
+                    },
+                    {upsert: true, new: true},
+                  function(err, product){
+                    if(err){
+                      console.log("Err push comment, price and image: " + err);
+                    } else {
+                      console.log("Save ne ae.....");
+                      product.save();
+                      //console.log("Update comment, price, image for product: " + product.name);
+                    }
+                  });
+                });
               }
             });
           }
@@ -309,6 +314,7 @@ router.get("/tiki", function(req, res){
                 var thumbnail_url = productData.product.thumbnail_url;
                 var value = productData.product.price;
                 var rating = productData.product.rating_average;
+                var master_id = productData.product.master_id;
 
                 request("https://tiki.vn/".concat(url_path), function(err, response, body) {
                     if(err){
@@ -337,6 +343,7 @@ router.get("/tiki", function(req, res){
                                               {
                                                   $set: {
                                                       product_id: product_id,
+                                                      master_id: master_id,
                                                       name: name,
                                                       url_path: url_path,
                                                       thumbnail_url: thumbnail_url,
@@ -379,8 +386,14 @@ router.get("/delete", function(req, res){
     if(err){
       console.log(err);
     } else {
-      console.log("Delete all products!");
-      res.redirect("/");
+      Category.remove({}, function(err, doneTwo){
+        if(err){
+          console.log(err);
+        } else {
+          console.log("Delete all category and product!");
+          res.redirect("/");
+        }
+      });
     }
   });
 });
