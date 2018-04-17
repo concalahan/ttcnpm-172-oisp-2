@@ -14,7 +14,7 @@ router.get("/:url_path", function(req, res){
         if(err){
           console.log(err);
         } else {
-          res.render("product", {product: foundProduct, categories: foundCategories});
+          res.render("product1", {product: foundProduct, categories: foundCategories});
         }
       });
     }

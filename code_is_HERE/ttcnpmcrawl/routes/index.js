@@ -258,11 +258,12 @@ router.get("/tiki-increase-or-decrease", function(req, res){
 
             if(result > 1) {
               updateProduct.isIncrease = 1;
-              updateProduct.save();
             } else if (result < 1) {
-              updateProduct.isDecrease = 1;
-              updateProduct.save();
+              updateProduct.isIncrease = -1;
+            } else {
+              updateProduct.isIncrease = 0;
             }
+            updateProduct.save();
           }
         });
       });
