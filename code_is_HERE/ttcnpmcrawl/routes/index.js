@@ -90,16 +90,17 @@ router.get("/tiki-crawl", function(req, res){
             }
 
             // get comment, then update all
-            request("https://tiki.vn/api/v2/reviews?product_id=" + product.product_id + "&apikey=2cd335e2c2c74a6f9f4b540b91128e55", function(err, res, body){
+            request("https://tiki.vn/api/v2/reviews?product_id=" + product.master_id + "&limit=50&apikey=2cd335e2c2c74a6f9f4b540b91128e55", function(err, res, body){
               if(err){
                 console.log("Cannot get reviews of product: " + product.name + ". Err: " + err);
               } else {
-                // Object.preventExtensions(res);
-                // res.body.slice(0, res.body.length);
+                Object.preventExtensions(res);
+                res.body.slice(0, res.body.length);
                 var temp = JSON.parse(res.body);
 
+                console.log("-----------------------------------------------");
                 console.log("san pham " + product.name);
-                console.log("QQQQQQQQQQQQQQQQQQQQQQQQQ " + temp.data);
+                //console.log("lalala " + JSON.stringify(temp.data));
 
                 temp.data.forEach(function(reviewData){
                   var cmt_id = reviewData.id;
@@ -111,16 +112,19 @@ router.get("/tiki-crawl", function(req, res){
                     content: content
                   };
                   /*TEST THOI*/
-                  console.log(newPrice);
-                  console.log(comment);
+                  console.log("comment: " + comment);
+                  console.log("price: " + newPrice);
+                  console.log("image: " + moreImages);
 
                   // store comment and price to database
                   Product.findOneAndUpdate(
                     {product_id: product.product_id},  //query
                     {
-                      $push: {"comments": comment},
-                      //$push: {"price": newPrice},
-                      //$push: {"more_thumbnail_url": {$each: moreImages}}
+                      $push: {"price": newPrice},
+                      $addToSet: {
+                        "comments": comment,
+                        "more_thumbnail_url": {$each: moreImages}
+                      }
                     },
                     {upsert: true, new: true},
                   function(err, product){
@@ -129,7 +133,7 @@ router.get("/tiki-crawl", function(req, res){
                     } else {
                       console.log("Save ne ae.....");
                       product.save();
-                      console.log("Update comment, price, image for product: " + product.name);
+                      //console.log("Update comment, price, image for product: " + product.name);
                     }
                   });
                 });
@@ -255,11 +259,12 @@ router.get("/tiki-increase-or-decrease", function(req, res){
 
             if(result > 1) {
               updateProduct.isIncrease = 1;
-              updateProduct.save();
             } else if (result < 1) {
-              updateProduct.isDecrease = 1;
-              updateProduct.save();
+              updateProduct.isIncrease = -1;
+            } else {
+              updateProduct.isIncrease = 0;
             }
+            updateProduct.save();
           }
         });
       });
@@ -311,6 +316,7 @@ router.get("/tiki", function(req, res){
                 var thumbnail_url = productData.product.thumbnail_url;
                 var value = productData.product.price;
                 var rating = productData.product.rating_average;
+                var master_id = productData.product.master_id;
 
                 request("https://tiki.vn/".concat(url_path), function(err, response, body) {
                     if(err){
@@ -339,6 +345,7 @@ router.get("/tiki", function(req, res){
                                               {
                                                   $set: {
                                                       product_id: product_id,
+                                                      master_id: master_id,
                                                       name: name,
                                                       url_path: url_path,
                                                       thumbnail_url: thumbnail_url,
@@ -381,8 +388,14 @@ router.get("/delete", function(req, res){
     if(err){
       console.log(err);
     } else {
-      console.log("Delete all products!");
-      res.redirect("/");
+      Category.remove({}, function(err, doneTwo){
+        if(err){
+          console.log(err);
+        } else {
+          console.log("Delete all category and product!");
+          res.redirect("/");
+        }
+      });
     }
   });
 });

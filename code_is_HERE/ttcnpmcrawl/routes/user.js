@@ -31,7 +31,7 @@ router.post("/track/:user_id/:product_id", middleware.isLoggedIn, function(req, 
             foundUser.save();
 
             var mailOptions = {
-              from: 'vuwebproject@gmail.com',
+              from: '145giakhang@gmail.com',
               to: foundUser.mail,
               subject: '[sosanhtiki.com] Cảm ơn bạn đã theo dõi sản phẩm ' + foundProduct.name,
               html: "Chúng tôi sẽ thông báo cho bạn khi sản phẩm có sự thay đổi về giá."
