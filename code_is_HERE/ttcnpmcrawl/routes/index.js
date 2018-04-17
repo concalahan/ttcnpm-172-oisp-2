@@ -77,13 +77,12 @@ router.get("/tiki-crawl", function(req, res){
             var date = new Date();
             var newPrice = {value: value, date: date};
 
-            // pull out all the image in the content
-            // var m, moreImages = [], str = $('.product-content-detail').children().html(), rex = /<img[^>]+src="(https:\/\/[^">]+)"/g;
+            var m, moreImages = [], str = $('.product-content-detail').children().html(), rex = /<img[^>]+src="(https:\/\/[^">]+)"/g;
 
-            // // update more image to the product
-            // while ( m = rex.exec( str ) ) {
-            //     moreImages.push( m[1] );
-            // }
+            // update more image to the product
+            while ( m = rex.exec( str ) ) {
+                moreImages.push( m[1] );
+            }
 
             // get comment, then update all
             request("https://tiki.vn/api/v2/reviews?product_id=" + product.product_id + "&apikey=2cd335e2c2c74a6f9f4b540b91128e55", function(err, res, body){
@@ -106,9 +105,9 @@ router.get("/tiki-crawl", function(req, res){
                   //console.log(newPrice);
                   console.log(comment);
                   //console.log(moreImages);
-                  
-                  
-                  
+
+
+
                   // store comment and price to database
                   Product.findOneAndUpdate(
                     {product_id: product.product_id},  //query
@@ -306,7 +305,7 @@ router.get("/tiki", function(req, res){
                 var thumbnail_url = productData.product.thumbnail_url;
                 var value = productData.product.price;
                 var rating = productData.product.rating_average;
-                
+
                 request("https://tiki.vn/".concat(url_path), function(err, response, body) {
                     if(err){
                         console.log("Cannot request to product url: " + url_path);
