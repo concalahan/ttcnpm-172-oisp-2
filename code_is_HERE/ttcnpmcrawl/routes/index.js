@@ -58,12 +58,12 @@ router.get("/tiki-crawl", function(req, res){
           } else {
             var $ = cheerio.load(body);
 
-            // get price
+            // get price and product's brand
             var value = String($('#span-price').text().match( /\d+/g )).replace(/,/g, "");
             var brand = $('.item-brand').first().find('a').text();
             var date = new Date();
             var newPrice = {value: value, date: date};
-
+            
             console.log("before: " + brand);
 
             var m, moreImages = [], str = $('.product-content-detail').children().html(), rex = /<img[^>]+src="(https:\/\/[^">]+)"/g;
@@ -102,9 +102,9 @@ router.get("/tiki-crawl", function(req, res){
                     {product_id: product.product_id},  //query
                     {
                       $set: {"brand": brand},
-                      $push: {"price": newPrice},
                       $addToSet: {
                         "comments": comment,
+                        "price": newPrice,
                         "more_thumbnail_url": {$each: moreImages}
                       }
                     },
@@ -369,11 +369,11 @@ router.get("/tiki", function(req, res){
 router.get("/delete", function(req, res){
   Product.remove({}, function(err, done){
     if(err){
-      console.log(err);
+      console.log("Err delete product " + err);
     } else {
       Category.remove({}, function(err, doneTwo){
         if(err){
-          console.log(err);
+          console.log("Err delete category " + err);
         } else {
           console.log("Delete all category and product!");
           res.redirect("/");

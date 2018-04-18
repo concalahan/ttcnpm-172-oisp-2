@@ -9,6 +9,7 @@ var ProductSchema = new mongoose.Schema({
     thumbnail_url: String,
     more_thumbnail_url: [ String ],
     price: [{
+        _id: false,
         value: Number,
         date: {type: Date, default: Date.now}
     }],
@@ -16,6 +17,7 @@ var ProductSchema = new mongoose.Schema({
     category_type: String,
     comments: [
         {
+            _id: false,
             cmt_id: String,
             author_name: String,
             content: String
