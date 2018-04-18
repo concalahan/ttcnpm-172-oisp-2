@@ -4,6 +4,7 @@ var ProductSchema = new mongoose.Schema({
     product_id: String,
     master_id: String,
     name: String,
+    brand: String,
     url_path: String,
     thumbnail_url: String,
     more_thumbnail_url: [ String ],

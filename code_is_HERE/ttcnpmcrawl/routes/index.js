@@ -45,24 +45,6 @@ router.get("/logout", function(req, res){
     return res.redirect("/");
 });
 
-router.get("/test-tiki-crawl", function(req, res){
-  request("https://tiki.vn/may-giat-cua-ngang-electrolux-ewf12843-8-0-kg-p460088.html", function(err, response, body){
-    if(err) {
-      console.log("err " + err);
-    } else {
-      var $ = cheerio.load(body);
-
-      console.log($('#span-price').text());
-
-      var value = String($('#span-price').text().match( /\d+/g )).replace(/,/g, "");
-
-      console.log("value " + value);
-
-      res.send("test crawl again");
-    }
-  });
-});
-
 router.get("/tiki-crawl", function(req, res){
   //var count = 0;
   Product.find({}, function(err, foundProducts){
@@ -78,8 +60,11 @@ router.get("/tiki-crawl", function(req, res){
 
             // get price
             var value = String($('#span-price').text().match( /\d+/g )).replace(/,/g, "");
+            var brand = $('.item-brand').first().find('a').text();
             var date = new Date();
             var newPrice = {value: value, date: date};
+
+            console.log("before: " + brand);
 
             var m, moreImages = [], str = $('.product-content-detail').children().html(), rex = /<img[^>]+src="(https:\/\/[^">]+)"/g;
 
@@ -97,8 +82,6 @@ router.get("/tiki-crawl", function(req, res){
                 res.body.slice(0, res.body.length);
                 var temp = JSON.parse(res.body);
 
-                console.log("-----------------------------------------------");
-                console.log("san pham " + product.name);
                 //console.log("lalala " + JSON.stringify(temp.data));
 
                 temp.data.forEach(function(reviewData){
@@ -111,28 +94,29 @@ router.get("/tiki-crawl", function(req, res){
                     content: content
                   };
                   /*TEST THOI*/
-                  console.log("comment: " + comment);
-                  console.log("price: " + newPrice);
-                  console.log("image: " + moreImages);
+                  // console.log("comment: " + comment);
+                  // console.log("price: " + newPrice);
 
                   // store comment and price to database
                   Product.findOneAndUpdate(
                     {product_id: product.product_id},  //query
                     {
+                      $set: {"brand": brand},
                       $push: {"price": newPrice},
                       $addToSet: {
                         "comments": comment,
                         "more_thumbnail_url": {$each: moreImages}
                       }
                     },
-                    {upsert: true, new: true},
+                    {upsert: true, multi: true},
+                    // {upsert: true, new: true, multi: true},
                   function(err, product){
                     if(err){
                       console.log("Err push comment, price and image: " + err);
                     } else {
-                      console.log("Save ne ae.....");
-                      product.save();
-                      //console.log("Update comment, price, image for product: " + product.name);
+                      console.log("after: " + product.brand);
+                      console.log("------------------------------");
+                      //console.log("Update comment, price, brand, image for product: " + product.name);
                     }
                   });
                 });
