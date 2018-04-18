@@ -39,24 +39,6 @@
               <span id="bar_cart">Giỏ hàng</span>
             </a>
           </li>
-          <li>
-            <span class="bar_dm">Danh mục</span>
-          </li>
-          <li>
-            <span class="">Điện thoại</span>
-          </li>
-          <li>
-            <a href="/"><span>Trang chủ</span></a>
-          </li>
-          <li>
-            <a href=""> <span id="bar_zopim">Gửi tin nhắn</span></a>
-          </li>
-          <li>
-            <a href="gio-hang.html" rel="nofollow">
-              <div id="cart_soluong" class="total-quantity-cart">0</div>
-              <span id="bar_cart">Giỏ hàng</span>
-            </a>
-          </li>
         </ul>
         <img class="icon_bottom" style="width:100%;z-index:0;" src="Content/images/mb_bar_bgsk.png">
       </span>
@@ -106,17 +88,14 @@
       <div class="container">
         <div class="head_bottom cf" style = "background: #337ab7; margin-top:12px">
           <!--Main Menu-->
-          <div class="all_categories">
+          <div class="all_categories all_cate_subpage">
             <div class="menu_Tab" style = "background: #337ab7"><i class="icon_menu"></i>Danh mục sản phẩm</div>
             <div class="show_menu">
               <ul class="nav_menu" style="display: block">
                 <% for (var i=0; i<10; i++) { %>
                 <% if(categories[i]){ %>
                 <li class="m_li" id="menu2">
-                  <i class="icon_cate"></i>
-                  <a class="t_menu" href = "#">
-                    <%=categories[i].name%>
-                  </a>
+                  <i class="icon_cate"> </i> <a class="t_menu" href = "eafdf" > <%=categories[i].name%></a>
                   <div class="list_categories">
                     <ul class="subcatwrapper">
                       <li class="pc_menu">
@@ -129,7 +108,7 @@
                   </div>
                 </li>
                 <% } %>
-                <% } %>
+                <% }; %>
               </ul>
             </div>
             <div class="cf"> </div>

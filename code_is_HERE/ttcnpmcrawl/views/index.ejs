@@ -52,20 +52,44 @@
         <!--List Products-->
         <div class="pros_home column_items">
           <ul>
-            <% category.products.forEach(function(product){ %>
+            <% for(var i=0; i<8; i=i+1){ %>
             <li class="columns">
+              <% if(category.products[i]){ %>
               <div class="pro_item">
                 <figure class="img_pro">
-                  <span><a href="/<%=product.url_path%>" title="<%=product.name%>"> <img src="<%=product.thumbnail_url%>" alt="<%=product.name%>" title="<%=product.name%>" /></a></span>
-                  <div class="addtocart col_addcart"><a href="gio-hang.html" class="hvr-shutter-out-horizontal" rel="nofollow"><i class="fa fa-cart-plus"></i><span>Mua ngay</span></a></div>
+                  <span>
+                    <a
+                      href="/<%=category.products[i].url_path%>"
+                      title="<%=category.products[i].name%>">
+                      <img
+                        src="<%=category.products[i].thumbnail_url%>"
+                        alt="<%=category.products[i].name%>"
+                        title="<%=category.products[i].name%>"/>
+                    </a>
+                  </span>
+                  <div class="addtocart col_addcart">
+                    <a
+                      href="gio-hang.html"
+                      class="hvr-shutter-out-horizontal"
+                      rel="nofollow"><i class="fa fa-cart-plus"></i>
+                      <span>Mua ngay</span>
+                    </a>
+                  </div>
                 </figure>
-                <h4 class="pro_name"> <a href="/<%=product.url_path%>" title="<%=product.name%>"><%=product.name%></a></h4>
-                <div class="info_price"><span class="m_price"><%=product.price[0].value%></span> <span class="f_price"><del>490,000 đ</del></span></div>
+                <h4 class="pro_name">
+                  <a
+                    href="/<%=category.products[i].url_path%>"
+                    title="<%=category.products[i].name%>">
+                    <%=category.products[i].name%>
+                  </a>
+                </h4>
+                <div class="info_price"><span class="m_price"><%=category.products[i].price[0].value%></span> <span class="f_price"><del>490,000 đ</del></span></div>
                 <div class="star_rating fa fa-star"><span style="width:80%"></span></div>
                 <div class="pro_discount"><span>-39%</span></div>
               </div>
+              <% } %>
             </li>
-            <% }); %>
+            <% } %>
           </ul>
         </div>
         <!--end List Products-->
