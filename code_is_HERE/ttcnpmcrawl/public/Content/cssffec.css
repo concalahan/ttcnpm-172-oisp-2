@@ -2097,7 +2097,7 @@ div.row_account .item_title{text-align:right}
 .hotNews .title_news{height:42px}
 #main_content{padding-left:30px}
 #box_video{padding-right:30px}
-.main_slider{position:relative;margin-left:230px}
+.main_slider{position:relative;margin-left:300px}
 .show_menu{display:block;height:407px}
 .left_nav ul ul{min-width:200px;-webkit-column-break-inside:avoid;-webkit-column-width:180px;-webkit-column-gap:0;border:1px solid #ddd;display:none!important;top:-1px;left:100%;z-index:9996;position:absolute;background-color:#fff;-moz-box-shadow:2px 2px 5px #ccc;-webkit-box-shadow:2px 2px 5px #ccc;box-shadow:2px 2px 5px #ccc}
 .left_nav li:hover ul{display:block!important}
@@ -2120,7 +2120,7 @@ div.row_account .item_title{text-align:right}
 }
 @media (min-width: 1200px) {
 .account_area .contentEGP:before,.account_area .contentEGP:after{right:135px}
-.slider-for{width:calc(100% - 270px)}
+.slider-for{width:calc(100% - 0px)}
 .slider-nav{width:270px}
 .logo_brands{border-left:1px solid #ddd}
 .column_items li{width:25%}
