@@ -37,7 +37,7 @@
     <% categories.forEach(function(category){ %>
     <div class="box">
       <div class="box_Tab_cate_home">
-        <div class="main_cate" style = "background: #337ab7">
+        <div class="main_cate" style = "background-color: #337ab7">
           <h2 class="link_cate" >
             <a title="<%= category.name %>">
               <h5><%= category.name %></h5>
@@ -89,6 +89,7 @@
               </div>
               <% } %>
             </li>
+            
             <% } %>
           </ul>
         </div>
@@ -98,4 +99,7 @@
     <% }); %>
   </div>
 </div>
+
+
+
 <% include partials/footer %>
