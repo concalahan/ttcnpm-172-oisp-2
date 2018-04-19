@@ -2,9 +2,8 @@
 <div class="container">
   <div class="breadcrum">
     <div class="container">
-      <a href="index.html" title="Trang chủ" style = "margin-left:15px">Trang chủ</a> /
-      <a href="do-gia-dung.html" title="Trang chủ">Đồ gia dụng</a><span>/</span>
-      <a href="noi-ap-suat.html" title="Trang chủ">Nồi &#225;p suất</a>
+      <a href="/" title="Trang chủ" style = "margin-left:15px">Trang chủ</a> /
+      <a href="#" title="<%=product.category_type%>"><%=product.category_type%></a>
     </div>
   </div>
 </div>
@@ -39,7 +38,7 @@
           </div>
           <div class="row_pro short_des_dtp">Tiện lợi, hữu &#237;ch trong việc chế biến c&#225;c m&#243;n hầm, ninh nhừ, ch&#225;o, ch&#232;, cơm...chức năng tự động, tiết kiệm thời gian</div>
           <div class="row_pro">
-            <div class="code_pro fr"> <b>Mã sản phẩm:</b> <span>KL-688S</span></div>
+            <div class="code_pro fr"> <b>Mã sản phẩm:</b> <span><%=product.product_id%></span></div>
           </div>
           <div class="row_pro line_dot"></div>
           <div class="row_pro price_detail">
@@ -60,11 +59,10 @@
           <div class="row_pro info_des_dtp">
             <ul>
               <li>Model: KL-688S</li>
-              <li>Hãng sản xuất: Khaluck</li>
+              <li>Hãng sản xuất: <%=product.brand%></li>
               <li>Dung tích	6.0 lít</li>
               <li>Công suất: 1000W </li>
               <li>Chất liệu Lòng nồi Inox cao cấp</li>
-              <li>Đa chức năng nấu tự động như nấu cơm, nấu canh, cháo, hầm...</li>
               <li>Công nghệ Nhật Bản</li>
               <li>Bảo hành	12 Tháng</li>
             </ul>
@@ -94,68 +92,67 @@
       <!--Stick Bar-->
       <div id="stickyheader">
         <ul class="product_tabs">
-          <li> <a href="#anchor_intro" title="Giới thiệu">Giới thiệu</a> </li>
-          <li> <a href="#anchor_spec" title="Các thông số, chi tiết kỹ thuật">Thông số</a> </li>
-          <li> <a href="#anchor_brand" title="Thông tin thương hiệu">Thông tin thương hiệu</a> </li>
-          <li> <a href="#anchor_comment" title="Các bình luận, đánh giá">Đánh giá</a> </li>
+          <li> <a href="#chart" title="Biểu đồ giá">Biểu đồ giá</a> </li>
+          <li> <a href="#images" title="Hình ảnh sản phẩm">Hình ảnh sản phẩm</a> </li>
+          <li> <a href="#tracking" title="Theo dõi sản phẩm">Theo dõi sản phẩm</a> </li>
+          <li> <a href="#comment" title="Các bình luận, đánh giá">Đánh giá sản phẩm</a> </li>
         </ul>
       </div>
       <!--end Stick Bar-->
-      <section class="tab_descp" id="anchor_intro">
-        <h3 class="section_title_dt">Giới thiệu</h3>
+      <section class="tab_descp" id="intro">
+        <h3 class="section_title_dt">Biểu đồ giá</h3>
         <div id="info_detailP">
-          <p><span style="font-size: 16px;">Nồi &aacute;p suất điện ng&agrave;y nay l&agrave; một vật dụng v&ocirc; c&ugrave;ng hữu &iacute;ch thiết thực trong mỗi căn bếp của mọi gia đ&igrave;nh. V&igrave; cấu tạo, thiết kế rất k&iacute;n hơi, m&acirc;m nhiệt to, dễ sử dụng, đặc biệt c&ocirc;ng suất lớn n&ecirc;n sẽ gi&uacute;p chị em nội trợ ninh, hầm xương hay nấu ch&aacute;o&hellip;cực nhanh ch&oacute;ng, kh&ocirc;ng mất thời gian, c&ocirc;ng sức. So với c&aacute;c c&aacute;ch nấu th&ocirc;ng thường th&igrave; khi d&ugrave;ng nồi &aacute;p suất sẽ c&oacute; lợi thế l&agrave; giữ lại được hầu như nguy&ecirc;n vẹn nguồn dinh dưỡng, vitamin, kho&aacute;ng chất của c&aacute;c thực phẩm.</span></p>
-          <p><img src="Data/san-pham/201710/noi-ap-suat-dien-khaluck-kl-688s-2.jpg" alt="Nồi &aacute;p suất điện Khaluck KL-688S (6L)" width="650" style="font-size: 16px; display: block; margin-left: auto; margin-right: auto;" caption="false" /></p>
-          <p><span style="font-size: 16px;">Chỉ mất 15 ph&uacute;t để hầm xương thay v&igrave; 2 giờ đồng hồ với c&aacute;c loại nồi th&ocirc;ng thường đ&oacute; ch&iacute;nh l&agrave; Nồi &aacute;p suất điện Khaluck KL-688S (6L) v&ocirc; c&ugrave;ng tiện dụng th&iacute;ch hợp mọi gia đ&igrave;nh chế biến m&oacute;n ăn thơm ngon, dinh dưỡng đặc biệt sản phẩm v&ocirc; c&ugrave;ng th&iacute;ch hợp cho những gia đ&igrave;nh c&oacute; trẻ em v&agrave; người gi&agrave;.</span></p>
-          <p><img src="Data/san-pham/201710/noi-ap-suat-dien-khaluck-kl-688s-3.jpg" alt="Nồi &aacute;p suất điện Khaluck KL-688S (6L)" width="650" style="font-size: 16px; display: block; margin-left: auto; margin-right: auto;" caption="false" /></p>
-          <p></p>
-          <p></p>
-          <p><span style="font-size: 16px;"><strong>ĐẶC ĐIỂM NỔI BẬT CỦA NỒI &Aacute;P SUẤT ĐIỆN KHALUCK KL-688S (6L):</strong></span></p>
-          <p><span style="font-size: 16px;">L&ograve;ng nồi</span></p>
-          <p><span style="font-size: 16px;">Được l&agrave;m từ chất liệu bằng inox n&ecirc;n đảm bảo an to&agrave;n cho sức khỏe của người d&ugrave;ng. Đặc biệt inox c&oacute; độ bền cao, khả năng chịu nhiệt tốt v&agrave; kh&ocirc;ng tiết chất độc hại v&agrave;o thức ăn.</span></p>
-          <p><span style="font-size: 16px;">Dung t&iacute;ch</span></p>
-          <p><span style="font-size: 16px;">Nồi &aacute;p suất điện KL-688S c&oacute; dung t&iacute;ch lớn đến 6L n&ecirc;n ho&agrave;n to&agrave;n th&iacute;ch hợp cho những gia đ&igrave;nh đ&ocirc;ng người, hoặc sử dụng chế biến m&oacute;n ăn v&agrave;o những buổi sum họp bạn b&egrave;, người th&acirc;n.</span></p>
-          <p><span style="font-size: 16px;">C&ocirc;ng suất</span></p>
-          <p><span style="font-size: 16px;">Vận h&agrave;nh với mức c&ocirc;ng suất l&agrave; 1000W kh&ocirc;ng chỉ nhanh, tiết kiệm thời gian, điện năng m&agrave; c&ograve;n đảm bảo giữ m&ugrave;i vị v&agrave; dinh dưỡng của thức ăn.</span></p>
-          <p><img src="Data/san-pham/201710/noi-ap-suat-dien-khaluck-kl-688s-1.jpg" alt="Nồi &aacute;p suất điện Khaluck KL-688S (6L)" width="650" style="font-size: 16px; display: block; margin-left: auto; margin-right: auto;" caption="false" /></p>
-          <p></p>
-          <p><img src="Data/san-pham/201710/noi-ap-suat-dien-khaluck-kl-688s-5.jpg" alt="Nồi &aacute;p suất điện Khaluck KL-688S (6L)" width="650" style="display: block; margin-left: auto; margin-right: auto;" caption="false" /><span style="font-size: 16px;"></span></p>
-          <p></p>
-          <p><span style="font-size: 16px;">Chức năng nấu tự động</span></p>
-          <p><span style="font-size: 16px;">Nồi &aacute;p suất điện Khaluck KL-688S trang bị nhiều chức năng nấu kh&aacute;c nhau như: hầm thịt, xương, c&aacute;, nấu soup, ch&acirc;n gi&ograve;, ch&aacute;o, cơm&hellip; g&oacute;p phầm l&agrave;m phong ph&uacute;, đa dạng cho chị em nội trợ trổ t&agrave;i nấu ăn, th&ecirc;m thực đơn hấp dẫn lạ miệng h&agrave;ng ng&agrave;y cho người th&acirc;n trong gia đ&igrave;nh thưởng thức.</span></p>
-          <p><span style="font-size: 16px;">Hệ thống bảo vệ</span></p>
-          <p><span style="font-size: 16px;">Hệ thống điều khiển nhiệt v&agrave; &aacute;p suất tự động với khả năng sẽ tự cảm ứng, điều chỉnh mức nhiệt, xả &aacute;p tự động sao cho ph&ugrave; hợp lượng thức ăn trong nồi. Khi &aacute;p suất l&ecirc;n qu&aacute; cao, th&igrave; nồi sẽ tự động ngắt điện đi để đảm bảo an to&agrave;n v&agrave; độ bền của sản phẩm.</span></p>
-          <p><span style="font-size: 16px;">N&uacute;m xoay cơ điều khiển</span></p>
-          <p><span style="font-size: 16px;">Thiết kế n&uacute;t vặn t&ugrave;y chỉnh đơn giản, dễ hiểu, dễ sử dụng v&agrave; đ&egrave;n b&aacute;o thuận tiện cho người d&ugrave;ng theo d&otilde;i qu&aacute; tr&igrave;nh nấu thức ăn của m&igrave;nh.</span></p>
-          <p></p>
-          <p><img src="Data/san-pham/201710/noi-ap-suat-dien-khaluck-kl-688s-4.jpg" alt="Nồi &aacute;p suất điện Khaluck KL-688S (6L)" width="650" style="font-size: 16px; display: block; margin-left: auto; margin-right: auto;" /></p>
-          <p></p>
-          <p><span style="font-size: 16px;">Khaluck &ndash; một thương hiệu chuy&ecirc;n sản xuất c&aacute;c sản phẩm gia dụng th&ocirc;ng minh, hiện đại được đ&ocirc;ng đảo gia đ&igrave;nh Việt chọn lựa. Ch&iacute;nh v&igrave; thế việc chọn mua nồi &aacute;p suất điện Khaluck l&agrave; quyết định đ&uacute;ng đắn của c&aacute;c chị em nội trợ. Một m&oacute;n qu&agrave; cực kỳ hữu &iacute;ch, sang trọng, c&oacute; gi&aacute; trị cao để bạn tặng cho người th&acirc;n, &ocirc;ng b&agrave;, cha mẹ, vợ&hellip;đấy nh&eacute;!</span></p>
+          <div id="chartContainer" style="height: 300px; width: 100%;"></div>
         </div>
-        <div class="cf"> </div>
+        <div class="cf"></div>
       </section>
-      <section class="tab_specifications" id="anchor_spec">
-        <h3 class="section_title_dt">Thông số kỹ thuật</h3>
-        <ul>
-          <li><span>Model: KL-688S</span></li>
-          <li><span>H&atilde;ng sản xuất: Khaluck</span></li>
-          <li><span>Dung t&iacute;ch 6.0 l&iacute;t</span></li>
-          <li><span>C&ocirc;ng suất: 1000W</span></li>
-          <li><span>Chất liệu L&ograve;ng nồi Inox cao cấp</span></li>
-          <li><span>Đa chức năng nấu tự động như nấu cơm, nấu canh, ch&aacute;o, hầm...</span></li>
-          <li><span>C&ocirc;ng nghệ Nhật Bản</span></li>
-          <li><span>Bảo h&agrave;nh 12 Th&aacute;ng</span></li>
-        </ul>
+      <section class="tab_specifications" id="images">
+        <h3 class="section_title_dt">Hình ảnh sản phẩm</h3>
+        <% product.more_thumbnail_url.forEach(function(image){ %>
+          <figure class="img_pro fl">
+            <span>
+              <img
+              src="<%=image%>"
+              alt="Hình ảnh minh họa <%=product.name%>"
+              title="Hình ảnh minh họa cho <%=product.name%>" />
+            </span>
+          </figure>
+        <% }); %>
         <div class="cf"></div>
         <div class="btn_addtocart_bottom" align="center"><a class="btn_order button_buy" href="gio-hang.html" rel="nofollow"> <span class="btn_order_icon icon_spcart"></span> <span class="text_btn">Đặt mua</span> </a></div>
         <div class="cf" style="height:30px"> </div>
       </section>
       <div class="cf" style="height:30px"> </div>
-      <section class="tab_comments" id="anchor_comment">
+      <section class="tab_specifications" id="tracking">
+        <% if(currentUser){ %>
+          <h3 class="section_title_dt">Nhận biểu đồ giá qua mail</h3>
+          <form action="/track/<%=currentUser._id%>/<%=product.product_id%>" method="POST">
+            <input
+              type="submit"
+              class="btn btn-block btn-primary"
+              onclick="return confirm('Are you want to track this Product? We will notify you via email.');"
+              value="submit">
+          </form>
+        <% } else { %>
+          <h3 class="section_title_dt">Bạn phải đăng nhập</h3>
+        <% } %>
+      </section>
+      <section class="tab_comments" id="comment">
         <h3 class="section_title_dt">Đánh giá & Bình luận</h3>
+        <h4>Những nhận xét của khách hàng về <%=product.name%></h4>
+
+        <% product.comments.forEach(function(comment){ %>
+        <div class="comment_part padd15">
+          <label class="item_title fl"><%=comment.author_name%></label>
+          <hr>
+          <div class="row_input">
+            <%=comment.content%>
+          </div>
+        </div>
+        <% }); %>
         <!--Comment-->
         <div class="comment_part padd15">
-          <div class="title_cmt">Chia sẻ nhận xét của bạn về Nồi &#225;p suất điện Khaluck KL-688S (6L)</div>
+          <div class="title_cmt">Chia sẻ nhận xét của bạn về <%=product.name%></div>
           <div class="pcmnd">
             <textarea data-name="content-comment" class="input_cmt" rows="2" cols="20" placeholder="Nhận xét về sản phẩm"></textarea>
           </div>

@@ -63,8 +63,6 @@ router.get("/tiki-crawl", function(req, res){
             var brand = $('.item-brand').first().find('a').text();
             var date = new Date();
             var newPrice = {value: value, date: date};
-            
-            console.log("before: " + brand);
 
             var m, moreImages = [], str = $('.product-content-detail').children().html(), rex = /<img[^>]+src="(https:\/\/[^">]+)"/g;
 
@@ -73,7 +71,20 @@ router.get("/tiki-crawl", function(req, res){
                 moreImages.push( m[1] );
             }
 
-            // get comment, then update all
+            // Update brand of product
+            Product.findOneAndUpdate(
+            {
+              product_id: product.product_id},  //query
+              {
+                $set: {"brand": brand}
+              },
+            function(err, product){
+              if(err){
+                console.log(err);
+              }
+            });
+
+            // Get comment, then update all
             request("https://tiki.vn/api/v2/reviews?product_id=" + product.master_id + "&limit=50&apikey=2cd335e2c2c74a6f9f4b540b91128e55", function(err, res, body){
               if(err){
                 console.log("Cannot get reviews of product: " + product.name + ". Err: " + err);
@@ -93,15 +104,11 @@ router.get("/tiki-crawl", function(req, res){
                     author_name: author_name,
                     content: content
                   };
-                  /*TEST THOI*/
-                  // console.log("comment: " + comment);
-                  // console.log("price: " + newPrice);
 
                   // store comment and price to database
                   Product.findOneAndUpdate(
                     {product_id: product.product_id},  //query
                     {
-                      $set: {"brand": brand},
                       $addToSet: {
                         "comments": comment,
                         "price": newPrice,
@@ -114,9 +121,7 @@ router.get("/tiki-crawl", function(req, res){
                     if(err){
                       console.log("Err push comment, price and image: " + err);
                     } else {
-                      console.log("after: " + product.brand);
-                      console.log("------------------------------");
-                      //console.log("Update comment, price, brand, image for product: " + product.name);
+                      console.log("Update comment, price, brand, image for product: " + product.name);
                     }
                   });
                 });
