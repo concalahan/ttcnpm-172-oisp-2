@@ -9,6 +9,7 @@ var express = require('express'),
 
 var Product = require("../models/product");
 var Category = require("../models/category");
+var User = require("../models/user");
 
 router.get("/", function(req, res){
   Category.find({}).populate("products").exec(function(err, categories){
@@ -22,15 +23,15 @@ router.get("/", function(req, res){
 });
 
 // LOGIN PAGE
-router.get("/login", function(req, res){
-    return res.render("login");
-});
+// router.get("/login", function(req, res){
+//     return res.render("login");
+// });
 
 // HANDLE LOGIN LOGIC
 router.post("/login", passport.authenticate("local",
     {
         successRedirect: "/",
-        failureRedirect: "/login"
+        failureRedirect: "/"
     }), function(req, res){
 });
 
@@ -44,10 +45,23 @@ router.get("/dang-ky", function(req, res){
   });
 });
 
+router.post("/dang-ky", function(req, res){
+  var newUser = new User({mail: req.body.mail});
+  User.register(newUser, req.body.password, function(err, user){
+    if(err){
+      console.log(err);
+      res.send(err);
+    } else {
+      user.isAdmin = 0;
+      user.save();
+      res.redirect("/");
+    }
+  });
+});
+
 //logout route
 router.get("/logout", function(req, res){
     req.logout();
-    req.flash("success", "Logged you out!");
     return res.redirect("/");
 });
 

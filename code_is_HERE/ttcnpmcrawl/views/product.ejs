@@ -58,25 +58,29 @@
           <div class="row_pro line_dot" style="margin-bottom: 10px"></div>
           <div class="row_pro info_des_dtp">
             <ul>
-              <li>Model: KL-688S</li>
+              <li>Model: <%=product.product_id%></li>
               <li>Hãng sản xuất: <%=product.brand%></li>
-              <li>Dung tích	6.0 lít</li>
-              <li>Công suất: 1000W </li>
-              <li>Chất liệu Lòng nồi Inox cao cấp</li>
-              <li>Công nghệ Nhật Bản</li>
-              <li>Bảo hành	12 Tháng</li>
+              <li>Đánh giá người dùng: <strong><%=product.rating%></strong></li>
             </ul>
           </div>
           <div class="row_pro line_dot" style="margin-bottom: 10px"></div>
-          <div class="row_pro">
-            <span class="title">Chọn số lượng:</span> <span class="info_row add_number">
-            <input type="number" id="txtQty" name="txtQty" class="txtQty" value="1" min="1" />
-            </span>
-            <span class='stock stk_y' itemprop='availability' content='in_stock'>Còn hàng</span>
-          </div>
-          <div class="row_pro info_dt_payment">
-            <a class="btn_order button_buy fl" href="gio-hang.html" rel="nofollow"> <span class="btn_order_icon icon_spcart"></span> <span class="text_btn">Đặt mua</span> </a>
-          </div>
+          <% if(currentUser){ %>
+            <form action="/track/<%=currentUser._id%>/<%=product.product_id%>" method="POST">
+              <div
+                class="btn_addtocart_bottom"
+                align="center">
+                <button
+                  class="btn_order button_buy"
+                  onclick="return confirm('Are you want to track this Product? We will notify you via email.');"
+                  value="submit">
+                  <span class="btn_order_icon icon_spcart"></span>
+                  <span class="text_btn">Nhận báo giá từ chúng tôi</span>
+                </button>
+              </div>
+            </form>
+          <% } else { %>
+            <h3 class="section_title_dt">Bạn phải đăng nhập để nhận báo giá qua mail</h3>
+          <% } %>
         </div>
         <!--end Detail Pro Items-->
         <!--Status-->
@@ -118,8 +122,6 @@
             </span>
           </figure>
         <% }); %>
-        <div class="cf"></div>
-        <div class="btn_addtocart_bottom" align="center"><a class="btn_order button_buy" href="gio-hang.html" rel="nofollow"> <span class="btn_order_icon icon_spcart"></span> <span class="text_btn">Đặt mua</span> </a></div>
         <div class="cf" style="height:30px"> </div>
       </section>
       <div class="cf" style="height:30px"> </div>
@@ -127,20 +129,28 @@
         <% if(currentUser){ %>
           <h3 class="section_title_dt">Nhận biểu đồ giá qua mail</h3>
           <form action="/track/<%=currentUser._id%>/<%=product.product_id%>" method="POST">
-            <input
-              type="submit"
-              class="btn btn-block btn-primary"
-              onclick="return confirm('Are you want to track this Product? We will notify you via email.');"
-              value="submit">
+            <div
+              class="btn_addtocart_bottom"
+              align="center">
+              <button
+                class="btn_order button_buy"
+                onclick="return confirm('Are you want to track this Product? We will notify you via email.');"
+                value="submit">
+                <span class="btn_order_icon icon_spcart"></span>
+                <span class="text_btn">Nhận báo giá từ chúng tôi</span>
+              </button>
+            </div>
           </form>
         <% } else { %>
-          <h3 class="section_title_dt">Bạn phải đăng nhập</h3>
+          <h3 class="section_title_dt">Bạn phải đăng nhập để nhận báo giá qua mail</h3>
         <% } %>
+        <div class="cf" style="height:30px"> </div>
       </section>
       <section class="tab_comments" id="comment">
         <h3 class="section_title_dt">Đánh giá & Bình luận</h3>
-        <h4>Những nhận xét của khách hàng về <%=product.name%></h4>
-
+        <div class="title_new_comment">
+          <h3 class="title_cmt">Có <%=product.comments.length%> bình luận:</h3>
+        </div>
         <% product.comments.forEach(function(comment){ %>
         <div class="comment_part padd15">
           <label class="item_title fl"><%=comment.author_name%></label>
@@ -183,11 +193,6 @@
             </div>
           </div>
           <div class="cf"> </div>
-          <div class="view_comments" id="anchor_cus_comment">
-            <div class="title_new_comment">
-              <h3 class="title_cmt">Có 0 bình luận:</h3>
-            </div>
-          </div>
         </div>
         <!--End Comment-->
         <!--Useful Info-->

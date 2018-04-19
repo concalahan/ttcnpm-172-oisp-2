@@ -17,7 +17,7 @@ var productRoutes = require('./routes/product');
 var userRoutes = require('./routes/user');
 var cmsRoutes = require("./routes/cms");
 
-  mongoose.connect('mongodb://localhost/crawlTiki');
+mongoose.connect('mongodb://localhost/crawlTiki');
 //mongoose.connect('mongodb://admin:Haiconcacon123@ds233769.mlab.com:33769/ttcnpm');
 
 // App setup
@@ -43,10 +43,10 @@ passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
 app.use(function(req, res, next){
-    res.locals.currentUser = req.user;
-    // res.locals.error = req.flash("error");
-    // res.locals.success = req.flash("success");
-    next();
+  res.locals.currentUser = req.user;
+  // res.locals.error = req.flash("error");
+  // res.locals.success = req.flash("success");
+  next();
 });
 
 app.use('/', cmsRoutes);

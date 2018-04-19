@@ -2,9 +2,8 @@ var mongoose = require("mongoose");
 var passportLocalStrategy = require("passport-local-mongoose");
 
 var userSchema = new mongoose.Schema({
-    username: String,
-    password: String,
     mail: String,
+    password: String,
     isAdmin: Boolean,
     mail_list: [{
         date: {type: Date, default: Date.now},
@@ -18,6 +17,8 @@ var userSchema = new mongoose.Schema({
     ]
 });
 
-userSchema.plugin(passportLocalStrategy);
+// userSchema.plugin(passportLocalStrategy);
+// use mail as username
+userSchema.plugin(passportLocalStrategy, { usernameField : 'mail' });
 
 module.exports = mongoose.model("User", userSchema);
