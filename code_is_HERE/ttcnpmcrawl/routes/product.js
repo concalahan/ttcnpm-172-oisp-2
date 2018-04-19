@@ -4,6 +4,18 @@ var express = require('express'),
 var Product = require("../models/product");
 var Category = require("../models/category");
 
+// Each Category
+router.get("/danh-muc", function(req, res){
+  // Category.findOne({name: req.params.name}, function(err, foundCategory){
+  //   if(err){
+  //     console.log(err);
+  //   } else {
+  //
+  //   }
+  // });
+  res.render("category");
+});
+
 // Each product
 router.get("/:url_path", function(req, res){
   Product.findOne({url_path: req.params.url_path}, function(err, foundProduct){
@@ -19,18 +31,6 @@ router.get("/:url_path", function(req, res){
       });
     }
   });
-});
-
-// Each product
-router.get("/danh-muc", function(req, res){
-  // Category.findOne({name: req.params.name}, function(err, foundCategory){
-  //   if(err){
-  //     console.log(err);
-  //   } else {
-  //
-  //   }
-  // });
-  res.render("category");
 });
 
 module.exports = router;
