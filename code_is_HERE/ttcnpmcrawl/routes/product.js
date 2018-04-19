@@ -21,4 +21,16 @@ router.get("/:url_path", function(req, res){
   });
 });
 
+// Each product
+router.get("/danh-muc", function(req, res){
+  // Category.findOne({name: req.params.name}, function(err, foundCategory){
+  //   if(err){
+  //     console.log(err);
+  //   } else {
+  //
+  //   }
+  // });
+  res.render("category");
+});
+
 module.exports = router;
