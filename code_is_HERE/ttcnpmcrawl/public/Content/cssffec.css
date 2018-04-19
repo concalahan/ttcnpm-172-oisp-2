@@ -1109,7 +1109,7 @@ header .filter_name,header .cart_link{margin-left:30px}
 .btn_fb:hover{color:#fff;opacity:.9}
 .user_new_account{font-size:11px}
 .user_new_account a{color:#00aaf1;font-weight:700;text-decoration:underline}
-.head_bottom{background:#41a10a url(Images/green_bg.jpg) 0 0 repeat;margin-top:15px}
+.head_bottom{background:#337ab7  0 0 repeat;margin-top:14px}
 #right_top_main{float:right;position:relative;width:calc(100% - 230px);padding:0;margin:0;position:relative}
 .top_menu_item{padding:0 20px}
 .main_nav{border-right:1px solid rgba(0,0,0,0.1)}
@@ -2385,7 +2385,7 @@ span.mb_bar li span{color:#8b8b8b;cursor:pointer;display:block;font-size:84%;pad
 .lof-navigator li .img_news,.news_cate .img_news,.list_news .img_news{float:left;width:40%;height:auto;margin-right:10px;margin-bottom:0}
 .lof-navigator li img{width:100%;height:auto}
 .lof-navigator{margin:0 10px}
-header{padding-top:60px}
+header{padding-top:50px}
 .mb_right_hotline{height:48px}
 span.mb_bar{display:block;position:relative;width:100%}
 span.mb_bar ul{left:0;position:absolute;right:0;top:0;width:100%;z-index:10}
