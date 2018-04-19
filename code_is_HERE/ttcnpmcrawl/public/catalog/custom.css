@@ -715,7 +715,7 @@ header.typeheader-1 .megamenu-style-dev .horizontal ul.megamenu > li > a h4 {
   display: none;
 }
 body:not(.common-home) header {
-  margin-bottom: 15px;
+  margin-bottom: 0px;
 }
 .cate-menu {
   border: 1px solid #e8e8e8;
