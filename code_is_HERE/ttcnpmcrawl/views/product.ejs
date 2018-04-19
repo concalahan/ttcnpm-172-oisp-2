@@ -19,10 +19,10 @@
             <img id="image" src="<%=product.thumbnail_url%>" data-zoom-image="<%=product.thumbnail_url%>"/>
           </div>
         </div>
-        
-        
-        
-        
+
+
+
+
         <!--end Image Product-->
         <!-- JS FOR SCROLLING THE ROW OF THUMBNAILS -->
       </div>
@@ -83,7 +83,9 @@
               </div>
             </form>
           <% } else { %>
-            <h3 class="section_title_dt">Bạn phải đăng nhập để nhận báo giá qua mail</h3>
+            <div class="row_pro short_des_dtp">
+              Bạn phải đăng nhập để nhận báo giá qua mail
+            </div>
           <% } %>
         </div>
         <!--end Detail Pro Items-->
@@ -112,7 +114,7 @@
         <div id="info_detailP">
           <div id="chartContainer" style="height: 300px; width: 100%;"></div>
         </div>
-        <div class="cf"></div>
+        <div class="cf" style="height:30px"> </div>
       </section>
       <section class="tab_specifications" id="images">
         <h3 class="section_title_dt">Hình ảnh sản phẩm</h3>
@@ -131,7 +133,7 @@
       <div class="cf" style="height:30px"> </div>
       <section class="tab_specifications" id="tracking">
         <% if(currentUser){ %>
-          <h3 class="section_title_dt">Nhận biểu đồ giá qua mail</h3>
+          <h3 class="section_title_dt">Theo dõi sản phẩm</h3>
           <form action="/track/<%=currentUser._id%>/<%=product.product_id%>" method="POST">
             <div
               class="btn_addtocart_bottom"
@@ -146,7 +148,10 @@
             </div>
           </form>
         <% } else { %>
-          <h3 class="section_title_dt">Bạn phải đăng nhập để nhận báo giá qua mail</h3>
+          <h3 class="section_title_dt">Theo dõi sản phẩm</h3>
+          <div class="row_pro short_des_dtp">
+            Bạn phải đăng nhập để nhận báo giá qua mail
+          </div>
         <% } %>
         <div class="cf" style="height:30px"> </div>
       </section>
