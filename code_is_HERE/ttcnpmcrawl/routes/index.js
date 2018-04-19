@@ -34,8 +34,14 @@ router.post("/login", passport.authenticate("local",
     }), function(req, res){
 });
 
-router.get("/register", function(req, res){
-    return res.render("register");
+router.get("/dang-ky", function(req, res){
+  Category.find({}).populate("products").exec(function(err, categories){
+    if(err){
+      console.log(err);
+    } else {
+      res.render("register", {categories: categories, product: ''});
+    }
+  });
 });
 
 //logout route
