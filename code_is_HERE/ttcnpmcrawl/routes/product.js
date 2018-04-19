@@ -22,11 +22,11 @@ router.get("/:url_path", function(req, res){
     if(err){
       console.log(err);
     } else {
-      Category.find({}, function(err, foundCategories){
+      Category.find({}).populate("products").exec(function(err, categories){
         if(err){
           console.log(err);
         } else {
-          res.render("product", {product: foundProduct, categories: foundCategories});
+          res.render("product", {product: foundProduct, categories: categories});
         }
       });
     }

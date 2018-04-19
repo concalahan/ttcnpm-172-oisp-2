@@ -34,7 +34,7 @@
               <img src="" alt="<%=product.brand%>" title="<%=product.brand%>" />
               </a>
             </div>
-            <div class="view_count fr"> <b>Lượt xem: <span><%=  Math.round(Math.random()*100) %></span></b> </div>
+            <div class="view_count fr"> <b>Lượt xem: <span><%= Math.round(Math.random()*100) %></span></b> </div>
           </div>
           <div class="row_pro short_des_dtp">Tiện lợi, hữu &#237;ch trong việc chế biến c&#225;c m&#243;n hầm, ninh nhừ, ch&#225;o, ch&#232;, cơm...chức năng tự động, tiết kiệm thời gian</div>
           <div class="row_pro">
@@ -200,13 +200,27 @@
         <div class="other_products bor">
           <h3 class="g_Tab">Xem thêm</h3>
           <div class="vertical_pros slide_v_pros">
-            <div class="item">
-              <div class="pro_item">
-                <figure class="img_pro fl"><span><a href="noi-ap-suat-dien-khaluck-kl-699.html" title="Nồi &#225;p suất điện Khaluck KL-699"> <img src="Data/Product/noi-ap-suat-dien-khaluck-kl-699-1.jpg" alt="Nồi &#225;p suất điện Khaluck KL-699" title="Nồi &#225;p suất điện Khaluck KL-699"  /></a></span> </figure>
-                <h4 class="pro_name"> <a href="noi-ap-suat-dien-khaluck-kl-699.html" title="Nồi &#225;p suất điện Khaluck KL-699">Nồi &#225;p suất điện Khaluck KL-699</a></h4>
-                <div class="info_price"><span class="m_price">780,000 đ</span> </div>
+            <!-- Math.floor(Math.random() * (max - min + 1)) + min -->
+            <%categories[Math.floor(Math.random() * (3 - 1 + 1)) + 1].products.forEach(function(productInWatchMore){ %>
+              <div class="item">
+                <div class="pro_item">
+                  <figure class="img_pro fl">
+                    <span>
+                      <a
+                        href="/<%=productInWatchMore.url_path%>"
+                        title="<%=productInWatchMore.name%>">
+                          <img
+                            src="<%=productInWatchMore.thumbnail_url%>"
+                            alt="<%=productInWatchMore.category_type%>"
+                            title="<%=productInWatchMore.name%>" />
+                      </a>
+                    </span>
+                  </figure>
+                  <h4 class="pro_name"><a href="/<%=productInWatchMore.url_path%>" title="<%=productInWatchMore.name%>"><%=productInWatchMore.name%></a></h4>
+                  <div class="info_price"><span class="m_price"><%=productInWatchMore.price[0].value%> đ</span> </div>
+                </div>
               </div>
-            </div>
+            <% }); %>
           </div>
         </div>
         <div class="cf"></div>
