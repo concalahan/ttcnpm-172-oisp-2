@@ -5,15 +5,21 @@ var Product = require("../models/product");
 var Category = require("../models/category");
 
 // Each Category
-router.get("/danh-muc", function(req, res){
-  // Category.findOne({name: req.params.name}, function(err, foundCategory){
-  //   if(err){
-  //     console.log(err);
-  //   } else {
-  //
-  //   }
-  // });
-  res.render("category");
+router.get("/danh-muc/:category_url", function(req, res){
+  Category.findOne({category_url: req.params.category_url}).populate("products").exec(function(err, foundCategory){
+    if(err){
+      console.log(err);
+    } else {
+      Category.find({}, function(err, categories){
+        if(err){
+          console.log(err);
+        } else {
+          console.log("test " + foundCategory);
+          res.render("category", {category: foundCategory, categories: categories});
+        }
+      });
+    }
+  });
 });
 
 // Each product

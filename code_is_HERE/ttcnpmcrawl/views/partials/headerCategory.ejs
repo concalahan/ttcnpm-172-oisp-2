@@ -10,64 +10,20 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <% if(typeof product == 'object' && product) { %>
-      <title><%=product.name%></title>
+    <% if(typeof category == 'object' && category) { %>
+      <title><%=category.name%></title>
     <% } else { %>
       <title>Biết giá sản phẩm tăng giảm từ Tiki</title>
     <% } %>
-    <link rel="stylesheet" href="catalog/style_render_326.css">
-    <link rel="stylesheet" href="catalog/orange.css">
-    <link rel="stylesheet" type="text/css" href="catalog/custom.css">
+    <link rel="stylesheet" href="/catalog/style_render_326.css">
+    <link rel="stylesheet" href="/catalog/orange.css">
+    <link rel="stylesheet" type="text/css" href="/catalog/custom.css">
     <link href='https://fonts.googleapis.com/css?family=Roboto:400,500,700&amp;amp;subset=vietnamese' rel='stylesheet' type='text/css'>
-    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="Content/cssffec.css?v=JSZqQBY3iNhKIhQSyZHvRO5rfk3m-Q03hN6-80MeZuU1" rel="stylesheet"/>
-    <link href="Content/jqueryUi400c.css?v=YERHjWDWwnC4BaIKoYYsqvJpCoDQAr7x0PQ70btR_C01" rel="stylesheet"/>
-    <script src="jquery/jquery.js"></script>
-    <script src="bootstrap/js/bootstrap.min.js"></script>
-
-    <script>
-    window.onload = function () {
-
-    var product =<%-JSON.stringify(product)%>
-    var count = 0;
-
-    var chart = new CanvasJS.Chart("chartContainer", {
-    	animationEnabled: true,
-    	theme: "light2",
-    	title:{
-    		text: "Biểu đồ giá"
-    	},
-      axisX:{
-        valueFormatString: "MMM DD" ,
-        labelAngle: -50
-      },
-    	axisY:{
-    		includeZero: true
-    	}
-    	// data: [{
-    	// 	type: "line",
-    	// 	dataPoints: [
-      //     { x: new Date(product.price[0].date), y: product.price[0].value}
-    	// 	]
-    	// }]
-    });
-
-    chart.options.data = []; // Set Array of dataSeries
-
-    // https://canvasjs.com/docs/charts/basics-of-creating-html5-chart/updating-chart-options/
-    product.price.forEach(function(data){
-      chart.options.data[count] = {connectNullData: true}; // type: "line"
-      chart.options.data.push({});
-      chart.options.data[count].dataPoints = [];
-      chart.options.data[count].dataPoints.push({x: new Date(data.date), y: data.value});
-
-      count = count+1;
-    });
-
-    chart.render();
-
-    }
-    </script>
+    <link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/Content/cssffec.css?v=JSZqQBY3iNhKIhQSyZHvRO5rfk3m-Q03hN6-80MeZuU1" rel="stylesheet"/>
+    <link href="/Content/jqueryUi400c.css?v=YERHjWDWwnC4BaIKoYYsqvJpCoDQAr7x0PQ70btR_C01" rel="stylesheet"/>
+    <script src="/jquery/jquery.js"></script>
+    <script src="/bootstrap/js/bootstrap.min.js"></script>
 
   </head>
   <body>

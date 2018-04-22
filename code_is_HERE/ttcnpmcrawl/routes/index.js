@@ -4,6 +4,7 @@ var express = require('express'),
     passport = require('passport'),
     fs = require('fs'),
     mongoose = require('mongoose'),
+    KhongDau = require('khong-dau'),
     middleware = require("../middleware/index.js"),
     cheerio = require('cheerio');
 
@@ -60,11 +61,12 @@ router.post("/dang-ky", function(req, res){
 });
 
 //logout route
-router.get("/logout", function(req, res){
+router.get("/dang-xuat", function(req, res){
     req.logout();
     return res.redirect("/");
 });
 
+// route for
 router.get("/tiki-crawl", function(req, res){
   //var count = 0;
   Product.find({}, function(err, foundProducts){
@@ -336,13 +338,15 @@ router.get("/tiki", function(req, res){
                             $('ul.breadcrumb').children().each(function(){
                                 if($(this).children().text().trim() === "Trang chủ"){
                                     var category_type = $(this).next().children().children().text().trim();
+                                    var category_url = KhongDau(category_type.toLowerCase(), ["chuyen", "url"]);
 
                                     // create product if not exist; else update price & date
                                     Category.findOneAndUpdate(
                                       {name: category_type},
                                       {
                                         $set: {
-                                          name: category_type
+                                          name: category_type,
+                                          category_url: category_url
                                         }
                                       }, { upsert: true, new: true }, function(err, category) {
                                         if(err){
