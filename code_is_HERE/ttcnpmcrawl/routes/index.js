@@ -6,7 +6,10 @@ var express = require('express'),
     mongoose = require('mongoose'),
     KhongDau = require('khong-dau'),
     middleware = require("../middleware/index.js"),
+    bodyParser = require("body-parser"),
     cheerio = require('cheerio');
+    
+router.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 
 var Product = require("../models/product");
 var Category = require("../models/category");
@@ -410,6 +413,26 @@ router.get("/delete", function(req, res){
       });
     }
   });
+});
+
+// search product GET route
+// router.get("/search", function(req, res) {
+    
+// });
+
+//search product POST route
+router.post("/search", function(req, res) {
+    // text pre-processing
+    var searchText = (req.body.search).replace(/[^a-zA-Z0-9\s\(\)-]/g,'');
+    Product.find({$text: {$search: searchText}}/*{$or: [{"name": searchText}, {"product_id": searchText}]}*/, function(err, foundProducts){
+      if(err){
+        console.log("Err at /search " + err);
+        res.redirect("/");
+      } else {
+        res.render("found-products", {foundProducts: foundProducts});
+      }
+    })
+    //res.send("Search post route!!!");
 });
 
 module.exports = router;

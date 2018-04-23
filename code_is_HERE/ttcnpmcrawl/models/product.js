@@ -27,4 +27,6 @@ var ProductSchema = new mongoose.Schema({
     isIncrease: Number
 });
 
+ProductSchema.index({name: "text", product_id: "text"});
+
 module.exports = mongoose.model("Product", ProductSchema);

@@ -1,0 +1,11 @@
+<h1>Here is found products: </h1>
+<% if (foundProducts.length !== 0) { %>
+    <% foundProducts.forEach(function(product) { %>
+        <ul style="list-style-type:circle">
+            <li>Name: <%= product.name %></li>
+            <li>Id: <%= product.product_id %></li>
+        </ul>
+    <% }); %> 
+<% } else { %>
+    <h2>No found product!</h2>
+<% } %>
