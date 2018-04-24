@@ -310,9 +310,10 @@ router.get("/giam-gia", function(req, res){
 });
 
 router.get("/tiki", function(req, res){
+  console.log("QQQQQQQQQQQQQQQQQQQQQQQQQQQQQ");
     var options = {
         url : "https://tiki.vn/api/v2/deals/collections/?category_ids=&sort=rand&type=now&page=1&per_page=30&from=1519266000&to=1524450000&apikey=2cd335e2c2c74a6f9f4b540b91128e55"
-    }
+    };
 
     request(options, function(err, res, body){
         if(err){

@@ -24,6 +24,7 @@ router.get("/danh-muc/:category_url", function(req, res){
 
 // Each product
 router.get("/:url_path", function(req, res){
+  console.log("AAAAAAAAAAAAAAAAAAAAAAAAAA");
   Product.findOne({url_path: req.params.url_path}, function(err, foundProduct){
     if(err){
       console.log(err);
