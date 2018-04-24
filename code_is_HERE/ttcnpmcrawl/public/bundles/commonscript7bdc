@@ -1,6 +1,5 @@
 function getTotalCart() {}
 
-
 (function(n) {
     n.fn.menumaker = function(t) {
         var i = n(this),
@@ -35,12 +34,7 @@ function getTotalCart() {}
             return n(window).on("resize", resizeFix)
         })
     }
-})
-
-
-
-
-(jQuery),
+})(jQuery),
 function(n) {
     n(document).ready(function() {
         n(".show_menu").menumaker({
