@@ -49,15 +49,14 @@
             <h1 style= "font-size:300%; margin-left:0px; color: white" >SoSanh.com</h1>
           </a>
           <!--Search Form-->
-          <div class="columns head_mid" style ="margin-top:12px; background:black">
+          <form class="columns head_mid" style="margin-top:12px; background:black" action="/search" method="POST">
             <div class="input-group" style ="background:black">
-              <input type="text" class="form-control" placeholder="Tìm kiếm">
+              <input name="search" type="text" class="form-control" placeholder="Tìm kiếm">
               <span class="input-group-btn" >
-              <button class="btn btn-default" type="button" style = " background: #337ab7; color: white"> <span class="glyphicon glyphicon-search"></span></button>
+              <button class="btn btn-default" type="submit" style="background: #337ab7; color: white"><span class="glyphicon glyphicon-search"></span></button>
               </span>
             </div>
-            <!-- /input-group -->
-          </div>
+          </form>
           <!--end Search Form-->
           <!--Cart Head-->
           <!--end Cart Head-->
@@ -73,10 +72,10 @@
                 <form action="/login" method="POST">
                   <div class="dropdown_title">Đăng nhập</div>
                   <div class="input_form">
-                    <input type="text" name="username" id="txtemail" maxlength="50" class="input identity" placeholder="Email" />
+                    <input type="email" name="username" maxlength="50" class="input identity" placeholder="Email" />
                   </div>
                   <div class="input_form">
-                    <input type="password" name="password" id="txtpass" class="input password" placeholder="Mật khẩu" />
+                    <input type="password" name="password" class="input password" placeholder="Mật khẩu" />
                   </div>
                   <div class="login-notify"></div>
                   <div class="input_form">
