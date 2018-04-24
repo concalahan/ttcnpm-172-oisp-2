@@ -53,14 +53,14 @@
     </span>
     <!--#begin Header-->
     <Header>
-      <div style = "background-color: black">
+      <div style = "background: #222222">
         <div class="container">
-          <a href='/' id='logo' class='columns'>
-            <h1 style= "font-size:300%; margin-left:0px; color: white" >SoSanh.com</h1>
+          <a href='/' id='logo' class='columns' style = "text-align: left; ">
+            <h1 style= "font-size:300%; color: white" >SoSanh.com</h1>
           </a>
           <!--Search Form-->
-          <form class="columns head_mid" style="margin-top:12px; background:black" action="/search" method="POST">
-            <div class="input-group" style ="background:black">
+          <form class="columns head_mid" style="margin-top:12px; background:#222222" action="/search" method="POST">
+            <div class="input-group" style ="background:#222222">
               <input name="search" type="text" class="form-control" placeholder="Tìm kiếm">
               <span class="input-group-btn" >
               <button class="btn btn-default" type="submit" style="background: #337ab7; color: white"><span class="glyphicon glyphicon-search"></span></button>
@@ -97,7 +97,7 @@
               </form>
             </div>
             <% } else { %>
-              <p style="color:white;">Xin chào <%=currentUser.mail%></p>
+              <p style="color:#9d9d9d;">Xin chào <%=currentUser.mail%></p>
             <% } %>
           </div>
           <!--end Account-->
@@ -110,7 +110,7 @@
           <div class="all_categories">
             <div class="menu_Tab" ><i class="icon_menu" ></i>Danh mục sản phẩm</div>
             <div class="show_menu">
-              <ul class="nav_menu" style="display: block; background: white">
+              <ul class="nav_menu" style="display: block">
                 <% for (var i=0; i <10; i++) { %>
                 <% if(categories[i]){ %>
                 <li class="m_li" id="menu2">
