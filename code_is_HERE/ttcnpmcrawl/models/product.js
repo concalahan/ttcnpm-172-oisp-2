@@ -24,7 +24,12 @@ var ProductSchema = new mongoose.Schema({
         }
     ],
     rating: Number,
-    isIncrease: Number
+    isIncrease: Number,
+    linearReg: {
+      constant: Number,
+      coefficient: Number
+    },
+    updateTimes: Number
 });
 
 ProductSchema.index({name: "text", product_id: "text"});

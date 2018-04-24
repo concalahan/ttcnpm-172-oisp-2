@@ -26,11 +26,6 @@ router.get("/", function(req, res){
   });
 });
 
-// LOGIN PAGEhttp://localhost:8080
-// router.get("/login", function(req, res){
-//     return res.render("login");
-// });
-
 // HANDLE LOGIN LOGIC
 router.post("/login", passport.authenticate("local",
     {
@@ -168,7 +163,6 @@ router.get("/linear-regression", function(req, res){
     if(err) {
       res.redirect("/");
     } else {
-
       foundProducts.forEach(function(product){
         // loop through all date in product
 
@@ -176,7 +170,7 @@ router.get("/linear-regression", function(req, res){
         // http://www.statisticshowto.com/probability-and-statistics/regression-analysis/find-a-linear-regression-equation/
         var x=0,y=1,xy=0,x2=0,y2=0;
         var sumX=0, sumY=0, sumXY=0, sumX2=0, sumY2=0;
-        var a, b;
+        var constant, coefficient;
         product.price.forEach(function(eachDay){
           x = eachDay.value/ 1000;
           xy = x*y;
@@ -191,17 +185,34 @@ router.get("/linear-regression", function(req, res){
 
           if(y == product.price.length){
             if((y*sumX2-sumX*sumX) == 0) {
-              a = 0;
-              b = 1;
+              constant = 0;
+              coefficient = 1;
             } else {
-              a = (sumY*sumX2 - sumX*sumXY)/(y*sumX2-sumX*sumX);
-              b = (y*sumXY - sumX*sumY)/(y*sumX2-sumX*sumX);
+              constant = (sumY*sumX2 - sumX*sumXY)/(y*sumX2-sumX*sumX);
+              coefficient = (y*sumXY - sumX*sumY)/(y*sumX2-sumX*sumX);
             }
-
-            console.log("the function is: " + a + "+ x*" + b);
-            console.log("------------------------------");
           }
           y = y + 1;
+        });
+
+        console.log("the function is: " + constant + "+ x*" + coefficient);
+        console.log("------------------------------");
+
+        Product.findByIdAndUpdate(
+          product._id,
+          {
+            $set: {
+              "linearReg.constant": constant,
+              "linearReg.coefficient": coefficient
+            },
+            $inc: { updateTimes: 1 }
+          },
+          function(err, updateProduct){
+            if(err){
+              console.log(err);
+            } else {
+              console.log("Update linear regression for " + updateProduct._id);
+            }
         });
       });
     }

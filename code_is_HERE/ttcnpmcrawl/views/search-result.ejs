@@ -1,0 +1,74 @@
+<% include partials/headerCategory %>
+<!--#end Header-->
+
+<div class="container">
+  <div class="breadcrum">
+    <div class="container">
+      <a href="/" title="Trang chủ" style="margin-left:15px">Trang chủ</a> /
+      <a href="#">Kết quả tìm kiếm</a>
+    </div>
+  </div>
+</div>
+<div class="container cf">
+  <!-- #Main -->
+  <div id="main">
+    <!--Main Content-->
+    <div class="container">
+      <!--end Ads Cate Page-->
+      <!--List products-->
+      <div class="box box_pros_page marg_bot20">
+        <h1 class="tab_pro_page">Kết quả tìm kiếm:</h1>
+        <div class="sort_area">
+          <span class="display_product_option view_as_list fr"><i class="fa fa-list"></i></span> <span class="display_product_option view_as_grid fr"><i class="fa fa-th-large"></i></span>
+        </div>
+        <div class="cf"></div>
+        <div class="list_products_page column_items" id="_products">
+          <ul>
+            <% if (foundProducts.length !== 0) { %>
+              <% foundProducts.forEach(function(product) { %>
+                <li class="columns">
+                  <div class="pro_item">
+                    <figure class="img_pro">
+                      <span><a title="<%=product.name%>" href="/<%=product.url_path%>"> <img title="<%=product.name%>" alt="<%=product.name%>" src="<%=product.thumbnail_url%>"></a></span>
+                      <div class="addtocart col_addcart"><a class="hvr-shutter-out-horizontal" href="#" rel="nofollow"><i class="fa fa-cart-plus"></i><span>Mua ngay</span></a></div>
+                    </figure>
+                    <h4 class="pro_name"> <a title="<%=product.name%>" href="/<%=product.url_path%>"><%=product.name%></a></h4>
+                    <div class="info_price"><span class="m_price"><%=product.price[0].value%> đ</span> <span class="f_price"><del><%=product.price[0].value%> đ</del></span></div>
+                    <div class="star_rating fa fa-star"><span style="width:80%"></span></div>
+                    <div class="pro_discount"><span>-34%</span></div>
+                  </div>
+                </li>
+              <% }); %>
+            <% } else { %>
+              <h2>No found product!</h2>
+            <% } %>
+          </ul>
+        </div>
+        <div class="pagination-container">
+          <ul class="pagination">
+            <li class="active"><a>1</a></li>
+            <li><a href="">2</a></li>
+            <li><a href="">3</a></li>
+            <li class="disabled PagedList-ellipses"><a>&#8230;</a></li>
+            <li class="PagedList-skipToNext"><a href="" rel="next">»</a></li>
+            <li class="PagedList-skipToLast"><a href="">»»</a></li>
+          </ul>
+        </div>
+      </div>
+      <!--end List products-->
+      <!--Info SEO-->
+      <!--end Info SEO-->
+    </div>
+    <!--end Main Content-->
+    <!--Sidebar-->
+    <!--end Left Nav-->
+    <div class="cf"></div>
+    <!--Filters-->
+    <!--end Filters-->
+  </div>
+  <!--end Sidebar-->
+</div>
+<!--End Main-->
+</div>
+<!--Policy-->
+<% include partials/footer %>
