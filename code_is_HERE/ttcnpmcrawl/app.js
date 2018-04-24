@@ -52,7 +52,7 @@ app.use(function(req, res, next){
 app.use('/', cmsRoutes);
 app.use('/', userRoutes);
 app.use('/', index);
-//app.use('/', productRoutes);
+app.use('/', productRoutes);
 
 //seedDB();
 

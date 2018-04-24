@@ -213,7 +213,6 @@ router.get("/linear-regression", function(req, res){
 // Get the last month price to now, apply the formula to find if it increase or decrease over a month
 router.get("/tiki-increase-or-decrease", function(req, res){
   // load all the price go into one Array
-  var arrayPrice = []
 
   Product.find({}, function(err, foundProducts){
     if(err) {
@@ -248,7 +247,7 @@ router.get("/tiki-increase-or-decrease", function(req, res){
           count = count+1;
         });
 
-        var result = 1, temp = 0, countTemp = 0;
+        var result = 1, temp = 0;
 
         Product.findByIdAndUpdate(product._id,{"date": {$gte: new Date(startDate) , $lt: new Date(endDate)}}, function(err, updateProduct){
           if(err) {
@@ -314,9 +313,9 @@ router.get("/tiki", function(req, res){
     var options = {
 
        
-        url : "https://tiki.vn/api/v2/deals/collections/?category_ids=1789&sort=rand&type=now&page=1&per_page=20&from=1521963271&to=1527147271&apikey=2cd335e2c2c74a6f9f4b540b91128e55"
+        url : "https://tiki.vn/api/v2/deals/collections/?category_ids=&sort=rand&type=now&page=1&per_page=20&from=1521963271&to=1527147271&apikey=2cd335e2c2c74a6f9f4b540b91128e55"
         // https://tiki.vn/api/v2/deals/collections/?category_ids=&sort=rand&type=now&page=1&per_page=30&from=1519266000&to=1524450000&apikey=2cd335e2c2c74a6f9f4b540b91128e55
-    }
+    };
 
     request(options, function(err, res, body){
         if(err){
