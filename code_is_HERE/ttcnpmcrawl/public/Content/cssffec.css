@@ -1538,7 +1538,7 @@ ul.articles li:not(:last-child){border-bottom:dotted 1px #ddd}
 .stars img{position:relative;top:-2px}
 .status_support .row_pro.price_detail{padding-left:65px;font-size:14px;line-height:20px;border:none}
 .line_dot{margin:0;height:1px;border-top:1px dotted #555}
-.price_detail{position:relative;background:#f5f5f5;margin-bottom:0}
+.price_detail{position:relative;background:#ffe775;color: black;margin-bottom:0}
 .origin{position:absolute;top:-2px;right:0;display:block;width:61px;height:61px;background:url(Images/hangchinhhang.png) 0 0 no-repeat}
 .col_detail{float:left;width:45%;margin-left:10px}
 .col_detail p{margin:10px 0}
@@ -1579,10 +1579,10 @@ ul.articles li:not(:last-child){border-bottom:dotted 1px #ddd}
 .promo_item_time{font-size:.85em;padding:5px 32px 0 10px;display:block}
 .text_btn{text-align:center;line-height:46px;width:130px;display:inline-block}
 .btn_send{-webkit-border-radius:4px;-moz-border-radius:4px;border-radius:4px;border:1px solid #194687;width:30%;text-align:center;line-height:30px;color:#fff;margin:0 auto;display:block;background:#194687;cursor:pointer}
-#stickyheader{clear:both;width:100%;top:0;left:0;height:40px;background-color:#f5f5f5;-moz-box-shadow:0 4px 4px -2px rgba(0,0,0,.15);-webkit-box-shadow:0 4px 4px -2px rgba(0,0,0,.15);box-shadow:0 4px 4px -2px rgba(0,0,0,.15);z-index:2000;overflow:hidden}
+#stickyheader{clear:both;width:80%;top:0;left:0;height:40px;background-color:#f5f5f5;-moz-box-shadow:0 4px 4px -2px rgba(0,0,0,.15);-webkit-box-shadow:0 4px 4px -2px rgba(0,0,0,.15);box-shadow:0 4px 4px -2px rgba(0,0,0,.15);z-index:2000;overflow:hidden}
 .product_tabs ul{display:table;width:100%}
 .product_tabs li{display:table-cell;width:20%;vertical-align:middle;text-align:center;border-right:1px solid #ddd}
-.product_tabs li:hover{background-color:#00346a;cursor:pointer;border-left:1px solid #00346a}
+.product_tabs li:hover{background-color:#337ab7;cursor:pointer;border-left:1px solid #337ab7}
 .product_tabs a{color:#000;line-height:40px;display:block;padding:0 10px;font-size:1.2em}
 .product_tabs li:hover a{color:#fff}
 .product_tabs img{vertical-align:middle;padding-right:5px}
@@ -2098,7 +2098,7 @@ div.row_account .item_title{text-align:right}
 #main_content{padding-left:30px}
 #box_video{padding-right:30px}
 .main_slider{position:relative;margin-left:300px}
-.show_menu{display:block;height:407px}
+.show_menu{display:block;height:370px}
 .left_nav ul ul{min-width:200px;-webkit-column-break-inside:avoid;-webkit-column-width:180px;-webkit-column-gap:0;border:1px solid #ddd;display:none!important;top:-1px;left:100%;z-index:9996;position:absolute;background-color:#fff;-moz-box-shadow:2px 2px 5px #ccc;-webkit-box-shadow:2px 2px 5px #ccc;box-shadow:2px 2px 5px #ccc}
 .left_nav li:hover ul{display:block!important}
 .product_slide{width:420px}
