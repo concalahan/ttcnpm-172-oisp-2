@@ -20,8 +20,8 @@
     <link rel="stylesheet" type="text/css" href="catalog/custom.css">
     <link href='https://fonts.googleapis.com/css?family=Roboto:400,500,700&amp;amp;subset=vietnamese' rel='stylesheet' type='text/css'>
     <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="Content/cssffec.css?v=JSZqQBY3iNhKIhQSyZHvRO5rfk3m-Q03hN6-80MeZuU1" rel="stylesheet"/>
-    <link href="Content/jqueryUi400c.css?v=YERHjWDWwnC4BaIKoYYsqvJpCoDQAr7x0PQ70btR_C01" rel="stylesheet"/>
+    <link href="Content/cssffec.css" rel="stylesheet"/>
+    <link href="Content/jqueryUi400c.css" rel="stylesheet"/>
     <script src="jquery/jquery.js"></script>
     <script src="bootstrap/js/bootstrap.min.js"></script>
 
@@ -95,14 +95,14 @@
     </span>
     <!--#begin Header-->
     <Header >
-      <div class="container-fluid" style="background-color: black">
+      <div class="container-fluid" style="background-color:  #222222">
         <div class="container">
           <a href='/' id='logo' class='columns' style = "text-align: left; ">
-            <h1 style= "font-size:300%; margin-left:0px; color: white" >SoSanh.com</h1>
+            <h1 style= "font-size:300%;color: white" >SoSanh.com</h1>
           </a>
           <!--Search Form-->
-          <div class="columns head_mid" style ="margin-top:13px; background:black ">
-            <div class="input-group" style ="background:black">
+          <div class="columns head_mid" style ="margin-top:13px; background: #222222 ">
+            <div class="input-group" style ="background: #222222">
               <input type="text" class="form-control" placeholder="Tìm kiếm">
               <span class="input-group-btn" >
               <button class="btn btn-default" type="button" style = " background: #337ab7; color: white"> <span class="glyphicon glyphicon-search"></span></button>
@@ -139,7 +139,7 @@
               </form>
             </div>
             <% } else { %>
-              <p style="color:white;">Xin chào <%=currentUser.mail%></p>
+              <p style="color:#9d9d9d;">Xin chào <%=currentUser.mail%></p>
             <% } %>
           </div>
           <!--end Account-->
@@ -150,23 +150,23 @@
           <div class="container">
           <!--Main Menu-->
           <div class="all_categories all_cate_subpage">
-            <div class="menu_Tab" style = "background: #337ab7"><i class="icon_menu"></i>Danh mục sản phẩm</div>
+            <div class="menu_Tab"><i class="icon_menu"></i>Danh mục sản phẩm</div>
             <div class="show_menu">
-              <ul class="nav_menu" style="display: block; background: white">
+              <ul class="nav_menu" style="display: block">
                 <% for (var i=0; i<10; i++) { %>
                 <% if(categories[i]){ %>
                 <li class="m_li" id="menu2">
                   <i class="icon_cate"> </i> <a class="t_menu" href = "/danh-muc/<%=categories[i].category_url%>"><%=categories[i].name%></a>
-                  <div class="list_categories">
-                    <ul class="subcatwrapper">
-                      <li class="pc_menu">
-                        <ul>
-                          <li><a href="noi-com-dien.html"> Nồi cơm điện</a> </li>
-                          <li><a href="noi-ap-suat.html"> Nồi áp suất</a> </li>
-                        </ul>
-                      </li>
-                    </ul>
-                  </div>
+                  <!--<div class="list_categories">-->
+                  <!--  <ul class="subcatwrapper">-->
+                  <!--    <li class="pc_menu">-->
+                  <!--      <ul>-->
+                  <!--        <li><a href="noi-com-dien.html"> Nồi cơm điện</a> </li>-->
+                  <!--        <li><a href="noi-ap-suat.html"> Nồi áp suất</a> </li>-->
+                  <!--      </ul>-->
+                  <!--    </li>-->
+                  <!--  </ul>-->
+                  <!--</div>-->
                 </li>
                 <% } %>
                 <% }; %>

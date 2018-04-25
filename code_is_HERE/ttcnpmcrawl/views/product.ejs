@@ -15,9 +15,9 @@
       <div class="product_slide columns">
         <!--Image Product-->
         <div class="img_dtp">
-          <div class="img_wrapper_inner main_img">
-            <img id="image" src="<%=product.thumbnail_url%>" data-zoom-image="<%=product.thumbnail_url%>"/>
-          </div>
+          <!--<div class="img_wrapper_inner main_img">-->
+            <img id="image" src="<%=product.thumbnail_url%>" data-zoom-image="<%=product.thumbnail_url%>" width:"300px"/>
+          <!--</div>-->
         </div>
 
 
@@ -44,7 +44,6 @@
           <div class="row_pro">
             <div class="code_pro fr"> <b>Mã sản phẩm:</b> <span><%=product.product_id%></span></div>
           </div>
-          <div class="row_pro line_dot"></div>
           <div class="row_pro price_detail">
             <div class="origin"></div>
             <div class="col_detail">
@@ -59,7 +58,6 @@
               </p>
             </div>
           </div>
-          <div class="row_pro line_dot" style="margin-bottom: 10px"></div>
           <div class="row_pro info_des_dtp">
             <ul>
               <li>Model: <%=product.product_id%></li>
