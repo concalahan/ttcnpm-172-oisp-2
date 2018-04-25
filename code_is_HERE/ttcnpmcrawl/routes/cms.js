@@ -5,12 +5,36 @@ var nodemailer = require('nodemailer');
 
 var Product = require("../models/product");
 
+var transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: 'vuwebproject@gmail.com',
+    pass: 'Nvu123456'
+  }
+});
+
 router.get("/admin", middleware.requireAdmin, function(req, res){
   return res.render("cms/landing");
 });
 
-router.get("/user", middleware.isLoggedIn, function(req, res){
-  return res.send("day la user");
+router.get("/admin/mail-notify", function(req, res){
+  User.find({}).populate("products").exec(function(err, foundUser){
+    if(err) {
+      console.log(err);
+    } else {
+      foundUser.products.forEach(function(product){
+        if(product.isIncrease == -1){
+          // Product price is decrease
+          var mailOptions = {
+            from: 'vuwebproject@gmail.com',
+            to: foundUser.mail,
+            subject: '[sosanhtiki.com] Sản phẩm ' + foundProduct.name + ' đang giảm giá!!!',
+            html: "Hãy mua ngay."
+          };
+        }
+      });
+    }
+  });
 });
 
 router.get("/admin/product", middleware.requireAdmin, function(req, res){
@@ -28,14 +52,6 @@ router.get("/admin/mail", middleware.isLoggedIn, function(req, res){
 });
 
 router.post("/admin/mail", middleware.isLoggedIn, function(req, res){
-    var transporter = nodemailer.createTransport({
-      service: 'gmail',
-      auth: {
-        user: 'vuwebproject@gmail.com',
-        pass: 'Nvu123456'
-      }
-    });
-
     var mailOptions = {
       from: 'vuwebproject@gmail.com',
       to: req.body.email,

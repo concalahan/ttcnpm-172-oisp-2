@@ -64,6 +64,10 @@ router.get("/dang-xuat", function(req, res){
     return res.redirect("/");
 });
 
+router.get("/ve-chung-toi", function(req, res){
+    return res.render("/about-us");
+});
+
 // route for
 router.get("/tiki-crawl", function(req, res){
   //var count = 0;
@@ -118,6 +122,7 @@ router.get("/tiki-crawl", function(req, res){
                 temp.data.forEach(function(reviewData){
                   var cmt_id = reviewData.id;
                   var author_name = reviewData.created_by.name;
+
                   var content = reviewData.content;
                   var comment = {
                     cmt_id: cmt_id,
@@ -170,7 +175,7 @@ router.get("/linear-regression", function(req, res){
         // http://www.statisticshowto.com/probability-and-statistics/regression-analysis/find-a-linear-regression-equation/
         var x=0,y=1,xy=0,x2=0,y2=0;
         var sumX=0, sumY=0, sumXY=0, sumX2=0, sumY2=0;
-        var constant, coefficient;
+        var constant, coefficient, isIncrease;
         product.price.forEach(function(eachDay){
           x = eachDay.value/ 1000;
           xy = x*y;
@@ -195,6 +200,15 @@ router.get("/linear-regression", function(req, res){
           y = y + 1;
         });
 
+        if(constant+product.updateTimes*coefficient > constant+(product.updateTimes-1)*coefficient){
+          // current larger than last time
+          isIncrease = 1;
+        } else if(constant+product.updateTimes*coefficient > constant+(product.updateTimes-1)*coefficient){
+          isIncrease = -1;
+        } else {
+          isIncrease = 0;
+        }
+
         console.log("the function is: " + constant + "+ x*" + coefficient);
         console.log("------------------------------");
 
@@ -203,7 +217,8 @@ router.get("/linear-regression", function(req, res){
           {
             $set: {
               "linearReg.constant": constant,
-              "linearReg.coefficient": coefficient
+              "linearReg.coefficient": coefficient,
+              "isIncrease": isIncrease
             },
             $inc: { updateTimes: 1 }
           },
@@ -321,8 +336,11 @@ router.get("/giam-gia", function(req, res){
 });
 
 router.get("/tiki", function(req, res){
+  console.log("QQQQQQQQQQQQQQQQQQQQQQQQQQQQQ");
     var options = {
-        url : "https://tiki.vn/api/v2/deals/collections/?category_ids=1789&sort=rand&type=now&page=1&per_page=20&from=1521963271&to=1527147271&apikey=2cd335e2c2c74a6f9f4b540b91128e55"
+
+
+        url : "https://tiki.vn/api/v2/deals/collections/?category_ids=&sort=rand&type=now&page=1&per_page=20&from=1521963271&to=1527147271&apikey=2cd335e2c2c74a6f9f4b540b91128e55"
         // https://tiki.vn/api/v2/deals/collections/?category_ids=&sort=rand&type=now&page=1&per_page=30&from=1519266000&to=1524450000&apikey=2cd335e2c2c74a6f9f4b540b91128e55
     }
 

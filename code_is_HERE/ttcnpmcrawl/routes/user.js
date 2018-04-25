@@ -7,18 +7,10 @@ var User = require("../models/user");
 var Product = require("../models/product");
 
 router.get("/user", function(req, res){
-    return res.send("Hello");
+  return res.send("Hello user");
 });
 
 router.post("/track/:user_id/:product_id", middleware.isLoggedIn, function(req, res){
-    var transporter = nodemailer.createTransport({
-      service: 'gmail',
-      auth: {
-        user: 'vuwebproject@gmail.com',
-        pass: 'Nvu123456'
-      }
-    });
-
     User.findById(req.params.user_id, function(err, foundUser){
       if(err){
         console.log(err);

@@ -11,7 +11,7 @@ function seedDB(){
       }
   });
 
-  var newUser = new User({mail: "user"});
+  var newUser = new User({mail: "user@gmail.com"});
   User.register(newUser, "user", function(err, user){
     if(err){
       console.log(err);
