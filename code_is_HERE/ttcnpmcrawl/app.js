@@ -8,6 +8,7 @@ var express = require('express'),
     morgan = require('morgan'),
     robots = require('express-robots'),
     seedDB = require("./seed"),
+    keys = require('./config/keys');
     app = express();
 
 var User = require("./models/user");
@@ -17,7 +18,7 @@ var productRoutes = require('./routes/product');
 var userRoutes = require('./routes/user');
 var cmsRoutes = require("./routes/cms");
 
-mongoose.connect('mongodb://localhost/crawlTiki');
+mongoose.connect(keys.mongoURI);
 //mongoose.connect('mongodb://admin:Haiconcacon123@ds233769.mlab.com:33769/ttcnpm');
 
 // App setup
