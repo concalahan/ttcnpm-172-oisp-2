@@ -7,6 +7,7 @@ var express = require('express'),
     KhongDau = require('khong-dau'),
     middleware = require("../middleware/index.js"),
     bodyParser = require("body-parser"),
+    cron = require("node-cron"),
     cheerio = require('cheerio');
 
 router.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
@@ -44,33 +45,103 @@ router.get("/dang-ky", function(req, res){
   });
 });
 
-router.post("/dang-ky", function(req, res){
-  var newUser = new User({mail: req.body.mail});
-  User.register(newUser, req.body.password, function(err, user){
-    if(err){
-      console.log(err);
-      res.send(err);
-    } else {
-      user.isAdmin = 0;
-      user.save();
-      res.redirect("/");
-    }
-  });
+/*
+TEST SCHEDULER
+*/
+
+cron.schedule("* * * * Mon,Wed,Fri", function(){
+    console.log("CRAWL TIKI EVERY MON,WED,FRI...");
+    var options = {
+        url : "https://tiki.vn/api/v2/deals/collections/?category_ids=&sort=rand&type=now&page=1&per_page=20&from=1521963271&to=1527147271&apikey=2cd335e2c2c74a6f9f4b540b91128e55"
+        // https://tiki.vn/api/v2/deals/collections/?category_ids=&sort=rand&type=now&page=1&per_page=30&from=1519266000&to=1524450000&apikey=2cd335e2c2c74a6f9f4b540b91128e55
+    };
+
+    request(options, function(err, res, body){
+        if(err){
+            console.log(err);
+        } else {
+            Object.preventExtensions(res);
+            res.body.slice(0, res.body.length);
+            var temp = JSON.parse(res.body);
+            //console.log(temp);
+            temp.data.forEach(function(productData){
+                var product_id = productData.product.id;
+                var name = productData.product.name;
+                var url_path = productData.product.url_path;
+                url_path = url_path.split("?")[0];
+                var thumbnail_url = productData.product.thumbnail_url;
+                var value = productData.product.price;
+                var rating = productData.product.rating_average;
+                var master_id = productData.product.master_id;
+
+                request("https://tiki.vn/".concat(url_path), function(err, response, body) {
+                    if(err){
+                        console.log("Cannot request to product url: " + url_path);
+                    } else {
+                        if(response.statusCode === 200){
+                            var $ = cheerio.load(body);
+                            // get category
+                            $('ul.breadcrumb').children().each(function(){
+                                if($(this).children().text().trim() === "Trang chủ"){
+                                    var category_type = $(this).next().children().children().text().trim();
+                                    var category_url = KhongDau(category_type.toLowerCase(), ["chuyen", "url"]);
+
+                                    // create product if not exist; else update price & date
+                                    Category.findOneAndUpdate(
+                                      {name: category_type},
+                                      {
+                                        $set: {
+                                          name: category_type,
+                                          category_url: category_url
+                                        }
+                                      }, { upsert: true, new: true }, function(err, category) {
+                                        if(err){
+                                          console.log("Error at /tiki when update category: " + err);
+                                        } else {
+                                          Product.findOneAndUpdate(
+                                              { product_id: product_id },
+                                              {
+                                                  $set: {
+                                                      product_id: product_id,
+                                                      master_id: master_id,
+                                                      name: name,
+                                                      url_path: url_path,
+                                                      thumbnail_url: thumbnail_url,
+                                                      rating: rating,
+                                                      category_type: category_type
+                                                  }
+                                              },
+                                              { upsert: true, new: true }
+                                          , function(err, product) {
+                                              if(err) {
+                                                  console.log(err);
+                                              } else {
+                                                  // push the current price
+                                                  product.price.push({value: value});
+                                                  product.save();
+
+                                                  category.products.push(product);
+                                                  category.save();
+                                                  console.log("yay " + category);
+                                              }
+                                          });
+                                        }
+                                      }
+                                    )
+                                }
+                            });
+                        } else {
+                            console.log("Access to " + url_path + " with status code " + response.statusCode);
+                        }
+                    }
+                });
+            });
+        }
+    });
 });
 
-//logout route
-router.get("/dang-xuat", function(req, res){
-    req.logout();
-    return res.redirect("/");
-});
-
-router.get("/ve-chung-toi", function(req, res){
-    return res.render("/about-us");
-});
-
-// route for
-router.get("/tiki-crawl", function(req, res){
-  //var count = 0;
+cron.schedule("* * * * Tue,Thu,Sat", function(){
+  console.log("UPDATE COMMENT, PRICE, IMAGE EVERY TUE,THU,SAT...");
   Product.find({}, function(err, foundProducts){
     if(err) {
       console.log(err);
@@ -157,8 +228,123 @@ router.get("/tiki-crawl", function(req, res){
       });
     }
   });
-  res.send("crawling it again...");
 });
+
+router.post("/dang-ky", function(req, res){
+  var newUser = new User({mail: req.body.mail});
+  User.register(newUser, req.body.password, function(err, user){
+    if(err){
+      console.log(err);
+      res.send(err);
+    } else {
+      user.isAdmin = 0;
+      user.save();
+      res.redirect("/");
+    }
+  });
+});
+
+//logout route
+router.get("/dang-xuat", function(req, res){
+    req.logout();
+    return res.redirect("/");
+});
+
+router.get("/ve-chung-toi", function(req, res){
+    return res.render("/about-us");
+});
+
+// route for
+// router.get("/tiki-crawl", function(req, res){
+//   //var count = 0;
+//   Product.find({}, function(err, foundProducts){
+//     if(err) {
+//       console.log(err);
+//     } else {
+//       foundProducts.forEach(function(product){
+//         request("https://tiki.vn/" + product.url_path, function(err, response, body){
+//           if(err) {
+//             console.log("err " + err);
+//           } else {
+//             var $ = cheerio.load(body);
+
+//             // get price and product's brand
+//             var value = String($('#span-price').text().match( /\d+/g )).replace(/,/g, "");
+//             var brand = $('.item-brand').first().find('a').text();
+//             var date = new Date();
+//             var newPrice = {value: value, date: date};
+
+//             var m, moreImages = [], str = $('.product-content-detail').children().html(), rex = /<img[^>]+src="(https:\/\/[^">]+)"/g;
+
+//             // update more image to the product
+//             while ( m = rex.exec( str ) ) {
+//                 moreImages.push( m[1] );
+//             }
+
+//             // Update brand of product
+//             Product.findOneAndUpdate(
+//             {
+//               product_id: product.product_id},  //query
+//               {
+//                 $set: {"brand": brand}
+//               },
+//             function(err, product){
+//               if(err){
+//                 console.log(err);
+//               }
+//             });
+
+//             // Get comment, then update all
+//             request("https://tiki.vn/api/v2/reviews?product_id=" + product.master_id + "&limit=50&apikey=2cd335e2c2c74a6f9f4b540b91128e55", function(err, res, body){
+//               if(err){
+//                 console.log("Cannot get reviews of product: " + product.name + ". Err: " + err);
+//               } else {
+//                 Object.preventExtensions(res);
+//                 res.body.slice(0, res.body.length);
+//                 var temp = JSON.parse(res.body);
+
+//                 //console.log("lalala " + JSON.stringify(temp.data));
+
+//                 temp.data.forEach(function(reviewData){
+//                   var cmt_id = reviewData.id;
+//                   var author_name = reviewData.created_by.name;
+
+//                   var content = reviewData.content;
+//                   var comment = {
+//                     cmt_id: cmt_id,
+//                     author_name: author_name,
+//                     content: content
+//                   };
+
+//                   // store comment and price to database
+//                   Product.findOneAndUpdate(
+//                     {product_id: product.product_id},  //query
+//                     {
+//                       $addToSet: {
+//                         "comments": comment,
+//                         "price": newPrice,
+//                         "more_thumbnail_url": {$each: moreImages}
+//                       }
+//                     },
+//                     {upsert: true, multi: true},
+//                     // {upsert: true, new: true, multi: true},
+//                   function(err, product){
+//                     if(err){
+//                       console.log("Err push comment, price and image: " + err);
+//                     } else {
+//                       console.log("Update comment, price, brand, image for product: " + product.name);
+//                     }
+//                   });
+//                 });
+//               }
+//             });
+//           }
+//         });
+//       });
+//     }
+//   });
+//   res.send("crawling it again...");
+// });
 
 
 router.get("/linear-regression", function(req, res){
@@ -334,95 +520,96 @@ router.get("/giam-gia", function(req, res){
   });
 });
 
-router.get("/tiki", function(req, res){
-    var options = {
-        url : "https://tiki.vn/api/v2/deals/collections/?category_ids=&sort=rand&type=now&page=1&per_page=20&from=1521963271&to=1527147271&apikey=2cd335e2c2c74a6f9f4b540b91128e55"
-        // https://tiki.vn/api/v2/deals/collections/?category_ids=&sort=rand&type=now&page=1&per_page=30&from=1519266000&to=1524450000&apikey=2cd335e2c2c74a6f9f4b540b91128e55
-    };
+// router.get("/tiki", function(req, res){
+//     var options = {
+//         url : "https://tiki.vn/api/v2/deals/collections/?category_ids=&sort=rand&type=now&page=1&per_page=20&from=1521963271&to=1527147271&apikey=2cd335e2c2c74a6f9f4b540b91128e55"
+//         // https://tiki.vn/api/v2/deals/collections/?category_ids=&sort=rand&type=now&page=1&per_page=30&from=1519266000&to=1524450000&apikey=2cd335e2c2c74a6f9f4b540b91128e55
+//     };
 
-    request(options, function(err, res, body){
-        if(err){
-            console.log(err);
-        } else {
-            Object.preventExtensions(res);
-            res.body.slice(0, res.body.length);
-            var temp = JSON.parse(res.body);
-            //console.log(temp);
-            temp.data.forEach(function(productData){
-                var product_id = productData.product.id;
-                var name = productData.product.name;
-                var url_path = productData.product.url_path;
-                url_path = url_path.split("?")[0];
-                var thumbnail_url = productData.product.thumbnail_url;
-                var value = productData.product.price;
-                var rating = productData.product.rating_average;
-                var master_id = productData.product.master_id;
+//     request(options, function(err, res, body){
+//         if(err){
+//             console.log(err);
+//         } else {
+//             Object.preventExtensions(res);
+//             res.body.slice(0, res.body.length);
+//             var temp = JSON.parse(res.body);
+//             //console.log(temp);
+//             temp.data.forEach(function(productData){
+//                 var product_id = productData.product.id;
+//                 var name = productData.product.name;
+//                 var url_path = productData.product.url_path;
+//                 url_path = url_path.split("?")[0];
+//                 var thumbnail_url = productData.product.thumbnail_url;
+//                 var value = productData.product.price;
+//                 var rating = productData.product.rating_average;
+//                 var master_id = productData.product.master_id;
 
-                request("https://tiki.vn/".concat(url_path), function(err, response, body) {
-                    if(err){
-                        console.log("Cannot request to product url: " + url_path);
-                    } else {
-                        if(response.statusCode === 200){
-                            var $ = cheerio.load(body);
-                            // get category
-                            $('ul.breadcrumb').children().each(function(){
-                                if($(this).children().text().trim() === "Trang chủ"){
-                                    var category_type = $(this).next().children().children().text().trim();
-                                    var category_url = KhongDau(category_type.toLowerCase(), ["chuyen", "url"]);
+//                 request("https://tiki.vn/".concat(url_path), function(err, response, body) {
+//                     if(err){
+//                         console.log("Cannot request to product url: " + url_path);
+//                     } else {
+//                         if(response.statusCode === 200){
+//                             var $ = cheerio.load(body);
+//                             // get category
+//                             $('ul.breadcrumb').children().each(function(){
+//                                 if($(this).children().text().trim() === "Trang chủ"){
+//                                     var category_type = $(this).next().children().children().text().trim();
+//                                     var category_url = KhongDau(category_type.toLowerCase(), ["chuyen", "url"]);
 
-                                    // create product if not exist; else update price & date
-                                    Category.findOneAndUpdate(
-                                      {name: category_type},
-                                      {
-                                        $set: {
-                                          name: category_type,
-                                          category_url: category_url
-                                        }
-                                      }, { upsert: true, new: true }, function(err, category) {
-                                        if(err){
-                                          console.log("Error at /tiki when update category: " + err);
-                                        } else {
-                                          Product.findOneAndUpdate(
-                                              { product_id: product_id },
-                                              {
-                                                  $set: {
-                                                      product_id: product_id,
-                                                      master_id: master_id,
-                                                      name: name,
-                                                      url_path: url_path,
-                                                      thumbnail_url: thumbnail_url,
-                                                      rating: rating,
-                                                      category_type: category_type
-                                                  }
-                                              },
-                                              { upsert: true, new: true }
-                                          , function(err, product) {
-                                              if(err) {
-                                                  console.log(err);
-                                              } else {
-                                                  // push the current price
-                                                  product.price.push({value: value});
-                                                  product.save();
+//                                     // create product if not exist; else update price & date
+//                                     Category.findOneAndUpdate(
+//                                       {name: category_type},
+//                                       {
+//                                         $set: {
+//                                           name: category_type,
+//                                           category_url: category_url
+//                                         }
+//                                       }, { upsert: true, new: true }, function(err, category) {
+//                                         if(err){
+//                                           console.log("Error at /tiki when update category: " + err);
+//                                         } else {
+//                                           Product.findOneAndUpdate(
+//                                               { product_id: product_id },
+//                                               {
+//                                                   $set: {
+//                                                       product_id: product_id,
+//                                                       master_id: master_id,
+//                                                       name: name,
+//                                                       url_path: url_path,
+//                                                       thumbnail_url: thumbnail_url,
+//                                                       rating: rating,
+//                                                       category_type: category_type
+//                                                   }
+//                                               },
+//                                               { upsert: true, new: true }
+//                                           , function(err, product) {
+//                                               if(err) {
+//                                                   console.log(err);
+//                                               } else {
+//                                                   // push the current price
+//                                                   product.price.push({value: value});
+//                                                   product.save();
 
-                                                  category.products.push(product);
-                                                  category.save();
-                                                  console.log("yay " + category);
-                                              }
-                                          });
-                                        }
-                                      }
-                                    )
-                                }
-                            });
-                        } else {
-                            console.log("Access to " + url_path + " with status code " + response.statusCode);
-                        }
-                    }
-                });
-            });
-        }
-    });
-    res.send("Crawl Tiki.vn");
-});
+//                                                   category.products.push(product);
+//                                                   category.save();
+//                                                   console.log("yay " + category);
+//                                               }
+//                                           });
+//                                         }
+//                                       }
+//                                     )
+//                                 }
+//                             });
+//                         } else {
+//                             console.log("Access to " + url_path + " with status code " + response.statusCode);
+//                         }
+//                     }
+//                 });
+//             });
+//         }
+//     });
+//     res.send("Crawl Tiki.vn");
+// });
+
 
 module.exports = router;
