@@ -78,19 +78,19 @@ router.get("/ve-chung-toi", function(req, res){
 // route crawl
 router.get("/tiki", function(req, res){
     crawlTiki();
-    res.send("Crawl Tiki.vn");
+    res.send("Manually Crawl Tiki.vn");
 });
 
 // route update
 router.get("/tiki-crawl", function(req, res){
   updateProd();
-  res.send("crawling it again...");
+  res.send("Manually updating it again...");
 });
 
 // route linear regression
 router.get("/linear-regression", function(req, res){
   linearRegression();
-  res.send("Apply linear regression!");
+  res.send("Manually Apply linear regression!");
 });
 
 
@@ -99,16 +99,19 @@ router.get("/linear-regression", function(req, res){
  */
 // schedule to crawl Tiki every Mon,Wed,Fri
 cron.schedule("* * * * Mon,Wed,Fri", function(){
+    console.log("CRAWL TIKI EVERY MON,WED,FRI...");
     crawlTiki();
 });
 
 // schedule to update every Tue,Thu,Sat
 cron.schedule("* * * * Tue,Thu,Sat", function(){
+    console.log("UPDATE COMMENT, PRICE, IMAGE EVERY TUE,THU,SAT...");
     updateProd();
 });
 
 // schedule to run linear regression every Sun
 cron.schedule("* * * * Sun", function() {
+    console.log("RUN LINEAR REGRESSION EVERY SUN...");
     linearRegression();
 });
 
@@ -221,7 +224,6 @@ router.get("/giam-gia", function(req, res){
  */
 // function for crawl Tiki
 function crawlTiki() {
-    console.log("CRAWL TIKI EVERY MON,WED,FRI...");
     var options = {
         url : "https://tiki.vn/api/v2/deals/collections/?category_ids=&sort=rand&type=now&page=1&per_page=20&from=1521963271&to=1527147271&apikey=2cd335e2c2c74a6f9f4b540b91128e55"
         // https://tiki.vn/api/v2/deals/collections/?category_ids=&sort=rand&type=now&page=1&per_page=30&from=1519266000&to=1524450000&apikey=2cd335e2c2c74a6f9f4b540b91128e55
@@ -313,7 +315,6 @@ function crawlTiki() {
 
 // function for update
 function updateProd() {
-  console.log("UPDATE COMMENT, PRICE, IMAGE EVERY TUE,THU,SAT...");
   Product.find({}, function(err, foundProducts){
     if(err) {
       console.log(err);
