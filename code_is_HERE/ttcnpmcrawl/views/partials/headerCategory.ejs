@@ -16,6 +16,7 @@
     <link href='https://fonts.googleapis.com/css?family=Roboto:400,500,700&amp;amp;subset=vietnamese' rel='stylesheet' type='text/css'>
     <link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link href="/Content/cssffec.css" rel="stylesheet"/>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png"/>
     <link href="/Content/jqueryUi400c.css" rel="stylesheet"/>
     <script src="/jquery/jquery.js"></script>
     <script src="/bootstrap/js/bootstrap.min.js"></script>
@@ -23,7 +24,6 @@
 
 <style>
     body {
-    font-family: Andale Mono, monospace  ;
     min-width: 300px;
     height: 100%;
     }
@@ -58,18 +58,17 @@
       <div class="container-fluid" style="background-color: #222222">
         <div class="container">
           <a href='/' id='logo' class='columns' style = "text-align: left; ">
-            <h1 style= "font-size:300%;color: white">Aztechpro</h1>
+            <h1 style= "font-size:300%;color: white">Binggo</h1>
           </a>
           <!--Search Form-->
-          <div class="columns head_mid" style ="margin-top:13px; background:#222222 ">
+          <form class="columns head_mid" style="margin-top:12px; background:#222222" action="/search" method="POST">
             <div class="input-group" style ="background:#222222">
-              <input type="text" class="form-control" placeholder="Tìm kiếm">
+              <input name="search" type="text" class="form-control" placeholder="Tìm kiếm">
               <span class="input-group-btn" >
-              <button class="btn btn-default" type="button" style = " background: #337ab7; color: white"> <span class="glyphicon glyphicon-search"></span></button>
+              <button class="btn btn-default" type="submit" style="background: #337ab7; color: white"><span class="glyphicon glyphicon-search"></span></button>
               </span>
             </div>
-            <!-- /input-group -->
-          </div>
+          </form>
           <!--end Search Form-->
           <!--Cart Head-->
           <!--end Cart Head-->

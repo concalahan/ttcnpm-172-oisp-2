@@ -214,26 +214,42 @@
           <h3 class="g_Tab">Xem thêm</h3>
           <div class="vertical_pros slide_v_pros">
             <!-- Math.floor(Math.random() * (max - min + 1)) + min -->
-            <%categories[Math.floor(Math.random() * (3 - 1 + 1)) + 1].products.forEach(function(productInWatchMore){ %>
+            <% var randomCategoryIndex = Math.floor(Math.random() * (3 - 1 + 1)) + 1; %>
+            <%for(var i = 0; i < 10; i++) { %>
+              <% var tempProduct = categories[randomCategoryIndex].products[i] %>
+              <%if(tempProduct){ %>
+
               <div class="item">
                 <div class="pro_item">
                   <figure class="img_pro fl">
                     <span>
                       <a
-                        href="/<%=productInWatchMore.url_path%>"
-                        title="<%=productInWatchMore.name%>">
+                        href="/<%=tempProduct.url_path%>"
+                        title="<%=tempProduct.name%>">
                           <img
-                            src="<%=productInWatchMore.thumbnail_url%>"
-                            alt="<%=productInWatchMore.category_type%>"
-                            title="<%=productInWatchMore.name%>" />
+                            src="<%=tempProduct.thumbnail_url%>"
+                            alt="<%=tempProduct.category_type%>"
+                            title="<%=tempProduct.name%>" />
                       </a>
                     </span>
                   </figure>
-                  <h4 class="pro_name"><a href="/<%=productInWatchMore.url_path%>" title="<%=productInWatchMore.name%>"><%=productInWatchMore.name%></a></h4>
-                  <div class="info_price"><span class="m_price"><%=productInWatchMore.price[0].value%> đ</span> </div>
+                  <h4 class="pro_name">
+                    <a
+                      href="/<%=tempProduct.url_path%>"
+                      title="<%=tempProduct.name%>">
+                      <% if(tempProduct.name.length > 50){ %>
+                        <%=tempProduct.name.substring(0, 50)%>
+                      <% } else { %>
+                        <%=tempProduct.name%>
+                      <% } %>
+
+                    </a>
+                  </h4>
+                  <div class="info_price"><span class="m_price"><%=tempProduct.price[0].value%> đ</span> </div>
                 </div>
               </div>
-            <% }); %>
+              <% } %>
+            <% } %>
           </div>
         </div>
         <div class="cf"></div>
