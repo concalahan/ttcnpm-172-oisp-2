@@ -83,4 +83,25 @@ router.get("/:url_path", function(req, res){
   });
 });
 
+// Each product
+router.post("/:url_path/comments", function(req, res){
+  console.log("user " + req.body.comment.author);
+  Product.findOne({url_path: req.params.url_path}, function(err, foundProduct){
+    if(err){
+      console.log(err);
+      res.redirect("/");
+    } else {
+      var newComment = {
+        author_name: req.body.comment.author,
+        content: req.body.comment.content
+      }
+
+      foundProduct.comments.push(newComment);
+      foundProduct.save();
+
+      return res.redirect("/" + foundProduct.url_path);
+    }
+  });
+});
+
 module.exports = router;

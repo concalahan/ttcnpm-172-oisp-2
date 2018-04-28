@@ -10,7 +10,7 @@ var express = require('express'),
     cron = require("node-cron"),
     cheerio = require('cheerio');
 
-router.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
+//router.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 
 var Product = require("../models/product");
 var Category = require("../models/category");
@@ -76,19 +76,19 @@ router.get("/ve-chung-toi", function(req, res){
  */
 
 // route crawl
-router.get("/tiki", function(req, res){
+router.get("/tiki", middleware.requireAdmin, function(req, res){
     crawlTiki();
     res.send("Manually Crawl Tiki.vn");
 });
 
 // route update
-router.get("/tiki-crawl", function(req, res){
+router.get("/tiki-crawl", middleware.requireAdmin, function(req, res){
   updateProd();
   res.send("Manually updating it again...");
 });
 
 // route linear regression
-router.get("/linear-regression", function(req, res){
+router.get("/linear-regression", middleware.requireAdmin, function(req, res){
   linearRegression();
   res.send("Manually Apply linear regression!");
 });
