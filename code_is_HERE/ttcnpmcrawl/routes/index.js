@@ -98,21 +98,21 @@ router.get("/linear-regression", middleware.requireAdmin, function(req, res){
  * AUTO-CRAWL SCHEDULES
  */
 // schedule to crawl Tiki every Mon,Wed,Fri
-cron.schedule("* * * * Mon,Wed,Fri", function(){
-    console.log("CRAWL TIKI EVERY MON,WED,FRI...");
+cron.schedule("* 10 * * Mon,Wed,Fri", function(){
+    console.log("CRAWL TIKI EVERY MON,WED,FRI 10am...");
     crawlTiki();
 });
 
 // schedule to update every Tue,Thu,Sat
 // cron.schedule("* * * * Tue,Thu,Sat", function(){
-cron.schedule("* * * * Tue,Thu", function(){
-    console.log("UPDATE COMMENT, PRICE, IMAGE EVERY TUE,THU,SAT...");
+cron.schedule("* 10 * * Tue,Thu", function(){
+    console.log("UPDATE COMMENT, PRICE, IMAGE EVERY TUE,THU,SAT 10am...");
     updateProd();
 });
 
 // schedule to run linear regression every Sun
-cron.schedule("* * * * Sun", function() {
-    console.log("RUN LINEAR REGRESSION EVERY SUN...");
+cron.schedule("* 10 * * Sun", function() {
+    console.log("RUN LINEAR REGRESSION EVERY SUN 10am...");
     linearRegression();
 });
 
