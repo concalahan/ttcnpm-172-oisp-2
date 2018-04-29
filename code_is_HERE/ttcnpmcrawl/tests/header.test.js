@@ -12,7 +12,7 @@ afterEach(async () => {
   await page.close();
 })
 
-test('The header has the correct text', async () => {
+test.only('The header has the correct text', async () => {
   const text = await page.getContentsOf('h1');
 
   expect(text).toEqual('Binggo');
@@ -30,7 +30,7 @@ test('Have the button for login', async () => {
   expect(text).toEqual('Đăng nhập ');
 });
 
-test.only('The user can login', async () => {
+test('The user can login', async () => {
   await page.type('#username', 'user@gmail.com');
   await page.type('#password', 'user');
   await page.click('#btnLogin');
