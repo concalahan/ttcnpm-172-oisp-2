@@ -17,13 +17,9 @@
         <!--Image Product-->
         <div class="img_dtp">
           <!--<div class="img_wrapper_inner main_img">-->
-            <img id="image" src="<%=product.thumbnail_url%>" data-zoom-image="<%=product.thumbnail_url%>" width:"300px"/>
+          <img id="image" src="<%=product.thumbnail_url%>" data-zoom-image="<%=product.thumbnail_url%>" width:"300px"/>
           <!--</div>-->
         </div>
-
-
-
-
         <!--end Image Product-->
         <!-- JS FOR SCROLLING THE ROW OF THUMBNAILS -->
       </div>
@@ -66,26 +62,27 @@
               <li>Đánh giá người dùng: <strong><%=product.rating%></strong></li>
             </ul>
           </div>
-          <div class="row_pro line_dot" style="margin-bottom: 10px"></div>
+          <div class="row_pro line_dot" style="margin-bottom: 10px; margin-top:10px;"></div>
           <% if(currentUser){ %>
-            <form action="/track/<%=currentUser._id%>/<%=product.product_id%>" method="POST">
-              <div
-                class="btn_addtocart_bottom"
-                align="center">
-                <button
-                  class="btn_order button_buy"
-                  onclick="return confirm('Are you want to track this Product? We will notify you via email.');"
-                  value="submit">
-                  <span class="btn_order_icon icon_spcart"></span>
-                  <span class="text_btn">Nhận báo giá từ chúng tôi</span>
-                </button>
-              </div>
-            </form>
+          <form action="/track/<%=currentUser._id%>/<%=product.product_id%>" method="POST">
+            <button
+              class="btn_order button_buy"
+              onclick="return confirm('Are you want to track this Product? We will notify you via email.');"
+              value="submit">
+            <span class="text_btn">Nhận báo giá</span>
+            </button>
+          </form>
           <% } else { %>
-            <div class="row_pro short_des_dtp">
-              Bạn phải đăng nhập để nhận báo giá qua mail
-            </div>
+          <div class="row_pro short_des_dtp">
+            Bạn phải đăng nhập để nhận báo giá qua mail
+          </div>
           <% } %>
+          <br>
+          <div class="row_pro line_dot" style="margin-bottom: 10px; margin-top:10px;"></div>
+          <a class="btn_order button_buy fl" href="https://tiki.vn/<%=product.url_path%>" rel="nofollow" target="_blank">
+          <span class="btn_order_icon icon_spcart"></span>
+          <span class="text_btn">Đặt mua</span>
+          </a>
         </div>
         <!--end Detail Pro Items-->
         <!--Status-->
@@ -118,39 +115,39 @@
       <section class="tab_specifications" id="images">
         <h3 class="section_title_dt">Hình ảnh sản phẩm</h3>
         <% product.more_thumbnail_url.forEach(function(image){ %>
-          <figure class="img_pro fl">
-            <span>
-              <img
-              src="<%=image%>"
-              alt="Hình ảnh minh họa <%=product.name%>"
-              title="Hình ảnh minh họa cho <%=product.name%>" />
-            </span>
-          </figure>
+        <figure class="img_pro fl">
+          <span>
+          <img
+            src="<%=image%>"
+            alt="Hình ảnh minh họa <%=product.name%>"
+            title="Hình ảnh minh họa cho <%=product.name%>" />
+          </span>
+        </figure>
         <% }); %>
         <div class="cf" style="height:30px"> </div>
       </section>
       <div class="cf" style="height:30px"> </div>
       <section class="tab_specifications" id="tracking">
         <% if(currentUser){ %>
-          <h3 class="section_title_dt">Theo dõi sản phẩm</h3>
-          <form action="/track/<%=currentUser._id%>/<%=product.product_id%>" method="POST">
-            <div
-              class="btn_addtocart_bottom"
-              align="center">
-              <button
-                class="btn_order button_buy"
-                onclick="return confirm('Are you want to track this Product? We will notify you via email.');"
-                value="submit">
-                <span class="btn_order_icon icon_spcart"></span>
-                <span class="text_btn">Nhận báo giá từ chúng tôi</span>
-              </button>
-            </div>
-          </form>
-        <% } else { %>
-          <h3 class="section_title_dt">Theo dõi sản phẩm</h3>
-          <div class="row_pro short_des_dtp">
-            Bạn phải đăng nhập để nhận báo giá qua mail
+        <h3 class="section_title_dt">Theo dõi sản phẩm</h3>
+        <form action="/track/<%=currentUser._id%>/<%=product.product_id%>" method="POST">
+          <div
+            class="btn_addtocart_bottom"
+            align="center">
+            <button
+              class="btn_order button_buy"
+              onclick="return confirm('Are you want to track this Product? We will notify you via email.');"
+              value="submit">
+            <span class="btn_order_icon icon_spcart"></span>
+            <span class="text_btn">Nhận báo giá từ chúng tôi</span>
+            </button>
           </div>
+        </form>
+        <% } else { %>
+        <h3 class="section_title_dt">Theo dõi sản phẩm</h3>
+        <div class="row_pro short_des_dtp">
+          Bạn phải đăng nhập để nhận báo giá qua mail
+        </div>
         <% } %>
         <div class="cf" style="height:30px"> </div>
       </section>
@@ -169,39 +166,31 @@
         </div>
         <% }); %>
         <!--Comment-->
+        <br>
+        <% if(currentUser) { %>
+        <form action="/<%=product.url_path%>/comments" method="POST">
         <div class="comment_part padd15">
-          <div class="title_cmt">Chia sẻ nhận xét của bạn về <%=product.name%></div>
+          <div class="title_cmt">Chia sẻ nhận xét của bạn về <strong><%=product.name%></strong></div>
           <div class="pcmnd">
-            <textarea data-name="content-comment" class="input_cmt" rows="2" cols="20" placeholder="Nhận xét về sản phẩm"></textarea>
+            <input name="comment[author]" value="<%=currentUser.mail%>" type="hidden"></input>
+            <textarea
+              name="comment[content]"
+              class="input_cmt"
+              rows="2" cols="20"
+              placeholder="Nhận xét về sản phẩm">
+            </textarea>
           </div>
           <div class="pcmnd hidden1">
             <div id="review_info">
-              <div class="personal_info fl">
-                <h3 class="title_cmt">Cung cấp thông tin cá nhân</h3>
-                <div class="form_web padd_tb10 cf">
-                  <div class="row_account">
-                    <label class="item_title fl">Họ và tên:</label>
-                    <div class="row_input">
-                      <input type="text" data-name="name-comment" maxlength="50" class="inputbox" autocorrect="on" autocapitalize="on" placeholder="Nhập tên của bạn">
-                    </div>
-                  </div>
-                  <div class="row_account">
-                    <label class="item_title fl">Email:</label>
-                    <div class="row_input">
-                      <input type="text" data-name="email-comment" maxlength="100" class="inputbox" autocomplete="on" placeholder="Địa chỉ email - không bắt buộc">
-                    </div>
-                  </div>
-                </div>
-                <div class="pcmnd">
-                  <div class="fr">
-                    <input type="submit" value="Gửi bình luân" class="buttoncm btn-sendcomment" />
-                  </div>
-                </div>
+              <div class="fr">
+                <input type="submit" value="Gửi bình luân" class="buttoncm btn-sendcomment" />
               </div>
             </div>
           </div>
           <div class="cf"> </div>
         </div>
+        </form>
+        <% } %>
         <!--End Comment-->
         <!--Useful Info-->
       </section>
@@ -214,26 +203,40 @@
           <h3 class="g_Tab">Xem thêm</h3>
           <div class="vertical_pros slide_v_pros">
             <!-- Math.floor(Math.random() * (max - min + 1)) + min -->
-            <%categories[Math.floor(Math.random() * (3 - 1 + 1)) + 1].products.forEach(function(productInWatchMore){ %>
-              <div class="item">
-                <div class="pro_item">
-                  <figure class="img_pro fl">
-                    <span>
-                      <a
-                        href="/<%=productInWatchMore.url_path%>"
-                        title="<%=productInWatchMore.name%>">
-                          <img
-                            src="<%=productInWatchMore.thumbnail_url%>"
-                            alt="<%=productInWatchMore.category_type%>"
-                            title="<%=productInWatchMore.name%>" />
-                      </a>
-                    </span>
-                  </figure>
-                  <h4 class="pro_name"><a href="/<%=productInWatchMore.url_path%>" title="<%=productInWatchMore.name%>"><%=productInWatchMore.name%></a></h4>
-                  <div class="info_price"><span class="m_price"><%=productInWatchMore.price[0].value%> đ</span> </div>
-                </div>
+            <% var randomCategoryIndex = Math.floor(Math.random() * (3 - 1 + 1)) + 1; %>
+            <%for(var i = 0; i < 10; i++) { %>
+            <% var tempProduct = categories[randomCategoryIndex].products[i] %>
+            <%if(tempProduct){ %>
+            <div class="item">
+              <div class="pro_item">
+                <figure class="img_pro fl">
+                  <span>
+                  <a
+                    href="/<%=tempProduct.url_path%>"
+                    title="<%=tempProduct.name%>">
+                  <img
+                    src="<%=tempProduct.thumbnail_url%>"
+                    alt="<%=tempProduct.category_type%>"
+                    title="<%=tempProduct.name%>" />
+                  </a>
+                  </span>
+                </figure>
+                <h4 class="pro_name">
+                  <a
+                    href="/<%=tempProduct.url_path%>"
+                    title="<%=tempProduct.name%>">
+                  <% if(tempProduct.name.length > 50){ %>
+                  <%=tempProduct.name.substring(0, 50)%>
+                  <% } else { %>
+                  <%=tempProduct.name%>
+                  <% } %>
+                  </a>
+                </h4>
+                <div class="info_price"><span class="m_price"><%=tempProduct.price[0].value%> đ</span> </div>
               </div>
-            <% }); %>
+            </div>
+            <% } %>
+            <% } %>
           </div>
         </div>
         <div class="cf"></div>

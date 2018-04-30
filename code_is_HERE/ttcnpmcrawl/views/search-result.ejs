@@ -32,7 +32,21 @@
                       <span><a title="<%=product.name%>" href="/<%=product.url_path%>"> <img title="<%=product.name%>" alt="<%=product.name%>" src="<%=product.thumbnail_url%>"></a></span>
                       <div class="addtocart col_addcart"><a class="hvr-shutter-out-horizontal" href="#" rel="nofollow"><i class="fa fa-cart-plus"></i><span>Mua ngay</span></a></div>
                     </figure>
-                    <h4 class="pro_name"> <a title="<%=product.name%>" href="/<%=product.url_path%>"><%=product.name%></a></h4>
+                    <% if(product.name.length > 50){ %>
+                      <h4 class="pro_name"> <a
+                        title="<%=product.name.substring(0, 50)%>..."
+                        href="/<%=product.url_path%>">
+                        <%=product.name.substring(0, 50)%>...
+                        </a>
+                      </h4>
+                      <% } else { %>
+                        <h4 class="pro_name"><a
+                          title="<%=product.name%>..."
+                          href="/<%=product.url_path%>">
+                          <%=product.name%>...
+                          </a>
+                        </h4>
+                      <% } %>
                     <div class="info_price"><span class="m_price"><%=product.price[0].value%> đ</span> <span class="f_price"><del><%=product.price[0].value%> đ</del></span></div>
                     <div class="star_rating fa fa-star"><span style="width:80%"></span></div>
                     <div class="pro_discount"><span>-34%</span></div>
@@ -40,7 +54,8 @@
                 </li>
               <% }); %>
             <% } else { %>
-              <h2>No found product!</h2>
+              <br>
+              <center><h2>Không tìm thấy sản phẩm!</h2></center>
             <% } %>
           </ul>
         </div>

@@ -83,7 +83,11 @@
                   <a
                     href="/<%=category.products[i].url_path%>"
                     title="<%=category.products[i].name%>">
-                    <%=category.products[i].name%>
+                    <% if(category.products[i].name.length > 50){ %>
+                      <%=category.products[i].name.substring(0, 50)%>...
+                    <% } else { %>
+                      <%=category.products[i].name%>
+                    <% } %>
                   </a>
                 </h4>
                 <div class="info_price"><span class="m_price"><%=category.products[i].price[0].value%></span> <span class="f_price"><del>490,000 đ</del></span></div>

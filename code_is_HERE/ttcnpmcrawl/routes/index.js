@@ -10,7 +10,7 @@ var express = require('express'),
     cron = require("node-cron"),
     cheerio = require('cheerio');
 
-router.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
+//router.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 
 var Product = require("../models/product");
 var Category = require("../models/category");
@@ -68,27 +68,27 @@ router.get("/dang-xuat", function(req, res){
 
 // ABOUT US
 router.get("/ve-chung-toi", function(req, res){
-    return res.render("/about-us");
+    return res.render("about-us");
 });
 
 /*
- * MANUALLY CRAWL, UPDATE AND LINEAR REGRESSION: ADMIN PRIVILEDGE 
+ * MANUALLY CRAWL, UPDATE AND LINEAR REGRESSION: ADMIN PRIVILEDGE
  */
- 
+
 // route crawl
-router.get("/tiki", function(req, res){
+router.get("/tiki", middleware.requireAdmin, function(req, res){
     crawlTiki();
     res.send("Manually Crawl Tiki.vn");
 });
 
 // route update
-router.get("/tiki-crawl", function(req, res){
+router.get("/tiki-crawl", middleware.requireAdmin, function(req, res){
   updateProd();
   res.send("Manually updating it again...");
 });
 
 // route linear regression
-router.get("/linear-regression", function(req, res){
+router.get("/linear-regression", middleware.requireAdmin, function(req, res){
   linearRegression();
   res.send("Manually Apply linear regression!");
 });
@@ -98,32 +98,28 @@ router.get("/linear-regression", function(req, res){
  * AUTO-CRAWL SCHEDULES
  */
 // schedule to crawl Tiki every Mon,Wed,Fri
-cron.schedule("* * * * Mon,Wed,Fri", function(){
-    console.log("CRAWL TIKI EVERY MON,WED,FRI...");
+cron.schedule("* 10 * * Mon,Wed,Fri", function(){
+    console.log("CRAWL TIKI EVERY MON,WED,FRI 10am...");
     crawlTiki();
 });
 
 // schedule to update every Tue,Thu,Sat
-cron.schedule("* * * * Tue,Thu,Sat", function(){
-    console.log("UPDATE COMMENT, PRICE, IMAGE EVERY TUE,THU,SAT...");
+// cron.schedule("* * * * Tue,Thu,Sat", function(){
+cron.schedule("* 10 * * Tue,Thu", function(){
+    console.log("UPDATE COMMENT, PRICE, IMAGE EVERY TUE,THU,SAT 10am...");
     updateProd();
 });
 
 // schedule to run linear regression every Sun
-cron.schedule("* * * * Sun", function() {
-    console.log("RUN LINEAR REGRESSION EVERY SUN...");
+cron.schedule("* 10 * * Sun", function() {
+    console.log("RUN LINEAR REGRESSION EVERY SUN 10am...");
     linearRegression();
 });
-
-
-
-
 
 // Product price is inreased or decreased?
 // Get the last month price to now, apply the formula to find if it increase or decrease over a month
 router.get("/tiki-increase-or-decrease", function(req, res){
   // load all the price go into one Array
-
   Product.find({}, function(err, foundProducts){
     if(err) {
       res.redirect("/");
@@ -220,7 +216,7 @@ router.get("/giam-gia", function(req, res){
 
 
 /*
- * FUNTIONS 
+ * FUNTIONS
  */
 // function for crawl Tiki
 function crawlTiki() {
