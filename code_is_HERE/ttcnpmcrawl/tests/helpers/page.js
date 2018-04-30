@@ -1,6 +1,6 @@
 const puppeteer = require('puppeteer');
-// const sessionFactory = require('../factories/sessionFactory');
-// const userFactory = require('../factories/userFactory');
+const sessionFactory = require('../factories/sessionFactory');
+const userFactory = require('../factories/userFactory');
 
 class CustomPage {
   static async build() {
@@ -26,15 +26,14 @@ class CustomPage {
     this.page = page;
   }
 
-  // async login() {
-  //   const user = await userFactory(); // wait the mongoose user save
-  //   const { session, sig } = sessionFactory(user);
-  //   //const id = '5ad75ed41806cf114296947c';
-  //
-  //   await this.page.setCookie({name: 'session', value: session });
-  //   await this.page.setCookie({name: 'session.sig', value: sig });
-  //   await this.page.goto('localhost:8080');
-  // }
+  async login() {
+    const user = await userFactory(); // wait the mongoose user save
+    const { session, sig } = sessionFactory(user);
+
+    await this.page.setCookie({name: 'session', value: session });
+    await this.page.setCookie({name: 'session.sig', value: sig });
+    await this.page.goto('localhost:8080');
+  }
 
   async getContentsOf(selector) {
     return this.page.$eval(selector, el => el.innerHTML);

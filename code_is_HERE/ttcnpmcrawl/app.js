@@ -4,14 +4,17 @@ var express = require('express'),
     bodyParser = require("body-parser"),
     passport = require("passport"),
     LocalStrategy = require("passport-local"),
-    session = require('express-session'),
+    //session = require('express-session'),
+    cookieSession = require('cookie-session'),
     morgan = require('morgan'),
     robots = require('express-robots'),
-    seedDB = require("./seed"),
-    keys = require('./config/keys');
     app = express();
 
 var User = require("./models/user");
+var seedDB = require("./seed"),
+keys = require('./config/keys');
+
+require('./services/passport');
 
 var index = require('./routes/index');
 var productRoutes = require('./routes/product');
@@ -21,27 +24,32 @@ var cmsRoutes = require("./routes/cms");
 mongoose.connect(keys.mongoURI);
 //mongoose.connect('mongodb://admin:Haiconcacon123@ds233769.mlab.com:33769/ttcnpm');
 
-// App setup
-app.set("view engine", "ejs");
 
+app.set("view engine", "ejs");
 app.use(express.static("public"));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(robots({UserAgent: '*', Disallow: '/admin'})); // for robots.txt
 app.use(morgan('dev'));
+app.use(
+  cookieSession({
+    maxAge: 30 * 24 * 60 * 60 * 1000,
+    keys: [keys.cookieKey]
+  })
+);
 
 // required for passport session
-app.use(session({
-    secret: 'This is secret',
-    saveUninitialized: false,
-    resave: false
-}));
+// app.use(session({
+//     secret: 'This is secret',
+//     saveUninitialized: false,
+//     resave: false
+// }));
 
 app.use(passport.initialize());
 app.use(passport.session());
 
 passport.use(new LocalStrategy(User.authenticate()));
-passport.serializeUser(User.serializeUser());
-passport.deserializeUser(User.deserializeUser());
+// passport.serializeUser(User.serializeUser());
+// passport.deserializeUser(User.deserializeUser());
 
 app.use(function(req, res, next){
   res.locals.currentUser = req.user;
