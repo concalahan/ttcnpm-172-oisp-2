@@ -90,7 +90,8 @@
                     <% } %>
                   </a>
                 </h4>
-                <div class="info_price"><span class="m_price"><%=category.products[i].price[0].value%></span> <span class="f_price"><del>490,000 đ</del></span></div>
+                <% var currentPrice = category.products[i].price.length-1; %>
+                <div class="info_price"><span class="m_price"><%=category.products[i].price[currentPrice].value%></span> <span class="f_price"><del>490,000 đ</del></span></div>
                 <div class="star_rating fa fa-star"><span style="width:80%"></span></div>
                 <div class="pro_discount"><span>-39%</span></div>
               </div>

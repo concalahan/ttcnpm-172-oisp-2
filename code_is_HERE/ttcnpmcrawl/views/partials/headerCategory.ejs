@@ -75,28 +75,27 @@
           <!--Account-->
           <div class="filter_name account_area fr">
             <% if(!currentUser){ %>
-            <i class="fa fa-user"></i>
-            <div class="account_link_pad" style = "color:white"> <span class="account_login"><b>Đăng nhập</b></span><i class="i_view_more"></i> <span class="account_login_more">Tài khoản &amp; Đơn hàng</span> </div>
-            <div class="contentEGP">
-              <div class="form_head">
-
-                <form action="/login" method="POST">
-                  <div class="dropdown_title">Đăng nhập</div>
-                  <div class="input_form">
-                    <input type="text" name="username" id="txtemail" maxlength="50" class="input identity" placeholder="Email" />
-                  </div>
-                  <div class="input_form">
-                    <input type="password" name="password" id="txtpass" class="input password" placeholder="Mật khẩu" />
-                  </div>
-                  <div class="login-notify"></div>
-                  <div class="input_form">
-                    <!-- <a href="#" class="button" id="btnLogin" style = "height:45px">Đăng nhập <i class="arr_circle"></i></a> -->
-                    <button class="button" id="btnLogin" style = "height:45px">Đăng nhập <i class="arr_circle"></i></button>
-                  </div>
-                  <div class="input_form note_wrapper"><a class="lost_password fl" href="#">Quên mật khẩu?</a> <a rel="nofollow" href="/dang-ky" class="fr">Đăng ký</a> </div>
+              <i class="fa fa-user"></i>
+              <div class="account_link_pad" style = "color:white"> <span class="account_login"><b>Đăng nhập</b></span><i class="i_view_more"></i> <span class="account_login_more">Tài khoản &amp; Đơn hàng</span> </div>
+              <div class="contentEGP">
+                <div class="form_head">
+                  <form action="/login" method="POST">
+                    <div class="dropdown_title">Đăng nhập</div>
+                    <div class="input_form">
+                      <input type="text" name="username" id="txtemail" maxlength="50" class="input identity" placeholder="Email" />
+                    </div>
+                    <div class="input_form">
+                      <input type="password" name="password" id="txtpass" class="input password" placeholder="Mật khẩu" />
+                    </div>
+                    <div class="login-notify"></div>
+                    <div class="input_form">
+                      <!-- <a href="#" class="button" id="btnLogin" style = "height:45px">Đăng nhập <i class="arr_circle"></i></a> -->
+                      <button class="button" id="btnLogin" style = "height:45px">Đăng nhập <i class="arr_circle"></i></button>
+                    </div>
+                    <div class="input_form note_wrapper"><a class="lost_password fl" href="#">Quên mật khẩu?</a> <a rel="nofollow" href="/dang-ky" class="fr">Đăng ký</a> </div>
+                  </form>
                 </div>
-              </form>
-            </div>
+              </div>
             <% } else { %>
               <p style="color:#9d9d9d;">Xin chào <%=currentUser.mail%></p>
             <% } %>

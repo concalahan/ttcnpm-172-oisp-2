@@ -11,8 +11,8 @@ var express = require('express'),
     app = express();
 
 var User = require("./models/user");
-var seedDB = require("./seed"),
-keys = require('./config/keys');
+var seedDB = require("./seed");
+var keys = require('./config/keys');
 
 require('./services/passport');
 
@@ -23,7 +23,7 @@ var cmsRoutes = require("./routes/cms");
 
 mongoose.connect(keys.mongoURI);
 //mongoose.connect('mongodb://admin:Haiconcacon123@ds233769.mlab.com:33769/ttcnpm');
-
+// mongoURI: 'mongodb://localhost/crawlTiki',
 
 app.set("view engine", "ejs");
 app.use(express.static("public"));
