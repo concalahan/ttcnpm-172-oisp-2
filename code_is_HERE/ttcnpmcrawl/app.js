@@ -21,7 +21,20 @@ var productRoutes = require('./routes/product');
 var userRoutes = require('./routes/user');
 var cmsRoutes = require("./routes/cms");
 
-mongoose.connect("mongodb://admin:Haiconcacon123@ds233769.mlab.com:33769/ttcnpm");
+
+
+
+const db = "mongodb://admin:Haiconcacon123@ds233769.mlab.com:33769/ttcnpm";
+
+mongoose.Promise = global.Promise;
+mongoose.connect(db, function(err) {
+    if(err) {
+        console.log('Connection error');
+    }
+});
+
+//mongoose.connect(keys.mongoURI);
+
 
 app.set("view engine", "ejs");
 app.use(express.static("public"));
