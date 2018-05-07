@@ -22,8 +22,6 @@ var userRoutes = require('./routes/user');
 var cmsRoutes = require("./routes/cms");
 
 
-
-
 const db = "mongodb://admin:Haiconcacon123@ds233769.mlab.com:33769/ttcnpm";
 
 mongoose.Promise = global.Promise;
