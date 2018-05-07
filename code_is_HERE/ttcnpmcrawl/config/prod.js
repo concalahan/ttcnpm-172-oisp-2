@@ -1,4 +1,4 @@
 module.exports = {
-  mongoURI: 'mongodb://admin:Haiconcacon123@ds233769.mlab.com:33769/ttcnpm',
+  mongoURI: process.env.DATABASEURL,
   cookieKey: '321321321'
 };
