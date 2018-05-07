@@ -17,7 +17,7 @@ describe('When logged in', async () => {
     await page.login();
   });
 
-  test.only('Hhuhuhu', async () => {
+  test.only('Display the hello user at header', async () => {
     await page.waitFor('#hello');
     const text = await page.getContentsOf('#hello');
 

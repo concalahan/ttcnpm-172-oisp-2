@@ -11,8 +11,8 @@ var express = require('express'),
     app = express();
 
 var User = require("./models/user");
-var seedDB = require("./seed"),
-keys = require('./config/keys');
+var seedDB = require("./seed");
+var keys = require('./config/keys');
 
 require('./services/passport');
 
@@ -21,8 +21,17 @@ var productRoutes = require('./routes/product');
 var userRoutes = require('./routes/user');
 var cmsRoutes = require("./routes/cms");
 
-mongoose.connect(keys.mongoURI);
-//mongoose.connect('mongodb://admin:Haiconcacon123@ds233769.mlab.com:33769/ttcnpm');
+
+const db = "mongodb://localhost/crawlTiki";
+
+mongoose.Promise = global.Promise;
+mongoose.connect(db, function(err) {
+    if(err) {
+        console.log('Connection error');
+    }
+});
+
+//mongoose.connect(keys.mongoURI);
 
 
 app.set("view engine", "ejs");
@@ -63,7 +72,7 @@ app.use('/', userRoutes);
 app.use('/', index);
 app.use('/', productRoutes);
 
-//seedDB();
+seedDB();
 
 // 404 route
 app.use(function(req, res, next){
@@ -86,7 +95,7 @@ app.use(function(req, res, next){
 });
 
 // Server setup
-const port = process.env.PORT || 8080;
+const port = process.env.PORT || 80;
 const server = http.createServer(app);
 server.listen(port);
 

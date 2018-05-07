@@ -1,4 +1,5 @@
-module.exports = {
-  mongoURI: 'mongodb://localhost/crawlTiki',
-  cookieKey: '321321321'
-};
+if (process.env.NODE_ENV === 'prod') {
+  module.exports = require('./prod');
+} else {
+  module.exports = require('./dev');
+}

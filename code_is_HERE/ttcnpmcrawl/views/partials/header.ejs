@@ -5,33 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Homepage</title>
     <link rel="stylesheet" href="/catalog/style_render_326.css">
-
-<link rel="stylesheet" href="/catalog/orange.css">
-
-<link rel="stylesheet" type="text/css" href="/catalog/custom.css">
-
-<link href='https://fonts.googleapis.com/css?family=Roboto:400,500,700&amp;amp;subset=vietnamese' rel='stylesheet' type='text/css'>
-
-<link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-
-<link href="/Content/cssffec.css" rel="stylesheet"/>
-
-<link href="/Content/jqueryUi400c.css" rel="stylesheet"/>
-
-<link rel="shortcut icon" type="image/png" href="/favicon.png"/>
-
-<script src="/jquery/jquery.js"></script>
-
-<script src="/bootstrap/js/bootstrap.min.js"></script>
-
-<style>
-    body {
-
-    min-width: 300px;
-    height: 100%;
-    }
-  </style>
-
+    <link rel="stylesheet" href="/catalog/orange.css">
+    <link rel="stylesheet" type="text/css" href="/catalog/custom.css">
+    <link href='https://fonts.googleapis.com/css?family=Roboto:400,500,700&amp;amp;subset=vietnamese' rel='stylesheet' type='text/css'>
+    <link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/Content/cssffec.css" rel="stylesheet"/>
+    <link href="/Content/jqueryUi400c.css" rel="stylesheet"/>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png"/>
+    <script src="/jquery/jquery.js"></script>
+    <script src="/bootstrap/js/bootstrap.min.js"></script>
+    <style>
+      body {
+      min-width: 300px;
+      height: 100%;
+      }
+    </style>
   </head>
   <body>
     <span class="mb_right_hotline" >
@@ -72,31 +60,31 @@
               </span>
             </div>
           </form>
-          <!--end Search Form-->
-          <!--Cart Head-->
-          <!--end Cart Head-->
-          <!--Account-->
-
           <div class="filter_name account_area fr">
             <% if(!currentUser){ %>
-              <form action="/login" method="POST">
-                <div class="dropdown_title">Đăng nhập</div>
-                <div class="input_form">
-                  <input type="email" name="username" id="username" placeholder="Email" />
+              <i class="fa fa-user"></i>
+              <div class="account_link_pad" style = "color:white"> <span class="account_login"><b>Đăng nhập</b></span><i class="i_view_more"></i> <span class="account_login_more">Tài khoản &amp; Đơn hàng</span> </div>
+              <div class="contentEGP">
+                <div class="form_head">
+                  <form action="/login" method="POST">
+                    <div class="dropdown_title">Đăng nhập</div>
+                    <div class="input_form">
+                      <input type="text" name="username" id="txtemail" maxlength="50" class="input identity" placeholder="Email" />
+                    </div>
+                    <div class="input_form">
+                      <input type="password" name="password" id="txtpass" class="input password" placeholder="Mật khẩu" />
+                    </div>
+                    <div class="login-notify"></div>
+                    <div class="input_form">
+                      <!-- <a href="#" class="button" id="btnLogin" style = "height:45px">Đăng nhập <i class="arr_circle"></i></a> -->
+                      <button class="button" id="btnLogin" style = "height:45px">Đăng nhập <i class="arr_circle"></i></button>
+                    </div>
+                    <div class="input_form note_wrapper"><a class="lost_password fl" href="#">Quên mật khẩu?</a> <a rel="nofollow" href="/dang-ky" class="fr">Đăng ký</a> </div>
+                  </form>
                 </div>
-                <div class="input_form">
-                  <input type="password" name="password" id="password" placeholder="Mật khẩu" />
-                </div>
-                <div class="login-notify"></div>
-                <div class="input_form">
-                  <!-- <a href="#" class="button" id="btnLogin" style = "height:45px">Đăng nhập <i class="arr_circle"></i></a> -->
-                  <button class="button" id="btnLogin" style = "height:45px">Đăng nhập <i class="arr_circle"></i></button>
-                </div>
-                <div class="input_form note_wrapper"><a class="lost_password fl" href="#">Quên mật khẩu?</a> <a rel="nofollow" href="/dang-ky" class="fr">Đăng ký</a> </div>
               </div>
-            </form>
             <% } else { %>
-              <p id="hello" style="color:#9d9d9d;">Xin chào <%=currentUser.mail%></p>
+            <p id="hello" style="color:#9d9d9d;">Xin chào <%=currentUser.mail%></p>
             <% } %>
           </div>
           <!--end Account-->
@@ -105,33 +93,33 @@
       <div class="container">
         <div class="head_bottom">
           <div class="container">
-          <!--Main Menu-->
-          <div class="all_categories">
-            <div class="menu_Tab" ><i class="icon_menu" ></i>Danh mục sản phẩm</div>
-            <div class="show_menu">
-              <ul class="nav_menu" style="display: block">
-                <% for (var i=0; i <10; i++) { %>
-                <% if(categories[i]){ %>
-                <li class="m_li" id="menu2">
-                  <a class="t_menu" href = "/danh-muc/<%=categories[i].category_url%>" >  <%=categories[i].name%></a>
-
-                </li>
-                <% } %>
-                <% } %>
-              </ul>
+            <!--Main Menu-->
+            <div class="all_categories">
+              <div class="menu_Tab" ><i class="icon_menu" ></i>Danh mục sản phẩm</div>
+              <div class="show_menu">
+                <ul class="nav_menu" style="display: block">
+                  <% for (var i=0; i <10; i++) { %>
+                  <% if(categories[i]){ %>
+                  <li class="m_li" id="menu2">
+                    <a class="t_menu" href = "/danh-muc/<%=categories[i].category_url%>" >  <%=categories[i].name%></a>
+                  </li>
+                  <% } %>
+                  <% } %>
+                </ul>
+              </div>
+              <div class="cf"> </div>
             </div>
-            <div class="cf"> </div>
-          </div>
-          <!--End Main Menu-->
-          <!--Right Top Main-->
-          <div id="right_top_main"><div id="menu-button"><i class="fa fa-ellipsis-v"></i></div>
-        <ul class="main_nav">
+            <!--End Main Menu-->
+            <!--Right Top Main-->
+            <div id="right_top_main">
+              <div id="menu-button"><i class="fa fa-ellipsis-v"></i></div>
+              <ul class="main_nav">
                 <li><a title="TIN TỨC" href="" target="_self">TIN TỨC</a></li>
                 <li><a title="VIDEO" href="" target="_self">VIDEO</a></li>
-        </ul>
-    </div>
-          <!--End Right Top Main-->
+              </ul>
+            </div>
+            <!--End Right Top Main-->
+          </div>
         </div>
-      </div>
       </div>
     </Header>

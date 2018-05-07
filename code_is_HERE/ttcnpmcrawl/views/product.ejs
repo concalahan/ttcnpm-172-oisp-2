@@ -45,13 +45,23 @@
             <div class="origin"></div>
             <div class="col_detail">
               <p>Giá bán</p>
-              <div class="cost"><%=product.price[0].value%></div>
+              <% var current = product.price.length-1; %>
+              <div class="cost"><%=product.price[current].value%>đ</div>
             </div>
             <div class="col_detail">
-              <p> <del class="f_price">1,050,000 đ</del> </p>
+              <p> <del class="f_price"><%=product.price[0].value%>đ</del> </p>
               <p>
-                Tiết kiệm<br />
-                <b>340,000 đ = 33%</b>
+
+                <% var DiscoutNumber = product.price[current].value - product.price[0].value %>
+                <% var DiscoutPercentage = DiscoutNumber*100/product.price[0].value %>
+                <% if(DiscoutNumber > 0){ %>
+                  Tăng<br />
+                  <b><%=Math.abs(DiscoutNumber)%>đ = <%=Math.abs(Math.floor(DiscoutPercentage, 2))%>%</b>
+                <% } else { %>
+                  Giảm<br />
+                  <b><%=Math.abs(DiscoutNumber)%>đ = <%=Math.abs(Math.floor(DiscoutPercentage, 2))%>%</b>
+                <% } %>
+
               </p>
             </div>
           </div>
