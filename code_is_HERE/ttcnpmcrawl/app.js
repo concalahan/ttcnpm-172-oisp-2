@@ -22,8 +22,6 @@ var userRoutes = require('./routes/user');
 var cmsRoutes = require("./routes/cms");
 
 mongoose.connect(keys.mongoURI);
-//mongoose.connect('mongodb://admin:Haiconcacon123@ds233769.mlab.com:33769/ttcnpm');
-// mongoURI: 'mongodb://localhost/crawlTiki',
 
 app.set("view engine", "ejs");
 app.use(express.static("public"));
@@ -86,7 +84,7 @@ app.use(function(req, res, next){
 });
 
 // Server setup
-const port = process.env.PORT || 8080;
+const port = process.env.PORT || 80;
 const server = http.createServer(app);
 server.listen(port);
 
