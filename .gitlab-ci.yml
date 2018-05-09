@@ -7,7 +7,7 @@ env:
   - NODE_ENV=prod PORT=80
 
 cache:
-  directories:
+  paths::
     - node_modules
 
 install:
