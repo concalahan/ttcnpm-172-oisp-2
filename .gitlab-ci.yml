@@ -3,8 +3,8 @@ image: node:4.2.2
 services:
   - mongodb
 
-env:
-  - NODE_ENV=prod PORT=80
+variables:
+  NODE_ENV: $(prod)
 
 cache:
   paths:
