@@ -11,10 +11,10 @@ cache:
     - code_is_HERE/ttcnpmcrawl/node_modules/
 
 before_script:
-    - npm install
+    - cd code_is_HERE/ttcnpm/crawl && npm install
 
 all_tests:
   script:
-   - nohup npm run start &
-   - sleep 3
-   - npm run test
+   - cd code_is_HERE/ttcnpm/crawl && nohup npm run start &
+   - cd code_is_HERE/ttcnpm/crawl && sleep 3
+   - cd code_is_HERE/ttcnpm/crawl && npm run test
