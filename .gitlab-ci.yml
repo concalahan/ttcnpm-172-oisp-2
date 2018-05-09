@@ -7,8 +7,8 @@ env:
   - NODE_ENV=prod PORT=80
 
 cache:
-  paths::
-    - node_modules
+  paths:
+    - code_is_HERE/ttcnpmcrawl/node_modules
 
 install:
   - npm install
