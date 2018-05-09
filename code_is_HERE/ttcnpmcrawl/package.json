@@ -33,7 +33,7 @@
     "setupTestFrameworkScriptFile": "./tests/setup.js"
   },
   "scripts": {
-    "start": "node app.js app=$CI_ENVIRONMENT_SLUG",
+    "start": "node app.js",
     "test": "jest",
     "dev": "nodemon app.js"
   },
