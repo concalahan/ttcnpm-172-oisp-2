@@ -1,7 +1,7 @@
 image: node:4.2.2
 
 services:
-  - mongodb
+  - mongo
 
 variables:
   NODE_ENV: $(prod)
