@@ -33,7 +33,7 @@ class CustomPage {
     await this.page.setCookie({name: 'session', value: session });
     await this.page.setCookie({name: 'session.sig', value: sig });
 
-    await page.goto('http://localhost:3000');
+    await this.page.goto('http://localhost:3000');
   }
 
   async getContentsOf(selector) {
