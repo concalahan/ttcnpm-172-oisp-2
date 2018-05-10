@@ -1,10 +1,7 @@
-image: node:10.0.0
+image: node:latest
 
 services:
   - mongo
-
-variables:
-  NODE_ENV: $(prod)
 
 cache:
   paths:
@@ -15,6 +12,6 @@ before_script:
 
 all_tests:
   script:
-   - cd code_is_HERE/ttcnpmcrawl && nohup npm run start &
-   - cd code_is_HERE/ttcnpmcrawl && sleep 3
-   - cd code_is_HERE/ttcnpmcrawl && npm run test
+   - nohup npm run start &
+   - sleep 3
+   - npm run test
