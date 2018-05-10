@@ -32,11 +32,8 @@ class CustomPage {
 
     await this.page.setCookie({name: 'session', value: session });
     await this.page.setCookie({name: 'session.sig', value: sig });
-    if(process.env.NODE_ENV === 'ci'){
-      await page.goto('http://localhost:3000');
-    } else {
-      await page.goto('http://localhost/');
-    }
+
+    await page.goto('http://localhost:3000');
   }
 
   async getContentsOf(selector) {

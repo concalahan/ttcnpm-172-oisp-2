@@ -5,11 +5,7 @@ let page;
 // init setup the environment
 beforeEach(async () => {
   page = await Page.build();
-  if(process.env.NODE_ENV === 'ci'){
-    await page.goto('http://localhost:3000');
-  } else {
-    await page.goto('http://localhost/');
-  }
+  await page.goto('http://localhost:3000');
 });
 
 afterEach(async () => {
