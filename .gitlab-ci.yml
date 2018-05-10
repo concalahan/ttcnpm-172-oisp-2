@@ -12,6 +12,6 @@ before_script:
 
 all_tests:
   script:
-   - cd code_is_HERE/ttcnpmcrawl && nohup npm run start &
-   - cd code_is_HERE/ttcnpmcrawl && sleep 3
-   - cd code_is_HERE/ttcnpmcrawl && npm run test
+   - cd nohup npm run start &
+   - cd sleep 3
+   - cd npm run test
