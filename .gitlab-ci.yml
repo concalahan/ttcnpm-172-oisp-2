@@ -1,9 +1,9 @@
-image: node: 10.0.0
+image: node:latest
 
 services:
   - mongo
 
-variables:
+environment:
   NODE_ENV: $(prod)
 
 cache:
