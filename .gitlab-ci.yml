@@ -1,5 +1,8 @@
 image: node:latest
 
+variables:
+  NODE_ENV: $(prod)
+
 services:
   - mongo
 
