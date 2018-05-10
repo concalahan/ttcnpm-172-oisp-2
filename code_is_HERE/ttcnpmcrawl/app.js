@@ -95,15 +95,14 @@ app.use(function(req, res, next){
 });
 
 // Server setup
-var port = 0;
-
 if(process.env.NODE_ENV === 'ci'){
-  port = process.env.PORT || 3000;
+  const port = process.env.PORT || 3000;
+  const server = http.createServer(app);
+  server.listen(port);
+  console.log("Server has started at port ", port);
 } else {
-  port = process.env.PORT || 80;
+  const port = process.env.PORT || 80;
+  const server = http.createServer(app);
+  server.listen(port);
+  console.log("Server has started at port ", port);
 }
-
-const server = http.createServer(app);
-server.listen(port);
-
-console.log("Server has started at port ", port);
