@@ -12,6 +12,6 @@ before_script:
 
 all_tests:
   script:
-   - cd nohup npm run start &
-   - cd sleep 3
-   - cd npm run test
+   - nohup npm run start &
+   - sleep 3
+   - npm run test
