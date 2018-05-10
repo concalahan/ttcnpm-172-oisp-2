@@ -34,7 +34,7 @@
   },
   "scripts": {
     "start": "NODE_ENV=ci && node app.js",
-    "test": "jest",
+    "test": "NODE_ENV=ci && jest",
     "dev": "NODE_ENV=dev && nodemon app.js"
   },
   "author": "oisp2",

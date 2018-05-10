@@ -95,7 +95,14 @@ app.use(function(req, res, next){
 });
 
 // Server setup
-const port = process.env.PORT || 3000;
-const server = http.createServer(app);
-server.listen(port);
-console.log("Server has started at port ", port);
+if(process.env.NODE_ENV === 'ci'){
+  const port = process.env.PORT || 3000;
+  const server = http.createServer(app);
+  server.listen(port);
+  console.log("Server has started at port ", port);
+} else {
+  const port = process.env.PORT || 80;
+  const server = http.createServer(app);
+  server.listen(port);
+  console.log("Server has started at port ", port);
+}
