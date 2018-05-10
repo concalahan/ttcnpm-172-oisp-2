@@ -3,9 +3,6 @@ image: node:latest
 services:
   - mongo
 
-environment:
-  NODE_ENV: $(prod)
-
 cache:
   paths:
     - code_is_HERE/ttcnpmcrawl/node_modules/
