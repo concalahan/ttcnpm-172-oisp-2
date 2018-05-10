@@ -5,7 +5,7 @@ let page;
 // init setup the environment
 beforeEach(async () => {
   page = await Page.build();
-  await page.goto('https://thinhthinh-namthinh1997.cs50.io/');
+  await page.goto('http://localhost/');
 });
 
 afterEach(async () => {
