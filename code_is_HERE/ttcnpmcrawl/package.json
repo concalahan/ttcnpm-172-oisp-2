@@ -33,7 +33,7 @@
     "setupTestFrameworkScriptFile": "./tests/setup.js"
   },
   "scripts": {
-    "start": "NODE_ENV=prod && node app.js",
+    "start": "NODE_ENV=ci && node app.js",
     "test": "jest",
     "dev": "NODE_ENV=dev && nodemon app.js"
   },
