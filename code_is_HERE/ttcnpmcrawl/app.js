@@ -22,7 +22,7 @@ var userRoutes = require('./routes/user');
 var cmsRoutes = require("./routes/cms");
 
 
-const db = "mongodb://localhost/crawlTiki";
+const db = "mongodb://127.0.0.1:27017/crawlTiki";
 
 mongoose.Promise = global.Promise;
 mongoose.connect(db, function(err) {
