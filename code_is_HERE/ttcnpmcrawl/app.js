@@ -95,7 +95,14 @@ app.use(function(req, res, next){
 });
 
 // Server setup
-const port = process.env.PORT || 80;
+
+if(process.env.NODE_ENV === 'ci'){
+  const port = process.env.PORT || 3000;
+} else {
+  const port = process.env.PORT || 80;
+}
+
+
 const server = http.createServer(app);
 server.listen(port);
 
