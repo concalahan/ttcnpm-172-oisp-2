@@ -3,6 +3,10 @@ image: node:latest
 services:
   - mongo
 
+cache:
+  paths:
+    - node_modules/
+
 variables:
   MONGO_URI: 'mongodb://127.0.0.1:27017/crawlTiki'
   NODE_ENV: 'dev'
