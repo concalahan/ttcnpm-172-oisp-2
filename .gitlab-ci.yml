@@ -16,7 +16,8 @@ before_script:
 
 all_tests:
   script:
-   - git docker
    - nohup npm run start &
    - sleep 3
    - npm run test
+  tags:
+  - docker
