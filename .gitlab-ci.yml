@@ -3,7 +3,7 @@ image: node:latest
 services:
   - mongo
 
-job:tags:
+tags:
   - group-oisp-2-runner
 
 variables:
