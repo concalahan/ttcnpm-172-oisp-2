@@ -7,10 +7,6 @@ variables:
   MONGO_URI: 'mongodb://127.0.0.1:27017/crawlTiki'
   NODE_ENV: 'dev'
 
-cache:
-  paths:
-    - node_modules/
-
 before_script:
     - cd code_is_HERE/ttcnpmcrawl && npm install
 
