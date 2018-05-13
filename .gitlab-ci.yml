@@ -3,9 +3,8 @@ image: node:latest
 services:
   - mongo
 
-job:
-  tags:
-    - group-oisp-2-runner
+job:tags:
+  - group-oisp-2-runner
 
 variables:
   MONGO_URI: 'mongodb://127.0.0.1:27017/crawlTiki'
