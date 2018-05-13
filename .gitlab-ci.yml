@@ -1,25 +1,4 @@
-image: node:latest
-
-services:
-  - mongo
-
-cache:
-  paths:
-    - node_modules/
-
-variables:
-  MONGO_URI: 'mongodb://127.0.0.1:27017/crawlTiki'
-  NODE_ENV: 'dev'
-
-before_script:
-    - cd code_is_HERE/ttcnpmcrawl && npm install
-
-all_tests:
-  tags:
-  - docker
-  script:
-   - nohup npm run start &
-   - sleep 3
-   - npm run test
-  only:
-    - tags
+hello:
+    image: ubuntu:16.04
+    script:
+    - echo "hello, world"
