@@ -197,8 +197,14 @@ router.get("/tang-gia", function(req, res){
     if(err) {
       console.log(err);
     } else {
-      console.log("hi " + foundProduct);
-      res.render("category", {products: foundProduct});
+      Category.find({}).populate("products").exec(function(err, categories){
+        if(err){
+          console.log(err);
+          return res.redirect("/");
+        } else {
+          return res.render("predict", {products: foundProduct, categories: categories});
+        }
+      });
     }
   });
 });
@@ -208,8 +214,14 @@ router.get("/giam-gia", function(req, res){
     if(err) {
       console.log(err);
     } else {
-      console.log("hi " + foundProduct);
-      res.render("category", {products: foundProduct});
+      Category.find({}).populate("products").exec(function(err, categories){
+        if(err){
+          console.log(err);
+          return res.redirect("/");
+        } else {
+          return res.render("predict", {products: foundProduct, categories: categories});
+        }
+      });
     }
   });
 });

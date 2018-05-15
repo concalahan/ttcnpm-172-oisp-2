@@ -21,16 +21,6 @@ var productRoutes = require('./routes/product');
 var userRoutes = require('./routes/user');
 var cmsRoutes = require("./routes/cms");
 
-
-// const db = "mongodb://127.0.0.1:27017/crawlTiki";
-//
-// mongoose.Promise = global.Promise;
-// mongoose.connect(db, function(err) {
-//     if(err) {
-//         console.log('Connection error');
-//     }
-// });
-
 mongoose.connect(keys.mongoURI);
 
 app.set("view engine", "ejs");
