@@ -60,6 +60,7 @@ app.use('/', cmsRoutes);
 app.use('/', userRoutes);
 app.use('/', index);
 app.use('/', productRoutes);
+app.get('/favicon.ico', (req, res) => res.status(204));
 
 seedDB();
 
@@ -83,7 +84,7 @@ app.use(function(req, res, next){
   res.type('txt').send('Not found');
 });
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 80;
 const server = http.createServer(app);
 server.listen(port);
 console.log("Server has started at port ", port);
